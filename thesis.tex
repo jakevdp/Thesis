@@ -1,6 +1,12 @@
 \documentclass[11pt,twoside]{uwthesis}
 
-\newcommand\apj{{\it ApJ}}
+\usepackage{natbib}
+\usepackage{aas_macros}
+
+
+%\def\aj{\ref{AJ}}
+%\def\apj{\ref{ApJ}}
+%\def\jcap{\ref{JCAP}}
 
 \begin{document}
  
@@ -18,10 +24,15 @@
 
 \textpages
 \include{chapter1}
+\include{chapter2}
+\include{chapter3}
+\include{chapter4}
+\include{chapter5}
+\include{chapter6}
  
 % bibliography
 %
-\bibliographystyle{plain}
+\bibliographystyle{apj}
 \bibliography{thesis}
  
 % appendices
