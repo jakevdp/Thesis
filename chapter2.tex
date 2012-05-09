@@ -1,7 +1,5 @@
 \chapter{Introduction to KL Analysis}
 
-Here we do an introduction to KL.
-
 \begin{itemize}
   \item Introduce the notational formalism
   \item KL as an eigenvalue problem
@@ -13,3 +11,441 @@ Here we do an introduction to KL.
 
 Also mention LLE and cite \cite{Vanderplas2009}, which uses a nonlinear
 alternative to PCA for dimensionalty reduction.
+
+\section{Karhunen-Lo\`{e}ve Analysis of Shear}
+\label{KL_Intro}
+KL analysis is a commonly used statistical tool
+in a broad range of astronomical applications, from, e.g.~studies of 
+galaxy and quasar spectra \citep{Connolly95,Connolly99,Yip04a,Yip04b}, to 
+analysis of the spatial distribution of galaxies 
+\citep{Vogeley96,Matsubara00,Pope04}, to characterization of the 
+expected errors in weak lensing surveys \citep{Kilbinger06, Munshi06}.    
+Any set of $N$-dimensional data can be represented as a sum of 
+$N$ orthogonal basis functions: this amounts to a rotation and scaling of 
+the $N$-dimensional coordinate axis spanning the space in which the data live.
+KL analysis seeks a set of orthonormal basis functions which can optimally
+represent the dataset.  The sense in which the KL basis is optimal will be
+discussed below.  For the current work, the data we wish to represent are the 
+observed gravitational shear measurements across the sky.  
+We will divide the survey 
+area into $N$ discrete cells, at locations $\myvec{x}_i,\ 1\le i \le N$.  
+From the ellipticity of the galaxies within each cell, 
+we infer the observed shear $\gamma^o(\myvec{x}_i)$, which we assume
+to be a linear combination of the true underlying shear, $\gamma(\myvec{x}_i)$
+and the shape noise $n_\gamma(\myvec{x}_i)$.\footnote{
+Throughout this work, we assume we are in the regime where the convergence
+$\kappa \ll 1$ so that the average observed ellipticity in a 
+cell is an unbiased estimator of shear; see \citet{Bartelmann01}}
+In general, the cells may be of any shape (even overlapping) 
+and may also take into account the redshift of sources.
+In this analysis, the cells will be square pixels across the locally 
+flat shear field, with no use of source redshift information.  
+For notational clarity, we will represent quantities with a vector notation,
+denoted by bold face: i.e. $\myvec{\gamma} = [\gamma_1,\gamma_2\cdots]^T$; 
+$\gamma_i = \gamma(\myvec{x}_i)$. 
+
+\subsection{KL Formalism}
+\label{KL_Formalism}
+KL analysis provides a framework such that our measurements $\myvec\gamma$ 
+can be expanded in a set of $N$ orthonormal basis functions 
+$\left\{ \myvec{\Psi}_j(\myvec{x}_i),\ j=1,N\right\}$, via a vector of
+coefficients $\myvec{a}$.  In matrix form, the relation can be written
+\begin{equation}
+  \myvec\gamma = \myvec\Psi\myvec{a}
+\end{equation}
+where the columns of the matrix $\myvec\Psi$ are the basis vectors 
+$\myvec\Psi_i$.  Orthonormality is given by the condition 
+$\myvec\Psi_i^\dagger\myvec\Psi_j = \delta_{ij}$, so that the coefficients
+can be determined by
+\begin{equation}
+  \myvec{a} = \myvec{\Psi}^\dagger\myvec{\gamma}
+\end{equation}
+A KL decomposition is optimal in the sense that it seeks basis 
+functions for which the 
+coefficients are statistically orthogonal;\footnote{Note that statistical
+orthogonality of coefficients is conceptually distinct from the 
+geometric orthogonality of the basis functions themselves; 
+see \citet{Vogeley96} for a discussion of this property.}
+that is, they satisfy
+\begin{equation}
+  \langle a_i^* a_j \rangle = \langle a_i^2 \rangle \delta_{ij}
+\end{equation}
+where angled braces $\langle\cdots\rangle$ denote averaging over all 
+realizations.  This definition leads to several important properties
+\citep[see][for a thorough discussion \& derivation]{Vogeley96}:
+\begin{enumerate}
+\item \textbf{KL as an Eigenvalue Problem:} 
+  Defining the correlation matrix 
+  $\myvec{\xi}_{ij} = \langle \gamma_i\gamma_j^*\rangle$, 
+  it can be shown that the KL vectors $\myvec{\Psi}_i$ are eigenvectors 
+  of $\myvec{\xi}$ with eigenvalues $\lambda_i = \langle a_i^2\rangle$.
+  For clarity, we'll order the eigenbasis such that 
+  $\lambda_i \ge \lambda_{i+1}\ \forall\ i\in(1,N-1)$.  We define the
+  diagonal matrix of eigenvalues $\mymat{\Lambda}$, such that
+  $\mymat{\Lambda}_{ij} = \lambda_i\delta_{ij}$
+  and write the eigenvalue decomposition in compact form:
+  \begin{equation}
+    \mymat{\xi} = \mymat{\Psi}\mymat{\Lambda}\mymat{\Psi}^\dagger
+  \end{equation}
+
+\item \textbf{KL as a Ranking of Signal-to-Noise}
+  It can be shown that KL vectors of a whitened covariance matrix (see
+  Section~\ref{Adding_Noise})
+  diagonalize both the signal and the noise of the problem, with the
+  signal-to-noise ratio proportional to the eigenvalue.  This is
+  why KL modes are often called ``Signal-to-noise eigenmodes''.
+
+\item \textbf{KL as an Optimal Low-dimensional Representation:}
+  An important consequence of the signal-to-noise properties of KL modes  
+  is that the optimal rank-$n$ representation of the data is 
+  contained in the KL vectors corresponding to the $n$ largest eigenvalues:
+  that is,
+  \begin{equation}
+    \label{eq_truncation}
+    \myvec{\hat\gamma}^{(n)}
+    \equiv \sum_{i=1}^{n<N} a_i\myvec{\Psi}_i
+  \end{equation}
+  minimizes the reconstruction error between $\myvec{\hat\gamma}^{(n)}$ and 
+  $\myvec\gamma$ for reconstructions using $n$ orthogonal basis vectors.
+  This is the theoretical basis of Principal Component Analysis (sometimes
+  called Discrete KL), and leads to a common application of KL 
+  decomposition: filtration of noisy signals.  For notational compactness,
+  we will define the truncated eigenbasis $\mymat{\Psi}_{(n)}$ and truncated
+  vector of coefficients $\myvec{a}_{(n)}$ such that 
+  Equation~\ref{eq_truncation} can be written in matrix form:
+  $\myvec{\hat\gamma}^{(n)} = \mymat{\Psi}_{(n)}\myvec{a}_{(n)}$.
+\end{enumerate}
+ 
+\subsection{KL in the Presence of Noise}
+\label{Adding_Noise}
+When noise is present in the data, the above properties do not 
+necessarily hold.
+To satisfy the statistical orthogonality of the KL coefficients $\myvec{a}$ 
+and the resulting signal-to-noise properties of the KL eigenmodes, 
+it is essential that the noise in the covariance matrix be ``white'': 
+that is, $\Noise_\gamma \equiv 
+\langle \myvec{n}_\gamma\myvec{n}_\gamma^\dagger \rangle \propto \mymat{I}$.  
+This can be accomplished through a judicious
+choice of binning, or by rescaling the covariance with a whitening 
+transformation.  We take the latter approach here.
+
+Defining the noise covariance matrix $\Noise_\gamma$ as above,
+the whitened covariance matrix can be written 
+$\myvec{\xi}_W = \Noise_\gamma^{-1/2} \myvec{\xi} \Noise_\gamma^{-1/2}$.  Then 
+the whitened KL modes become
+$\myvec{\Psi}_W\myvec{\Lambda}_W\myvec{\Psi}_W^\dagger \equiv \myvec{\xi}_W$.
+The coefficients $\myvec{a}_W$ are calculated from the noise-weighted signal,
+that is
+\begin{equation}
+  \myvec{a}_W = \myvec{\Psi}_W^\dagger\Noise_\gamma^{-1/2}
+  (\myvec{\gamma}+\myvec{n}_\gamma)
+\end{equation}
+For the whitened KL modes, if signal and noise are uncorrelated, this leads to 
+$\langle\myvec{a}_W\myvec{a}_W^\dagger\rangle = \myvec{\Lambda}_W + \myvec{I}$:
+that is, the coefficients $\myvec{a}_W$ are statistically orthogonal.
+For the remainder of this work, we will drop the subscript ``$_W$'' and assume
+all quantities to be those associated with the whitened covariance.
+
+
+
+\section{KL for Parameter Estimation}
+\label{sec:kl_intro}
+KL analysis and the related Principal Component Analysis are well-known
+statistical tools which have been applied in a wide variety of astrophysical
+situations, from e.g. analysis of the spatial power of galaxy counts
+\citep{Vogeley96, Szalay03, Pope04}
+to characterization of stellar, galaxy, and QSO spectra
+\citep{Connolly95, Connolly99, Yip04a, Yip04b},
+to studies of noise properties of weak lensing surveys
+\citep{Kilbinger06, Munshi06}, and a host of other situations too numerous
+to mention here.  Informally, the power of KL/PCA rests in the fact that 
+it allows a highly efficient representation of a set of data, highlighting
+the components which are most important in the dataset as a whole.
+The discussion of KL analysis below derives largely from \citet{Vogeley96},
+reexpressed for application in cosmic shear surveys.
+
+Any $D$-dimensional data point may be represented as a linear combination of 
+$D$ orthogonal basis functions.  
+For example, the data may be $N$ individual galaxy spectra, each with flux
+measurements in $D$ wavelength bins.  Each spectrum can be thought of as a
+single point in $D$-dimensional parameter space, where each axis corresponds
+to the value within a single wavelength bin.  
+Geometrically, there is nothing special about
+this choice of axes: one could just as easily rotate and translate the axes
+to obtain a different but equivalent representation of the same data.
+
+In the case of of a shear survey, our single data vector is the set of
+cosmic shear measurements across the sky.  We will divide the sky into $N$
+cells in angular and redshift space, at coordinates
+$\myvec{x}_i = (\theta_{x,i}, \theta_{y,i}, z_i)$
+These cells may be spatially distinct, or they may overlap.
+From the ellipticity of the galaxies within each cell, we
+estimate the shear
+$\gamma_i \equiv \gamma^o(\myvec{x}_i) = 
+\gamma(\myvec{x}_i) + n_\gamma(\myvec{x}_i)$
+where $\gamma(\myvec{x}_i)$ is the true underlying shear,
+and $n_\gamma(\myvec{x}_i)$ is the measurement noise.
+Our data vector is then
+$\myvec{\gamma} = [\gamma_1, \gamma_2 \cdots \gamma_N]^T$.
+
+We seek to express our set of measurements $\myvec{\gamma}$
+as a linear combination of $N$ (possibly complex) 
+orthonormal basis vectors
+$\{\myvec{\Psi}_j(\myvec{x}_i, j=1,N)\}$ with complex coefficients
+$a_j$:
+\begin{equation}
+  \label{eq:gamma_decomp}
+  \gamma_i = \sum_{j=1}^{N} a_j \Psi_j(\myvec{x}_i)
+\end{equation}
+For conciseness, we'll create the matrix $\mymat{\Psi}$ whose columns are
+the basis vectors $\myvec{\Psi}_j$, so that the above equation can be
+compactly written $\myvec\gamma = \mymat\Psi\myvec{a}$.  Orthonormality
+of the basis vectors leads to the property
+$\mymat\Psi^\dagger\mymat\Psi = \mymat{I}$, where $\mymat{I}$ is the identity
+matrix: that is, $\mymat\Psi$ is a unitary matrix with
+$\mymat\Psi^{-1} = \mymat\Psi^\dagger$.  Observing this, we can easily compute
+the coefficients for a particular data vector:
+\begin{equation}
+  \myvec{a} = \mymat\Psi^\dagger \myvec\gamma.
+\end{equation}
+We will be testing the likelihood of a particular set of coefficients
+$\myvec{a}$.  
+The statistical properties of these coefficients can be written in terms of
+the covariance of the observed shear:
+\begin{equation}
+  \label{eq:a_cov}
+  \left\langle \myvec{a}\myvec{a}^\dagger \right\rangle 
+  =  \mymat\Psi^\dagger
+  \left\langle \myvec\gamma\myvec\gamma^\dagger \right\rangle 
+  \mymat\Psi
+  \equiv \mymat\Psi^\dagger \myvec{\xi}  \mymat\Psi
+\end{equation}
+where we have defined the observed shear correlation matrix 
+$\myvec{\xi} \equiv \left\langle 
+\myvec\gamma\myvec\gamma^\dagger \right\rangle$, and angled braces
+$\langle\cdots\rangle$ denote expectation value or ensemble average
+of a quantity.
+
+Because we hope to perform a likelihood analysis on the coefficients
+$\myvec{a}$, it will be useful in likelihood estimation if they are
+statistically orthogonal:
+\begin{equation}
+  \label{eq:a_cov_2}
+  \left\langle \myvec{a}\myvec{a}^\dagger \right\rangle_{ij}
+  = \left\langle a_i^2 \right\rangle \delta_{ij}
+\end{equation}
+Comparing Equations \ref{eq:a_cov} \& \ref{eq:a_cov_2} we see that the desired
+basis functions are the solution of the eigenvalue problem
+\begin{equation}
+  \mymat\xi \myvec\Psi_j = \lambda_j \myvec\Psi_j
+\end{equation}
+where the eigenvalue $\lambda_j = \left\langle a_i^2 \right\rangle$.
+By convention, we'll order the eigenvalue/eigenvector pairs such that
+$\lambda_i \ge \lambda_{i+1} \forall i\in(1, N-1)$.
+Expansion of the data $\myvec\gamma$ into this basis is the discrete form
+of KL analysis.
+
+A KL decomposition has a number of useful properties:
+\begin{description}
+  \item[Uniqueness] A KL decomposition is a unique representation of the data.
+    That is, there only a single set of basis vectors which satisfy the above
+    properties (up to degeneracies resulting from identical eigenvalues)
+    This can be straightforwardly shown in a proof by contradiction
+    \citep[e.g.][]{Vogeley96}.
+  \item[Efficiency] A partial KL decomposition provides the
+    optimal low-rank approximation of an observed data vector.  That is,
+    for $n < N$, the partial reconstruction (cf. Eqn.~\ref{eq:gamma_decomp})
+    \begin{equation}
+      \myvec\gamma^{(n)} \equiv \sum_{j=1}^n a_j \Psi_j
+    \end{equation}
+    minimizes the average reconstruction error
+    $\epsilon_n \equiv |\myvec\gamma - \myvec\gamma^{(n)}|^2$
+    for any orthogonal basis set $\mymat\Psi$.  The proof can be easily
+    obtained using Lagrangian multipliers \citep[again, see][]{Vogeley96}.
+  \item[Signal-to-noise Optimization] As a consequence of the efficiency
+    property, it is clear that for data with white noise\footnote{
+    By \textit{white noise} we mean that the noise covariance satisfies
+    $\mymat{\mathcal{N}}_{ij} \equiv 
+    \langle\myvec{n_\gamma}\myvec{n_\gamma}^\dagger\rangle_{ij} 
+    \propto \delta_{ij}$}, KL modes provide the
+    maximum possible signal-to-noise ratio per mode.  The noise can be assured
+    to be white through a judicious choice of binning, or alternatively
+    the data can be artificially whitened (See \S\ref{sec:whitening}).
+    If signal and noise are uncorrelated, then the covariance of the observed
+    shear can be decomposed as
+    \begin{equation}
+      \mymat{\xi} = \mymat{\mathcal{S}} + \mymat{\mathcal{N}}
+    \end{equation}
+    Because the noise covariance $\mymat{\mathcal{N}} \equiv 
+    \langle\myvec{n_\gamma}\myvec{n_\gamma}^\dagger\rangle$ is proportional
+    to the identity by assumption, Diagonalization of $\mymat{\xi}$ results
+    in a simultaneous diagonalization of both the signal $\mymat{\mathcal{S}}$
+    and the noise $\mymat{\mathcal{N}}$.  Because of this signal-to-noise
+    optimization property, KL modes can be proven to be the optimal basis
+    for testing of spatial correlations \citep[see Appendix A of][]{Vogeley96}.
+\end{description}
+
+\subsection{Shear Noise Properties}
+\label{sec:whitening}
+The signal-to-noise properties of shear mentioned above are based on the 
+requirement that noise be ``white'', that is, the noise covariance is
+$\mymat{\mathcal{N}} \equiv 
+\langle\myvec{n_\gamma}\myvec{n_\gamma}^\dagger\rangle
+= \sigma^2 \mymat{I}$.  Noise in measured shear is affected mainly by the
+intrinsic ellipticity and source density, but can also be prone to systematic
+effects which lead to noise correlations between pixels.  When the survey
+geometry leads to shear with more complicated noise characteristics, a
+whitening transformation can be applied.
+
+Given the measured data $\myvec\gamma$ and noise covariance
+$\mymat{\mathcal{N}}$, we can define the whitened shear
+\begin{equation}
+  \myvec{\gamma}^\prime = \mymat{\mathcal{N}}^{-1/2} \myvec{\gamma}
+\end{equation}
+With this definition, the shear covariance matrix becomes
+\begin{eqnarray}
+  \mymat{\xi}^\prime 
+  &=& \left\langle \myvec{\gamma}^\prime 
+  \myvec{\gamma}^{\prime\dagger}\right\rangle \nonumber\\
+  &=& \mymat{\mathcal{N}}^{-1/2}\mymat{\xi}
+  \mymat{\mathcal{N}}^{-1/2} \nonumber\\
+  &=& \mymat{\mathcal{N}}^{-1/2}\left[
+    \mymat{\mathcal{S}} + \mymat{\mathcal{N}}
+    \right]\mymat{\mathcal{N}}^{-1/2} \nonumber\\
+  &=& \mymat{\mathcal{N}}^{-1/2}\mymat{\mathcal{S}}\mymat{\mathcal{N}}^{-1/2} + \mymat{I}
+\end{eqnarray}
+We see that the whitened signal is $\mymat{\mathcal{S}}^\prime = 
+\mymat{\mathcal{N}}^{-1/2}\mymat{\mathcal{S}}\mymat{\mathcal{N}}^{-1/2}$
+and the whitened noise is $\mymat{\mathcal{N}}^\prime = \mymat{I}$, the
+identity matrix. So this transformation in fact whitens the data covariance,
+so that the noise in each bin is constant and uncorrelated.  Given the
+whitened measurement covariance $\mymat{\xi}^\prime$, we can find the KL
+decomposition which satisfies the eigenvalue problem
+\begin{equation}
+  \mymat{\xi}^\prime \myvec{\Psi^\prime}_j = 
+  \lambda^\prime_j \myvec{\Psi^\prime}_j
+\end{equation}
+With KL coefficients given by
+\begin{equation}
+  \myvec{a}^\prime = \mymat{\Psi}^{\prime\dagger}
+  \mymat{\mathcal{N}}^{-1/2}\myvec\gamma
+\end{equation}
+Note that because $\langle\myvec\gamma\rangle = 0$,
+the expectation value of the KL coefficients is
+\begin{eqnarray}
+  \langle\myvec{a}^\prime\rangle 
+  &=& \mymat{\mathcal{N}}^{-1/2}\langle\myvec\gamma\rangle\nonumber\\
+  &=& 0
+\end{eqnarray}
+For the remainder of this work, it will be assumed that we are working with
+whitened quantities.  The primes will be dropped for notational simplicity.
+
+\subsection{Constructing the Covariance Matrix}
+In many applications, the data covariance matrix can be estimated
+empirically, using the fact that
+\begin{equation}
+  \tilde{\myvec\xi} = \lim_{N\to\infty} \sum_{i=1}^N 
+  \myvec{\gamma}_i \myvec{\gamma}_i^\dagger
+\end{equation}
+Unfortunately, in surveys of cosmic shear, we have only a single sky to
+observe, so this approach does not work.  Instead, we can construct the
+measurement covariance analytically by assuming a theoretical form of the
+underlying matter power spectrum.
+
+The measurement covariance $\mymat{\xi}_{ij}$ between two regions of the
+sky $A_i$ and $A_j$ is given by
+\begin{eqnarray}
+  \label{eq:xi_analytic}
+  \myvec{\xi}_{ij} 
+  &=& \mymat{\mathcal{S}}_{ij} + \mymat{\mathcal{N}}_{ij} \nonumber\\
+  &=& \left[\int_{A_i}d^2x_i\int_{A_j}d^2x_j 
+    \xi_+(|\myvec{x_i}-\myvec{x_j}|)\right]
+  + \mymat{\mathcal{N}}_{ij}
+\end{eqnarray}
+where $\xi_+(\theta)$ is the ``+'' shear correlation function. 
+$\xi_+(\theta)$ is expressible as an integral over the shear power spectrum
+weighted by the zeroth-order Bessel function
+\citep[see, e.g.][]{Schneider02}:
+\begin{equation}
+  \label{eq:xi_plus_def}
+  \xi_+(\theta) 
+  = \frac{1}{2\pi} \int_0^\infty d\ell\ \ell P_\gamma(\ell) J_0(\ell\theta)
+\end{equation}
+The angular shear power spectrum $P_\gamma(\ell)$ can be expressed as a
+weighted line-of-sight integral over the matter power 
+spectrum \citep[see, e.g.][]{Takada04}:
+\begin{equation}
+  \label{eq:P_gamma}
+  P_\gamma(\ell) = \int_0^{\chi_s}d\chi W^2(\chi)\chi^{-2}
+  P_\delta\left(k=\frac{\ell}{\chi};z(\chi)\right)
+\end{equation}
+Here $\chi$ is the comoving distance, $\chi_s$ is the distance to the
+source, and $W(\chi)$ is the lensing weight function,
+\begin{equation}
+  \label{eq:lensing_weight}
+  W(\chi) = \frac{3\Omega_{m,0}H_0^2}{2a(\chi)}\frac{\chi}{\bar{n}_g}
+  \int_{\chi}^{\chi_s}dz\ n(z) \frac{\chi(z)-\chi}{\chi(z)}
+\end{equation}
+where $n(z)$ is the empirical redshift distribution of galaxies.
+The nonlinear mass fluctuation power spectrum $P_\delta(k, z)$ can be
+predicted semianalytically: in this work we use the halo model of
+\citet{Smith03}.  With this as an input, we can analytically
+construct the measurement covariance matrix $\mymat\xi$ using 
+Equations~\ref{eq:xi_analytic}-\ref{eq:lensing_weight}.
+
+\subsection{Cosmological Likelihood Analysis with KL}
+From the survey geometry and galaxy ellipticities, we measure the
+shear $\myvec\gamma$, estimate the noise covariance
+$\mymat{\mathcal{N}}$ (see \S\ref{sec:bootstrap}) and derive
+the whitened covariance matrix $\mymat\xi$. 
+From $\mymat\xi$ we compute the KL basis $\mymat\Psi$ and $\myvec\lambda$.
+Using the KL basis, we compute the coefficients
+$\myvec{a} = \mymat{\Psi}^\dagger \mymat{\mathcal{N}}^{-1/2} \myvec\gamma$.
+Given these KL coefficients $\myvec{a}$, we use a Bayesian framework to
+compute the posterior distribution of our cosmological parameters.
+
+Given observations $D$ and prior information $I$, Bayes' theorem specifies the
+posterior probability of a model described by the parameters $\{\theta_i\}$:
+\begin{equation}
+  \label{eq:bayes}
+  P(\{\theta_i\}|DI) = P(\{\theta_i\}|I) \frac{P(D|\{\theta_i\}I)}{P(D|I)}
+\end{equation}
+The term on the LHS is the \textit{posterior} probability of the set of
+model parameters $\{\theta_i\}$, which is the quantity we are interested in.
+
+The first term on the RHS is the \textit{prior}.  It quantifies how our prior
+information $I$ affects the probabilities of the model parameters.  The 
+prior is where information from other surveys (e.g. WMAP, etc) can be
+included. The likelihood function for the observed coefficients $\myvec{a}$
+enters into the numerator $P(D|\{\theta_i\}I)$.  The denominator $P(D|I)$
+is essentially a normalization constant, set so that the sum of probabilities
+over the parameter space equals unity.
+
+For a given model $\{\theta_i\}$, we can predict the expected distribution of model KL
+coefficients $\myvec{a}_{\{\theta_i\}} \equiv \mymat{\Psi}^\dagger
+\mymat{\mathcal{N}}^{-1/2}\myvec{\gamma}$:
+\begin{eqnarray}
+  \mymat{C}_{\{\theta_i\}}
+  & \equiv & \langle\myvec{a}_{\{\theta_i\}}
+  \myvec{a}_{\{\theta_i\}}^\dagger\rangle\nonumber\\
+  &=& \mymat{\Psi}^\dagger \mymat{\mathcal{N}}^{-1/2} 
+  \mymat{\xi}_{\{\theta_i\}}\mymat{\mathcal{N}}^{-1/2}\mymat{\Psi}
+\end{eqnarray}
+Using this, the measure of departure from the model $m$ is given by the
+quadratic form
+\begin{equation}
+  \chi^2 = \myvec{a}^\dagger\mymat{C}_{\{\theta_i\}}^{-1}\myvec{a}
+\end{equation}
+The likelihood is then given by
+\begin{equation}
+  \label{eq:likelihood}
+  \mathcal{L}(\myvec{a}|\{\theta_i\}) = 
+  (2\pi)^{n/2} |\det(C_{\{\theta_i\}})|^{-1/2}
+  \exp(-\chi^2/2)
+\end{equation}
+where $n$ is the number of degrees of freedom: that is, the number
+of eigenmodes included in the analysis.  The likelihood given by
+Equation~\ref{eq:likelihood} enters into Equation~\ref{eq:bayes} when
+computing the posterior probability.
+
+
