@@ -1,0 +1,2 @@
+# fiducial cosmology: {'Om': 0.27000000000000002, 'Ol': 0.72999999999999998, 'h': 0.70999999999999996, 'sigma8': 0.81200000000000006, 'w1': 0.0, 'w0': -1.0, 'Or': 0.0, 'T_CMB': 2.71}
+# ncut Om sigma8 chi2 log|det(C)| log(Likelihood)

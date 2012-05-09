@@ -1,0 +1,27 @@
+We thank the referee for helpful comments in improving the study presented
+in this paper.  Below are our responses to the referee's comments and concerns:
+On top of addressing these concerns, we have added an appendix detailing the
+formalism of our SVD method.  The rest of the text is largely unchanged.
+
+1) Abstract: "We find however that linear... reconstructions have a fundamental limitation" - you've ably illustrated that this may be the case by this work, but I'm not sure you've proven it formally? If I'm right, it would be useful to soften this statement.
+
+We addressed this concern by adding a new section (3.4) which discusses the noise properties of line-of-sight modes.  We believe this new discussion supports this assertion of a "fundamental limitation" in the redshift direction.
+
+2) It would be helpful to flesh out section 3.4 - I felt that this was dealt with rather too briefly. Could you:
+
+[note: this is now section 3.5]
+
+(a) add discussion of whether your field is typical, i.e. whether one should expect this number of halos of this mass in this size of field, or is it purely illustrative; 
+
+we added this discussion in section 3.5
+
+(b) include an e.g. theta_x z plot to show how well/not well the reconstructions do in the z direction, and add discussion of this; 
+
+we added these plots in the right column of figure 6, 
+and a brief discussion of these plots in section 3.5
+
+(c) include some information in a table or figure to discuss how well the masses are recovered in each case?
+
+this information is now included in table 1.  We added discussion at the 
+end of section 3.4 about the difficulty in determining halo masses
+using nonparametric methods.

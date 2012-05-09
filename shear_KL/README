@@ -1,0 +1,4 @@
+This is the source for the paper Vanderplas et al 2012
+
+A lot of this is set up to work on my astro machine, with liberal use
+of condor and the scratch directory.

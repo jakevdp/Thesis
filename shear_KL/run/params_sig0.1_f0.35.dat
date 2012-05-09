@@ -1,0 +1,15 @@
+#----------------------------------------------------------------------
+#fmask=0.5, sigma=0.1
+#----------------------------------------------------------------------
+
+#for determining average noise characteristics
+sigma                   0.134            float
+
+#output location
+shear_recons_dir      $scratch_dir/shear_recons_sig0.1_f0.35
+Map_dir               $scratch_dir/Map_map_sig0.1_f0.35
+kappa_dir             $scratch_dir/kappa_map_sig0.1_f0.35
+
+#info for mask files
+fmask                 0.35    float
+mask_outdir           $scratch_dir/masks_f0.35

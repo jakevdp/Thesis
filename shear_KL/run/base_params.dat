@@ -1,0 +1,51 @@
+#these are the parameters for parsing the shear.
+#we'll use four of these fields for each shear reconstruction.
+field_width           	30             	float   #arcmin
+Npix			32		int     #pixels
+
+#for determining average noise characteristics
+ngal_arcmin             40.            float   #per square arcmin
+sigma                   0.3            float
+
+RAmin                   10             float
+RAmax                   30             float
+DECmin                  35             float
+DECmax                  50             float
+
+rseed                   1415           int
+
+#location and form of DES fits files
+fits_dir                /local/tmp/DES_mocks
+#fits_file               DES_Mock_v2.13_Baseline_truth_0%i.fit
+fits_file               DES_Mock_v3.02_Baseline_truth_0%i.fit
+
+#scratch location
+scratch_dir          /astro/store/student-scratch1/vanderplas/shear_KL_files#_v3
+
+#output location
+shear_in_dir          $scratch_dir/catalog_parsed
+shear_recons_dir      $scratch_dir/shear_recons
+Map_dir               $scratch_dir/Map_map
+kappa_dir             $scratch_dir/kappa_map
+
+#info for mask files
+fmask                 0.2    float
+mask_outdir           $scratch_dir/masks
+
+#info for galaxy distribution when creating KL basis for shear
+#  n(z) = z^a * exp( -(z/z0)^b )
+#  (zmin,zmax) give interval over which this function is nonzero
+z0                    0.5     float
+nz_a                  2       float
+nz_b                  1.5     float
+zmin                  0       float
+zmax                  3       float
+
+#info for calculating aperture mass
+rmax                  5.6     float  #arcmin
+xc                    0.15    float
+
+#info for condor
+condorlog      $scratch_dir/condor_log
+pyexec         reconstruct_shear.py
+initialdir     /astro/users/vanderplas/research/shear_KL/run

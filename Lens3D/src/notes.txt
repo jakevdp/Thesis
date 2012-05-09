@@ -1,0 +1,12 @@
+4-13-10
+fourier-space inverse of the KS kernel seems to work, while the fourier-space 
+inverse of the signal covariance (S_DD) does not.  I think this is because
+the magnitude of the KS kernel approaches 1 for large k, so that its inverse
+is well-behaved.  On the other hand, the magnitude of S_DD approaches 0 for
+large k, so the inverse is not well-behaved, and numerical accuracy issues
+are substantially amplified.
+
+So, for the regularization of the wiener-filtered matrix, I plan to use
+the fourier-space inverse of P_kd, and the numerical inverse of S_DD.
+
+LU factorization [ scipy.linalg.lu_factor(X) ] will be faster, if N>=32
