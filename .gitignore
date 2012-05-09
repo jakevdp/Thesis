@@ -1,0 +1,10 @@
+*~
+*.dvi
+*.aux
+thesis.bbl
+thesis.blg
+thesis.lof
+thesis.log
+thesis.pdf
+thesis.toc
+thesis/uwthesis.pdf
