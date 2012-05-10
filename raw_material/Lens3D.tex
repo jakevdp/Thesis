@@ -1,0 +1,736 @@
+% tutorial.tex  -  a short descriptive example of a LaTeX document
+%
+% For additional information see  Tim Love's ``Text Processing using LaTeX''
+% http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/
+%
+% You may also post questions to the newsgroup <b> comp.text.tex </b> 
+
+\documentclass[12pt,preprint]{aastex}			% For LaTeX 2e
+						% other documentclass options:
+						% draft, fleqn, openbib, 12pt
+
+\usepackage{graphicx}	 			% insert PostScript figures
+\usepackage{amsfonts}
+%% \usepackage{setspace}   % controllabel line spacing
+%% If an increased spacing different from one-and-a-half or double spacing is
+%% required then the spacing environment can be used.  The spacing environment 
+%% takes one argument which is the baselinestretch to use,
+%%         e.g., \begin{spacing}{2.5}  ...  \end{spacing}
+
+
+% the following produces 1 inch margins all around with no header or footer
+%\topmargin	=10.mm		% beyond 25.mm
+%\oddsidemargin	=0.mm		% beyond 25.mm
+%\evensidemargin	=0.mm		% beyond 25.mm
+%\headheight	=0.mm
+%\headsep	=0.mm
+%\textheight	=220.mm
+%\textwidth	=165.mm
+					% SOME USEFUL OPTIONS:
+% \pagestyle{empty}			% no page numbers
+% \parindent  15.mm			% indent paragraph by this much
+% \parskip     2.mm			% space between paragraphs
+% \mathindent 20.mm			% indent math equations by this much
+
+\newcommand{\MyTabs}{ \hspace*{25.mm} \= \hspace*{25.mm} \= \hspace*{25.mm} \= \hspace*{25.mm} \= \hspace*{25.mm} \= \hspace*{25.mm} \kill }
+
+\graphicspath{{../Figures/}{../data/:}}  % post-script figures here or in /.
+
+					% Helps LaTeX put figures where YOU want
+ \renewcommand{\topfraction}{0.9}	% 90% of page top can be a float
+ \renewcommand{\bottomfraction}{0.9}	% 90% of page bottom can be a float
+ \renewcommand{\textfraction}{0.1}	% only 10% of page must to be text
+
+\newcommand{\rcom}{\chi}     %comoving distance
+\newcommand{\dd}{\mathrm{d}} %differential for integrals
+
+\alph{footnote}				% make title footnotes alpha-numeric
+
+\title{3D Lensing Tomography}	% the document title
+
+\author{Jake VanderPlas\\
+  \texttt{vanderplas@astro.washington.edu}}
+
+\date{\today}				% your own text, a date, or \today
+
+% --------------------- end of the preamble ---------------------------
+
+\begin{document}			% REQUIRED
+\bibliographystyle{apj}
+
+%\maketitle				% you need to define \title{..}
+
+\section{Introduction}
+This is a summary of weak lensing theory, starting from first principles, in 
+order to solidify the theoretical/statistical basis for the reconstruction of
+3D mass distributions based on propagation of PDFs for lensing observables.
+
+\section{Cosmological Lensing: Simplifying Assumptions}
+\label{simplifying_assumptions}
+The propagation of light through a region of gravitational potential $\Phi(\vec{r})$ is, in general, a very complicated problem, only analytically solvable for potentials with various symmetries.  In cosmological contexts, however, it is safe to assume that the universe is described by a Robertson-Walker metric, with only small perturbations due to the density fluctuations described by the potential $\Phi$.  In this case, the gravitational deflection of a photon can be described by an effective index of refraction given by \citep[see][and references therein]{Narayan96}:
+\begin{equation}
+  n = 1-\frac{2}{c^2}\Phi 
+\end{equation}
+As in conventional optics, light rays are deflected in proportion to the perpendicular gradient of the refraction index, such that the deflection $\hat{\alpha}$ is given by
+\begin{equation}
+  \label{alpha-def}
+  \hat{\alpha} = -\int_0^{D_S} \vec{\nabla}_\perp n \dd D = \frac{2}{c^2}\int_0^{D_S} \vec{\nabla}_\perp\Phi \dd D
+\end{equation}
+where $D_S$ is the distance from the observer to the photon source.  
+
+For a point-mass located at a distance $D_L$ and an impact parameter $b$, with $D_L \gg b$ and $D_S \approx 2D_L$, equation \ref{alpha-def} can be integrated to give
+\begin{equation}
+  \hat{\alpha} = \frac{4GM}{bc^2}\Bigg[1 - \frac{1}{2}\bigg(\frac{b}{D_L}\bigg)^2 + \mathcal{O}\bigg[\frac{b}{D_L}\bigg]^3 \Bigg]
+\end{equation}
+The first-order approximation is twice the deflection predicted by Newtonian gravity for a particle of arbitrary mass moving at a speed $c$.  It is important to note here that to first order, the deflection does not depend on the distance to the lens or source.  That is, for a mass distribution located at a distance $D_L$, equation \ref{alpha-def} can be approximated
+\begin{equation}
+  \label{alpha-def-approx}
+  \hat{\alpha} \approx \frac{2}{c^2}\int_{D_L-\delta D}^{D_L+\delta D} \vec{\nabla}_\perp\Phi\,\dd D
+\end{equation}
+for $\delta D$ sufficiently greater than the size scale of the mass-distribution in question.  Also note that for a large impact parameter $b$, the contribution to $\hat{\alpha}$ becomes vanishingly small, and can be neglected.  So, to a very good approximation, the incremental deflection $\delta \hat{\alpha}$ of a photon at a given point along its trajectory is entirely due to a sheet of matter with a width $2\delta D$, oriented perpendicular to the unperturbed photon trajectory.  
+
+\section{Lensing Geometry}
+For a mass-sheet located at a distance $D_L$, and a photon source located at a distance $D_S$ (with $D_{LS} = D_S - D_L$) geometric considerations in the small-angle approximation yield the relation
+\begin{equation}
+  \vec{\theta} = \vec{\beta} + \frac{D_{LS}}{D_S}\hat{\vec{\alpha}}
+\end{equation}
+where $\vec{\theta}$ and $\vec{\beta}$ are the observed and true positions of the source, respectively.  Rescaling $\hat{\vec{\alpha}}$ in more convenient units gives
+\begin{equation}
+  \label{mapping}
+  \vec{\theta} = \vec{\beta} + \vec{\alpha}
+\end{equation}
+where we have defined
+\begin{equation}
+  \label{alpha-def2}
+  \vec{\alpha} \equiv \frac{D_{LS}}{D_S}\hat{\vec{\alpha}}
+\end{equation}
+
+\section{Continuous Mass Distribution}
+In the case of a continuous mass distribution, we can recall the remarks of section \ref{simplifying_assumptions}, and define a surface-mass density for a mass-sheet located at a redshift $z_L$:
+\begin{equation}
+  \label{sigma-def}
+  \Sigma(\vec{\theta},z_L) 
+  = \int_{D_L-\delta D}^{D_L+\delta D}\rho_M(\vec{\theta},D)\dd D 
+  = \frac{1}{c^2}\int_{z_L - \delta z}^{z_L + \delta z} 
+  \varepsilon_M(\vec{\theta},z)\frac{dD}{dz}\dd z
+\end{equation}
+where $\varepsilon_M \equiv \rho_M c^2$ is the energy density of matter,
+$\vec{\theta}$ is the apparent angular position, and $z$ and $D(z)$ are the 
+redshift and line-of-sight distance, respectively, with $D_S = D(z_s)$.  
+
+A matter distribution $\rho_M(\vec{\theta},z)$, and its newtonian potential $\Phi(\vec{\theta},z)$ are related by Poisson's equation:
+\begin{equation}
+  \label{poisson}
+  \nabla^2 \Phi(\vec{\theta},z) = 4\pi G \rho_M(\vec{\theta},z)
+\end{equation}
+
+It is convenient to define the unscaled lensing potential $\hat{\psi}$, 
+given by
+\begin{equation}
+  \hat{\psi}(\vec{\theta},z_s) 
+  = \int_{0}^{D(z_s)} \Phi(\vec{\theta},z(D))\dd D 
+  = \int_{0}^{z_s}\Phi(\vec{\theta},z)\frac{dD}{dz}\dd z
+\end{equation}
+Using the approximation in equation \ref{alpha-def-approx}, we can write this in terms of multiple mass-sheets, such that
+\begin{equation}
+  \hat{\psi} = \sum_i \delta \hat{\psi}_i 
+  = \sum_i \int_{D_i-\delta D}^{D_i+\delta D}\Phi \dd D
+\end{equation}
+with $D_{i+1} = D_i + 2*\delta D$.
+
+The gradient of $\hat{\psi}$ with respect to 
+$\vec{\xi} \equiv D_L\vec{\theta}$ is
+\begin{equation}
+  \vec{\nabla}_\xi\hat{\psi} 
+  = \sum_i \vec{\nabla}_\xi\big(\delta\hat{\psi}_i\big) 
+  = \sum_i \int_{D_i - \delta D}^{D_i+\delta D}\vec{\nabla}_\xi \Phi \dd D
+\end{equation}
+Comparing this with (\ref{alpha-def-approx}) and (\ref{alpha-def2}) gives the incremental deflection angle in terms of the lensing potential of a mass-sheet:
+\begin{equation}
+  \delta\vec{\alpha}_i = \frac{2}{c^2}\frac{D_{LS}}{D_S}\vec{\nabla}_\xi (\delta\hat{\psi}_i)
+\end{equation}
+Further simplification can be made by using the rescaling $\vec{\xi} = D_L \vec{\theta}$ and
+\begin{equation}
+  \delta\psi_i = \frac{2}{c^2}\frac{D_{LS}}{D_L D_S} \delta\hat{\psi}_i
+\end{equation}
+so that we are left with
+\begin{equation}
+  \label{alpha-psi}
+  \delta\vec{\alpha}_i(\vec{\theta},z_L) = \vec{\nabla}_\theta \Big( \delta\psi_i(\vec{\theta},z_L)\Big)
+\end{equation}
+Defining the total scaled lensing potential $\psi = \sum_i \delta\psi_i$, and the total deflection $\vec{\alpha} = \sum_i\delta\vec{\alpha}_i$, we obtain
+\begin{equation}
+  \vec{\alpha}(\vec{\theta},z_s) = \vec{\nabla}_\theta \psi(\vec{\theta},z_s)
+\end{equation}
+
+The Laplacian of $\delta\psi_i$ with respect to theta is given by
+\begin{equation}
+  \nabla_\theta^2 (\delta\psi_i) 
+  = \frac{2}{c^2}\frac{D_{LS}D_L}{D_S}\int_{D_L-\delta D}^{D_L+\delta D} 
+  \nabla_\xi^2\Phi \dd D
+\end{equation}
+Using (\ref{sigma-def}) and (\ref{poisson}) this becomes
+\begin{equation}
+  \label{psi-sigma_init}
+  \nabla_\theta^2(\delta\psi_i) = \frac{8\pi G}{c^2}\frac{D_{LS}D_L}{D_S}\Sigma(\vec{\theta},z_i)
+\end{equation}
+
+We now define the critical surface density,
+\begin{equation}
+  \Sigma_{c}(z) \equiv\frac{c^2 D_S}{4\pi G D_L(z) D_{LS}(z)}
+\end{equation}
+and the convergence
+\begin{equation}
+  \label{kappa-sigma}
+  \kappa(\vec{\theta},z_s) \equiv \sum \frac{\Sigma(\vec{\theta},z_i)}{\Sigma_c(z_i)}\ \forall\ z_i < z_s
+\end{equation}
+Now summing all the mass-sheets in (\ref{psi-sigma_init}) gives the relation between the scaled lensing potential and the convergence
+\begin{equation}
+  \label{psi-kappa-1}
+  \nabla_\theta^2\psi(\vec{\theta},z_s) = 2\kappa(\vec{\theta},z_s)
+\end{equation}
+
+Solving this two-dimensional differential equation gives the effective potential in terms of the convergence:
+\begin{equation}
+  \label{psi-kappa}
+  \psi(\vec{\theta},z) 
+  = \frac{1}{\pi}\int_{\mathbb{R}^2} \kappa(\vec{\theta}^\prime,z) 
+  \ln|\vec{\theta} - \vec{\theta}^\prime|\dd^2\theta^\prime
+\end{equation}
+
+\section{Weak Lensing Formalism}
+The local properties of the mapping in (\ref{mapping}) are contained in its Jacobian matrix, given by
+\begin{equation}
+  \label{Jacobian_def}
+  \mathcal{A} \equiv \frac{\partial \vec{\beta}}{\partial \vec{\theta}} = \Big(\delta_{ij} - \frac{\partial \alpha_i}{\partial \theta_j} \Big) = \Big(\delta_{ij} - \frac{\partial^2 \psi}{\partial \theta_i \partial \theta_j} \Big)
+\end{equation}
+
+Introducing the abbreviation
+\begin{equation}
+  \label{psi_ij}
+  \psi_{ij} = \frac{\partial^2 \psi}{\partial \theta_i \partial \theta_j}
+\end{equation}
+We can then rewrite the convergence $\kappa$ (eqn \ref{psi-kappa-1}) and define the complex shear $\gamma \equiv \gamma_1 + i\gamma_2$ of the mapping:
+\begin{equation}
+  \label{gamma-def}
+  \begin{array}{lcl}
+    \kappa & = & (\psi_{11} + \psi_{22})/2\\
+    \gamma_1 & = & (\psi_{11} - \psi_{22})/2\\
+    \gamma_2 & = & \psi_{21} = \psi_{12}
+  \end{array}
+\end{equation}
+The local Jacobian matrix (\ref{Jacobian_def}) of the lens mapping can then be written
+\begin{equation}
+  \mathcal{A} = \left(
+  \begin{array}{cc}
+    1 - \kappa - \gamma_1 & -\gamma_2\\
+    -\gamma_2             & 1-\kappa+\gamma_1
+  \end{array}\right)
+\end{equation}
+
+Equations \ref{psi-kappa}, \ref{psi_ij} and \ref{gamma-def} can be combined and simplified to yield the following relationship between the convergence and the shear, where for simplicity we define the complex angle $\theta = \theta_1 + i\theta_2$:
+\begin{equation}
+  \label{gamma-kappa}
+  \gamma(\theta) 
+  = \frac{-1}{\pi}\int_{\mathbb{R}^2} \mathcal{D}(\theta - 
+  \theta^\prime)\kappa(\theta^\prime) \dd^2\theta^\prime
+\end{equation}
+where 
+\begin{equation}
+  \label{scriptD}
+  \mathcal{D}(\theta \equiv \theta_1+i\theta_2) 
+  = \frac{\theta_1^2 - \theta_2^2 + 2i\theta_1\theta_2}{(\theta_1^2+\theta_2^2)^2}
+  = \frac{\theta^2}{|\theta|^4}
+\end{equation}
+
+In weak lensing, the ellipticities of source galaxies are measured, 
+giving a noisy estimate of the shear $\gamma(\theta)$.  The problem becomes, 
+given this shear estimate, to recover a local estimate of 
+$\kappa(\theta)$ using equation \ref{gamma-kappa}, and then an estimate 
+of the projected mass $\Sigma(\theta)$ via equation \ref{kappa-sigma}.  
+For 3D tomography, this procedure is repeated at various redshifts to recover 
+an estimate of the 3D mass density, $\rho(\theta,z)$. It helps to write 
+the expression for $\kappa(\theta,z)$ in terms of $\rho(\theta,z)$
+ explicitly.  From (\ref{sigma-def}) and (\ref{kappa-sigma}), approximating 
+the sum as an integral, we find
+\begin{equation}
+  \kappa(\vec{\theta},z_s) 
+  = 4\pi G \int_0^{z_s} 
+  \frac{D^{(A)}(z)[D^{(A)}(z_s)-D^{(A)}(z)]}{D^{(A)}(z_s)} 
+  \rho_M(\vec{\theta},z) \frac{dD^{(A)}(z)}{dz} \dd z
+\end{equation}
+The notation has been changed here to make clear that the distances in 
+question are in fact angular diameter distance, the relevant distance 
+in the context of lensing calculations.  Recall that angular diameter 
+distance $D^{(A)}$ is related to the comoving distance $D$ by
+\begin{equation}
+  D^{(A)}(z) = a S_\kappa (D)
+\end{equation}
+where $S_\kappa(D) = D$ for a flat universe.  Converting the angular 
+diameter distances to comoving distances, and writing this in terms 
+of $\varepsilon = \rho c^2$, we find
+\begin{equation}
+  \label{kappa-epsilon-1}
+  \kappa(\vec{\theta},z_s) 
+  = \frac{4\pi G}{c^2} \int_0^{z_s} \dd z\frac{dD}{dz} 
+  a^2\frac{D(D_S-D)}{D_S} \varepsilon_M(\vec{\theta},z) 
+\end{equation}
+here we've used the shorthand $D \equiv D(z)$ and 
+$D_S \equiv D(z_s)$.
+
+It is instructive to expand the energy density in equation 
+\ref{kappa-epsilon-1} about the background matter density.  
+We define $\delta(z)$, the density contrast, such that
+\begin{equation}
+  \label{delta-def}
+  \varepsilon_M(\vec{\theta},z) = \Omega_M(z) \varepsilon_c(z)\Big[1+\delta(\vec{\theta},z)\Big]
+\end{equation}
+where $\varepsilon_c(z)$ is the critical density, described by the Friedmann equation:
+\begin{equation}
+  \label{H-def}
+  \varepsilon_c(z) = \frac{3 \left[H(z)\right]^2 c^2}{8\pi G}
+\end{equation}
+Note also that the change of comoving distance $D$ with redshift $z$ is given by
+\begin{equation}
+  \label{dDdz}
+  \frac{dD}{dz} = \frac{c}{H(z)}
+\end{equation}
+and that the matter density fraction can be written
+\begin{equation}
+  \Omega_M(z) = \frac{H_0^2\Omega_{M,0}(1+z)^3}{[H(z)]^2}
+\end{equation}
+
+
+Combining these equations gives
+\begin{equation}
+  \kappa(z_s) = \frac{3cH_0^2\Omega_{M,0}}{2}\int_0^{z_s} \dd z \frac{(1+z)}{H(z)} \frac{D(D_S-D)}{D_S}\big[1+\delta(z)\big]
+\end{equation}
+
+Because of the mass-sheet degeneracy, $\kappa(z_s)$ can only be determined up to an additive constant across a given redshift bin \citep[see][for discussion]{Seitz_Schneider96}.  Defining $\bar{\kappa}(z_s)$ to be the convergence due to matter-dominated growth and $\Delta(z) \equiv \delta(z)/a$ (see Appendix \ref{matter_dominated_growth} for motivation behind this change of variables) we find
+\begin{equation}
+  \label{kappa-delta}
+  \kappa(z_s) \equiv \hat{\kappa}(z_s)-\bar\kappa(z_s) = 
+  \frac{3cH_0^2\Omega_{M,0}}{2}\int_0^{z_s} \dd z 
+  \frac{1}{H(z)} \frac{D(D_S-D)}{D_S}\Delta(z)
+\end{equation}
+where, to be explicit,
+\begin{equation}
+  \bar\kappa(z_s) = \frac{3cH_0^2\Omega_{M,0}}{2}\int_0^{z_s} \dd z 
+  \frac{(1+z)}{H(z)} \frac{D(D_S-D)}{D_S}
+\end{equation}
+To be clear, here, $D$ is the comoving distance to a redshift $z$, and $D_S$ is the comoving distance to the redshift $z_s$ of the photon source.  Equation \ref{kappa-delta} defines the mapping from $\kappa(z_s)$ to $\Delta(z)$ for $z<z_s$.  
+
+\section{Inversion}
+Equations \ref{gamma-kappa} and \ref{kappa-delta}:
+\begin{equation}
+  \gamma(\theta) 
+  = \frac{-1}{\pi}\int_{\mathbb{R}^2} \mathcal{D}(\theta - 
+  \theta^\prime)\kappa(\theta^\prime) \dd^2\theta^\prime
+\end{equation}
+
+\begin{equation}
+  \kappa(z_s) \equiv \hat{\kappa}(z_s)-\bar\kappa(z_s) = 
+  \frac{3cH_0^2\Omega_{M,0}}{2}\int_0^{z_s} \dd z 
+  \frac{1}{H(z)} \frac{D(D_S-D)}{D_S}\Delta(z)
+\end{equation}
+must be inverted in order to determine the mass distribution based on shear measurements.  \citet{Kaiser_Squires93} give an analytical inversion of (\ref{gamma-kappa}).  Due to edge-effects for a finite observation field, however, this inversion is not exact.  \citet{Seitz_Schneider96} present a few strategies to deal with this explicitly.  Another strategy, developed in \citet{Hu02} and brought further in \citet{Simon09}, makes use of the fact that observations are discrete rather than continuous, so that the integrals in equations \ref{gamma-kappa} and \ref{kappa-delta} are approximated by discrete sums.  The two equations then become linear mappings, which can be inverted by well-known linear algebra techniques.  This is the strategy we will pursue here.
+\subsection{Fourier Space Inversion}
+Equation \ref{gamma-kappa} shows that $\gamma(\theta)$ is simply a 2D
+convolution of $\kappa(\theta)$ with $\mathcal D(\theta)$.  With this in mind,
+we may proceed using the convolution theorem.  Given the $n$-dimensional
+fourier transform pair of a given function,
+\begin{eqnarray}
+  \label{ft}
+  g(\vec x) = \int \frac{\dd^nk}{(2\pi)^n} \tilde{g}(\vec k)
+  e^{-i\vec k\cdot\vec x}\\
+  \label{ift}
+  \tilde{g}(\vec k) = \int \dd^nx g(\vec x)e^{i\vec x\cdot\vec k}
+\end{eqnarray}
+it can be shown that equation \ref{gamma-kappa} can be equivalently expressed
+\begin{equation}
+  \tilde \gamma(\ell) 
+  = \frac{-1}{\pi} \widetilde{\mathcal{D}}(\ell)\tilde\kappa(\ell)
+\end{equation}
+
+\subsection{Real Space Inversion}
+Following \citet{Hu02}, we define $\phi = \arctan (\theta_2/\theta_1)$ so that equations \ref{gamma-kappa}-\ref{scriptD} can be rewritten in a more suggestive way:
+\begin{equation}
+  \label{gamma-kappa-new}
+  [\gamma_1 \pm i\gamma_2](\vec{\theta}) = -\frac{1}{\pi}\int_{\mathbb{R}^2} d^2\theta^\prime\frac{\cos(2i\phi) \pm i\sin(2i\phi)}{|\vec{\theta}-\vec{\theta}^\prime|^2}\kappa(\vec{\theta}^\prime)
+\end{equation}
+We discretize this equation into $N$ pixels, such that pixel $n$ has an area $A^{(n)}$, shear $\gamma^{(n)} = \gamma_1^{(n)} + i\gamma_2^{(n)}$, and convergence $\kappa^{(n)}$.  We define the data vector $\vec{d}_\gamma$ such that
+\begin{equation}
+  \left.
+  \begin{array}{ll}
+    \{d_\gamma\}_{2i-1} &= \gamma_1^{(i)}\\  
+    \{d_\gamma\}_{2i}   &= \gamma_2^{(i)}
+  \end{array}
+  \right\}1\le i\le N
+\end{equation}
+and the projection matrix $\mathbf{P_{\gamma\kappa}}$ such that
+\begin{equation}
+  \label{P-gamma-kappa}
+  \left.
+  \begin{array}{ll}
+    \{\mathbf{P_{\gamma\kappa}}\}_{2i-1,j} = -\frac{A_j}{\pi}\frac{\cos{2\phi_{ij}}}{\theta_{ij}^2}\\
+    \{\mathbf{P_{\gamma\kappa}}\}_{2i,j} = -\frac{A_j}{\pi}\frac{\sin{2\phi_{ij}}}{\theta_{ij}^2}
+  \end{array}
+  \right\}1\le i,j\le N
+\end{equation}
+where $(\theta_{ij},\phi_{ij})$ are the polar coordinites separating bins $i$ and $j$ in the plane of the sky.  The discretized version of the mapping equation (\ref{gamma-kappa-new}) becomes
+\begin{equation}
+  \label{mapping-gamma-kappa}
+  \vec{d}_\gamma = \mathbf{P_{\gamma\kappa}}\cdot\vec{s}_\kappa + \vec{n}_\gamma
+\end{equation}
+which can be straightforwardly solved using, e.g. QR-decomposition (see \citet{Hu02} for the details on inversions of linear maps in this context).
+
+\section{Utilization of redshift information}
+\label{3D-formalism}
+If the source galaxies which are used as shear estimators have measured constraints on their redshift $z$, then the mapping inversion in the previous section can be repeated for each source redshift bin.  This yields a collection of estimators $\vec{s}_\kappa (z_i)$ at different redshifts.  Let the convergence estimates along a given line of sight (i.e. within each of the $N$ pixels defined above) be given by $\vec{d}_\kappa$.  Equation \ref{kappa-delta} gives the continuous mapping from this new data vector to the signal vector of density contrasts, $\vec{s}_\Delta$.  Following a procedure similar to above, we define the projection matrix characterizing the discretization of (\ref{kappa-delta}):
+\begin{equation}
+  \label{P-kappa-delta}
+  [\mathbf{P_{\kappa\Delta}}]_{jk} =  \frac{3cH_0^2\Omega_{M,0}}{2}
+  \times\left\{
+  \begin{array}{ll}
+   \frac{1}{H(z_k)} \frac{(D_j-D_k)D_k}{D_j}\delta z_k, & z_k < z_j\\
+    0, & z_k \ge z_j
+  \end{array}
+  \right.
+\end{equation}
+and the linear mapping is given by
+\begin{equation}
+  \label{mapping-kappa-delta}
+  \vec{d}_\kappa = \mathbf{P_{\kappa\Delta}}\cdot\vec{s}_\Delta + \vec{n}_\kappa
+\end{equation}
+This, as above, can be inverted using the techniques in \citet{Hu02}.  In particular, for a well-behaved $\mathbf{P_{\kappa\Delta}}$, the solution is given by the estimator
+\begin{equation}
+  \hat{\vec{s}}_\Delta = \mathbf{R_{\Delta\kappa}} \vec{d}_\kappa
+\end{equation}
+where 
+\begin{equation}
+  \mathbf{R_{\Delta\kappa}} = 
+	 [\mathbf{P}^T_{\kappa\Delta} \mathbf{N}^{-1}_{\kappa\kappa}
+	   \mathbf{P}_{\kappa\Delta}]^{-1}
+	 \mathbf{P}^T_{\kappa\Delta}\mathbf{N}^{-1}_{\kappa\kappa}
+\end{equation}
+where $\mathbf{N}_{\kappa\kappa}$ is the noise covariance:
+\begin{equation}
+  \mathbf{N}_{\kappa\kappa} \equiv \langle \vec{n}_\kappa \vec{n}^T_\kappa \rangle .
+\end{equation}
+Note the importance of choosing well-behaved redshift bins: if $\max(z_\kappa) 
+\le \max(z_\Delta)$, then $\mathbf{P_{\kappa\Delta}}$ will be singular and 
+the inversion will not be well-posed.  
+
+In case of large noise, and where the 
+statistical properties of the signal matrix are known, a ``Wiener Filter''
+can be used by adding a penalty function to the $\chi^2$ minimization: $\chi^2 \to \chi^2 + H$, where
+\begin{equation}
+  H = \left(\hat{\vec{s}}^{(w)}_\Delta\right)^T \mathbf{S}^{-1}_{\Delta\Delta} \hat{\vec{s}}^{(w)}_\Delta
+\end{equation}
+with
+\begin{equation}
+  \label{SDD}
+  \mathbf{S}_{\Delta\Delta} \equiv \langle \vec{s}_\Delta \vec{s}_\Delta^T \rangle
+\end{equation}
+such that the minimization leads to
+\begin{equation}
+  \label{Wiener_R}
+  \mathbf{R}^{(w)}_{\Delta\kappa} = \mathbf{S}_{\Delta\Delta}\mathbf{P}^T_{\kappa\Delta} \left[\mathbf{P}_{\kappa\Delta}\mathbf{S}_{\Delta\Delta}\mathbf{P}^T_{\kappa\Delta} + \mathbf{N}_{\kappa\kappa} \right]^{-1}
+\end{equation}
+with the Wienter-filtered estimator
+\begin{equation}
+  \label{Wiener_s}
+  \hat{\vec{s}}^{(w)}_\Delta = \mathbf{R^{(w)}_{\Delta\kappa}} \vec{d}_\kappa.
+\end{equation}
+This form of the solution is much more robust to noise in the measurements.
+ 
+\section{Generalization to Arbitrary Redshift PDFs}
+The above method is equivalent to that outlined in \citet{Hu02}.  The weakness of this procedure is that it assumes a known redshift for each galaxy, i.e. a probability distribution for galaxy $g$ given by a delta-function
+\begin{equation}
+  P_g(z) = \delta_D(z-\bar{z}_g)
+\end{equation}
+or its discretely-binned equivalent.  We would like to extend this analysis 
+to make use of the full observed reshift information for an arbitrary $P_g(z)$.
+
+The shape of redshift PDFs for various galaxies is determined primarily by 
+their spectral type, their redshift, the colors observed, and the noise 
+characteristics of the observation.  For a homogeneous survey using a single 
+photometric redshift technique, the characteristics of a redshift PDF (i.e. 
+tails, bimodalism, etc) across the observed field will be determined entirely 
+by galaxy redshift and spectral type, regardless of location on the plane of 
+the sky.  This suggests a generalization of the concept of a redshift ``bin'' 
+to a set of galaxies across the sky with similar PDFs.  The degree of 
+similarity can be determined based on the amount of data, desired resolution, 
+noise constraints, etc.  (This will be an area for future work: perhaps we 
+can categorize pdfs based on a PCA approach)
+
+Consider now a survey divided into  $n_p$ pixels, indexed by $1\le i \le n_p$, 
+and $n_g$ redshift bins, indexed by $1\le j \le n_g$.  Each bin at pixel $i$ 
+and redshift bin $j$ contains $N_{ij}$ galaxies, with an average observed 
+complex shear estimate $\gamma_{ij}$, and an average redshift probablility 
+distribution $p_{ij}(z)$ given by the mean of the individual galaxy PDFs 
+$p_g(z)$ within the bin:
+\begin{equation}
+  p_{ij}(z) = \frac{1}{N_{ij}}\sum_{g=1}^{N_{ij}}p_g(z)
+\end{equation}
+The density contrast $\Delta$ (eqn. \ref{kappa-delta}) will be determined in $n_z$ discrete bins per pixel, indexed by $1\le k\le n_z$.  Bin $k$ spans the redshifts $z_k \le z < z_{k+1}$.
+
+The $\gamma$ to $\kappa$ mapping in equation \ref{mapping-gamma-kappa} is 
+performed for each of the $n_g$ galaxy bins for a given line-of-sight.  This 
+gives an estimate of $\vec{d}_{\kappa,i}$ for each pixel, where each 
+convergence estimate $\kappa_{ij}$ has a corresponding redshift probability 
+distribution $p_{ij}(z)$, normalized such that $\int p_{ij}(z)dz=1$.  
+The line-of-sight mapping matrix $\mathbf{P_{\kappa\Delta}}$ 
+(eqn. \ref{P-kappa-delta}) for pixel $i$, then becomes
+\begin{equation}
+  \label{P-kappa-delta-pdf}
+  [\mathbf{P_{\kappa\Delta}}^{(i)}]_{jk} = 
+  \frac{3cH_0^2\Omega_{M,0}}{2}\delta z_k
+  \int_{z_k}^{\infty} \frac{p_{ij}(z)}{H(z)}\frac{(D(z)-D_k)D_k}{D(z)}dz
+\end{equation}
+This formula for $\mathbf{P_{\kappa\Delta}}^{(i)}$ reflects the fact that a 
+given galaxy bin is ``smeared'' in redshift by its empirical redshift 
+PDF.  The matter at redshift $z_k$, in a statistical sense, affects the shear
+of all galaxies with a nonzero probability of having a redshift 
+$z_{\rm gal} > z_k$.  Setting $p_{ij}(z) = \delta_D(z-z_j)$ recovers the 
+form of equation \ref{P-kappa-delta}.
+
+\section{A Toy Model}
+\subsection{Density Distribution}
+To show the utility of a procedure, we may create a toy model along a particular line-of-sight, assuming that $\kappa$ has been accurately reconstructed based on non-local shear data.  
+
+As shown in \citet{Hu02}, an accurate 3D reconstruction can be performed only
+if the noise and covariance properties of the distribution are known.  We can
+draw our simulated data from the gaussian distribution defined by the mass
+power spectrum, given by 
+\begin{equation}
+  \label{power-spec}
+  P_k(z) = P_0 \cdot k [T_kG(z)]^2
+\end{equation}
+where $P_0$ is the normalization constant which will be determined
+empirically, $G(z)$ is the linear growth factor defined in Appendix 
+\ref{matter_dominated_growth}, and we have assumed that the 
+primordial power law follows the Harrison-Zel'dovich spectrum
+$P_k \sim k$, in agreement with most inflationary scenarios.  The transfer
+function $T_k$ is defined empirically by the following functional form, 
+taken from Equation  15.82-1 in \citet{Peacock} 
+\citep[The form is due to][]{Bardeen86}:
+\begin{equation}
+  \label{transfer-function}
+  T_k = \frac{\ln(1+2.34q)}{2.34q}\left[ 1 + 3.89q + (16.1q)^2 + 
+    (5.46q)^3 + (6.71q)^4 \right]^{-1/4}
+\end{equation}
+where $q = k/(\Omega_M h^2)$, with $k$ measured in Mpc$^{-1}$. 
+For historical reasons, the normalization constant $P_0$ is commonly 
+defined in terms of the parameter $\sigma_8$, which is defined as the density 
+fluctuation within a sphere of radius 8 Mpc.  To compute this, we use a 
+top-hat window function:
+\begin{equation}
+\label{top-hat}
+  W_T(\mathbf{x}/R) = \left\{
+    \begin{array}{ll}
+      1, & x/R \le 1 \\
+      0, & x/R > 1
+    \end{array}
+    \right.
+\end{equation} 
+The fourier transform of an arbitrary window function is given by
+\begin{equation}
+  \label{window-transform}
+  \widetilde{W}(\mathbf{k}R) \equiv \frac{\int d^3\mathbf{x} W(\mathbf{x}/R) e^{i\mathbf{k}\cdot\mathbf{x}}}{\int d^3\mathbf{x} W(\mathbf{x}/R)}
+\end{equation}
+The density fluctuation $\sigma_W$ within a given window $W$ is given by
+\begin{equation}
+  \label{powerspec-sigma-def}
+  \sigma_W^2 = \frac{1}{(2\pi)^3}\int d^3\mathbf{k} P_k W^2(\mathbf{k}R)
+\end{equation}
+where the window function is assumed to be shallow enough that there is no
+cosmological evolution of the signal.
+
+For the top-hat window function of equation \ref{top-hat}, 
+the fourier transform given by Equation \ref{window-transform}
+is (using $k = |\mathbf{k}|$)
+\begin{equation}
+  \label{top-hat-f}
+  \widetilde{W}_T(kR) = \frac{3}{(kR)^3}\left[\sin(kR) - kR\cos(kR) \right]
+\end{equation}
+Putting together equations \ref{power-spec}, \ref{transfer-function},
+\ref{powerspec-sigma-def}, and \ref{top-hat-f} and integrating numerically
+allows us to determine $P_0$ as a function of $\sigma_8$:
+\begin{equation}
+  P_0 = \frac{8.24 \times 10^6}{[G(0)]^2}\sigma_8^2
+\end{equation}
+Using the WMAP5 measurement, $\sigma_8 = 0.812 \pm 0.026$ \citep{Hinshaw09}, 
+we find the power-spectrum normalization $P_0 = 5.44 \times 10^6 [G(0)]^{-2}$.
+
+This prepares us to simulate a matter distribution within an arbitrarily 
+defined window.  Because we are doing radial maps, it is convenient to find 
+an expression for the window function given a small pixel size, and two 
+bounding radii $r_1$ and $r_2$.  Performing the integral in 
+(\ref{window-transform}) for a square pixel of angular width
+$\Delta \theta$, and a radial distance range $r_1$ to $r_2$ gives
+\begin{equation}
+  \widetilde{W}(k) = \frac{3}{kS_\theta(r_2^3 - r_1^3)} \int_{r_1}^{r_2}
+    r \sin \left( kS_\theta r \right)dr
+\end{equation} 
+where $S_\theta = \sin(\Delta\theta/2)$.  Using this expression, the matter
+density fluctuation within a given pixel and distance range can be determined 
+using equation \ref{powerspec-sigma-def}.
+
+
+\subsection{Statistical Properties of the Lensing Signal}
+To solve the mapping using the Wiener-estimator of Equation \ref{Wiener_R}, we
+need to determine the signal covariance $\mathbf{S}_{\Delta\Delta}$ defined
+in equation \ref{SDD}.  The measurement within a bin $i$ is given by
+\begin{equation}
+  \vec{s}_{\Delta,i} = a_i^{-1}\int d^3x W_i(\vec{x})\delta(\vec{x}),
+\end{equation}
+where $W(\vec{x})$ is the window function associated with the bin.  Then we have
+\begin{equation}
+  \label{SDDij}
+  \begin{array}{lll}
+      [S_{\Delta\Delta}]_{ij} &=& \langle \vec{s}_{\Delta,i}\vec{s}_{\Delta,j}\rangle \\
+                              &=& (a_i a_j)^{-1} \int d^3x_i \int d^3x_j W_i(\vec{x}_i)W_j(\vec{x}_j) \langle \delta(\vec{x}_i)\delta(\vec{x}_j)\rangle \\
+                              &=& (a_ia_j)^{-1} \int \frac{d^3k}{(2\pi)^3}\widetilde{W}_i(\vec{k})\widetilde{W}^*_j(\vec{k})G_iG_jP_k(0)\\
+                              &=& G_iG_j/(2 a_ia_j \pi^2) \int dk k^2 \widetilde{W}_i(k)\widetilde{W}^*_j(k)P_k(0)
+  \end{array}
+\end{equation}
+where $P_k(0)$ is the linear power spectrum today, $W_i(\vec{k})$ is the 
+fourier transform of the window function $W_i(\vec{x})$, and $G_i = G(z_i)$ 
+is the linear growth factor (see Appendix \ref{matter_dominated_growth}).  
+The statistical properties of the signal given in Equation \ref{SDDij} can 
+be used to determine the Wiener-filtered solution, in Equations 
+\ref{Wiener_R}-\ref{Wiener_s}.
+
+
+\subsection{Simplification}
+For simplicity, let's assume a matter dominated flat universe, $\Omega_M = 1$,
+so that $G(a) = a$ and the comoving distance is given by
+\begin{equation}
+  D(z) = \int_0^z \frac{c}{H(z^\prime)}dz^\prime = \frac{2c}{H_0} \left(1-\frac{1}{\sqrt{1+z}} \right).
+\end{equation}
+Assume the line-of-sight in question has $N$ bins of 
+equal width in redshift $\delta z$, and a pixel width of $2^\circ$ (above the 
+$\sim 1^\circ$ threshold where the power spectrum becomes nonlinear).  Then
+define a density field $\mathbf{s_\Delta}$ based on the gaussian-field 
+distribution with dispersion given by equation \ref{powerspec-sigma-def}.
+The observed $\kappa$ distribution is given (in the delta-function redshift
+case) by $\mathbf{s_\kappa} = \mathbf{P_{\kappa\Delta}}\mathbf{s_\Delta} 
++ \mathbf{n_\kappa}$.  The methods of section \ref{3D-formalism} can then
+be used to determine the reconstruction given various noise levels.  The
+result of this is shown in figure \ref{simple-reconstruction}.  This shows
+equivalent results to figure 1 in \citet{Hu02}
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.8\textwidth]{simple.eps}
+ \caption{Simple Reconstruction}
+ \label{simple-reconstruction}
+\end{figure}
+
+ 
+
+
+
+
+
+
+%Equation \ref{kappa-epsilon-1} gives the mapping from density $\varepsilon(z)$ to the convergence $\kappa(z_s)$.  We will rewrite it here:
+%\begin{equation}
+%  \kappa(z_s) = \frac{4\pi G}{c^2} \int_0^{z_s} dz\frac{dD}{dz} a^2\frac{D(D_S-D)}{D_S} \varepsilon(z) 
+%\end{equation}
+
+%We will construct mass distributions along this line-of-sight from a number of isothermal spheres, defined by
+%\begin{equation}
+%  \rho(\vec{r}) = \frac{\rho_0}{|\vec{r}-\vec{r_0}|^2}
+%\end{equation}
+%There is a singularity at $\vec{r} = \vec{r_0}$, so it is desirable that our line of sight not pass through this point.  With this in mind, let $b$ be the impact parameter of the line of sight, and $x$ be the distance along this line of sight from $\vec{r}=0$.  Then the density along this line of sight is given by
+%\begin{equation}
+%  \rho_{\rm los}(D) = \frac{\rho_0}{a^2[(D-D_0)^2+b^2]}
+%\end{equation}
+%where we have converted to comoving distance.  Here, $D_0$ is the comoving distance from the observer to the point of closest approach to $\vec{r_0}$.  the convergence is then given by
+%\begin{equation}
+%  \kappa(z_s) = \frac{4\pi G\rho_0}{c^2} \int_0^{D_S} dD \frac{D(D_S-D)}{D_S[(D_0-D)^2+b^2]}
+%\end{equation}
+%This can be numerically integrated to find $\kappa(z_s)$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%             begin bibliography
+
+\bibliography{Lens3D}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%             begin Appendix  
+
+\newpage
+\appendix
+\section{Matter-Dominated Growth}
+\label{matter_dominated_growth}
+\subsection{Intuitive Argument}
+Consider a flat universe with energy density $\varepsilon(\vec{r},t)$ at a location $\vec{r}$ and time $t$.  We define the density contrast $\delta(\vec{r},t)$ such that
+\begin{equation}
+  \varepsilon(\vec{r},t) = \bar{\varepsilon}(t)\big[1+\delta(\vec{r},t)\big]
+\end{equation}
+where $\bar{\varepsilon}(t)$ is the average energy density at time $t$:
+\begin{equation}
+  \bar{\varepsilon}(t) = \frac{\int\varepsilon(\vec{r},t)d^3r }{\int d^3r}
+\end{equation}
+
+Recall for a flat single-component universe, the first Friedmann equation gives
+\begin{equation}
+  H^2 = \frac{8\pi G}{3c^2}\bar{\varepsilon}
+\end{equation}
+Within a region of overdensity $\delta$, there will be positive curvature so that
+\begin{equation}
+  H^2 = \frac{8\pi G}{3c^2}\bar{\varepsilon}(1+\delta) - \frac{\kappa c^2}{a^2 R_0^2}
+\end{equation}
+Equating the hubble-parameter $H$ at the boundary gives
+\begin{equation}
+  \delta = \frac{3\kappa c^4}{8\pi G a^2 R_0^2 \bar{\varepsilon}}
+\end{equation}
+For a matter-only universe, $\bar{\varepsilon} \propto a^{-3}$ so that to first-order,
+\begin{equation}
+  \delta \propto a
+\end{equation}
+Thus, we define the \textit{comoving density contrast} 
+$\Delta \equiv \delta/a$.  In matter-dominated linear growth, $\Delta$ should 
+be approximately constant with redshift.  This makes it an ideal choice as an 
+observable in large-scale structure contexts.  
+Note that in a more general calculation, this type of analysis gives 
+the relation 
+\begin{equation}
+  \label{G_def}
+  \delta(a) \propto G(a)
+\end{equation}
+where $G(a)$ the linear growth factor of the density field, so that the 
+power spectrum at a given epoch is $P_k(z) = G(z)^2 P_k(0)$.
+
+\subsection{Detailed Derivation}
+A full General Relativistic treatment of the growth of density fluctuations 
+gives \citep[see, e.g.][]{Peacock}
+\begin{equation}
+  \label{delta_growth}
+  \ddot{\delta}_k + 2H\dot{\delta}_k - \frac{3}{2}\Omega_m H^2 \delta_k
+\end{equation}
+Make the substitution $\delta_k(z) = G(z)\delta_k(z=0)$, and using
+\begin{equation} 
+  H^2 = \left( \frac{\dot{a}}{a}\right)^2 = H_0^2 \sum_X \Omega_X a^{n_X},
+\end{equation}
+where the sum is over the components of the universe for an arbitrary
+cosmology (with non-evolving dark energy equation of state $w$), 
+equation \ref{delta_growth} can 
+be written:
+\begin{equation}
+  a^2 \frac{d^2G}{da^2} + \left(3+\frac{\sum_X n_X \Omega_X a^{n_X}}
+  {2\sum_X \Omega_X a^{n_X}} \right)a\frac{dG}{da} - \frac{3}{2}\Omega_m G = 0
+\end{equation}
+It is easy to check that a matter-dominated solution gives $G(a) \propto a$
+as found above.  For a general cosmology, this equation can be numerically 
+solved given appropriate boundary conditions.  We follow the convention of
+\citet{Takada04} and let $G(a_0)=a_0$ and $dG/da|_{a_0} = 1$ at $a_0=1/1100$, the approximate
+scale factor at the formation of the CMB.
+
+\end{document}				% REQUIRED
+

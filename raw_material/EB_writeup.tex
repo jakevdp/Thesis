@@ -1,0 +1,133 @@
+% tutorial.tex  -  a short descriptive example of a LaTeX document
+%
+% For additional information see  Tim Love's ``Text Processing using LaTeX''
+% http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/
+%
+% You may also post questions to the newsgroup <b> comp.text.tex </b> 
+
+\documentclass[12pt]{article}			% For LaTeX 2e
+						% other documentclass options:
+						% draft, fleqn, openbib, 12pt
+
+\usepackage{graphicx}	 			% insert PostScript figures
+%% \usepackage{setspace}   % controllabel line spacing
+%% If an increased spacing different from one-and-a-half or double spacing is
+%% required then the spacing environment can be used.  The spacing environment 
+%% takes one argument which is the baselinestretch to use,
+%%         e.g., \begin{spacing}{2.5}  ...  \end{spacing}
+
+
+% the following produces 1 inch margins all around with no header or footer
+\topmargin	=10.mm		% beyond 25.mm
+\oddsidemargin	=0.mm		% beyond 25.mm
+\evensidemargin	=0.mm		% beyond 25.mm
+\headheight	=0.mm
+\headsep	=0.mm
+\textheight	=220.mm
+\textwidth	=165.mm
+					% SOME USEFUL OPTIONS:
+% \pagestyle{empty}			% no page numbers
+ \parindent  15.mm			% indent paragraph by this much
+ \parskip     2.mm			% space between paragraphs
+% \mathindent 20.mm			% indent math equations by this much
+
+\newcommand{\MyTabs}{ \hspace*{25.mm} \= \hspace*{25.mm} \= \hspace*{25.mm} \= \hspace*{25.mm} \= \hspace*{25.mm} \= \hspace*{25.mm} \kill }
+
+\graphicspath{{../Figures/}{../data/:}}  % post-script figures here or in /.
+
+					% Helps LaTeX put figures where YOU want
+ \renewcommand{\topfraction}{0.9}	% 90% of page top can be a float
+ \renewcommand{\bottomfraction}{0.9}	% 90% of page bottom can be a float
+ \renewcommand{\textfraction}{0.1}	% only 10% of page must to be text
+
+\alph{footnote}				% make title footnotes alpha-numeric
+
+% --------------------- end of the preamble ---------------------------
+
+\begin{document}			% REQUIRED
+\section*{E and B modes}
+\subsection{Defining E/B Fourier Coefficients}
+Here we'll work from the E/B potential formalism of Crittendon et al. (2001)
+toward the definition of E/B Fourier coefficients.
+We'll express the observed ellipticity field 
+$\epsilon = (\epsilon_1,\epsilon_2)$ in terms of E-mode and B-mode potentials:
+\begin{eqnarray}
+  \epsilon_1 = \frac{1}{2}(\partial_1^2 - \partial_2^2)\phi_E - \partial_1\partial_2\phi_B \nonumber \\
+  \epsilon_2 = \partial_1\partial_2\phi_E + \frac{1}{2}(\partial_1^2 - \partial_2^2)\phi_B 
+\end{eqnarray}
+Taking the fourier transform of this equation, we find
+$\partial_{1,2} \to i\ell_{1,2}$ and can write
+\begin{equation}
+  \hat\epsilon_1 \pm i\hat\epsilon_2 = 
+  -\frac{1}{2}(\ell_1\pm i\ell_2)^2(\hat\phi_E \pm \hat\phi_B)
+\end{equation}
+Now we'll define the E/B fourier modes:
+\begin{eqnarray}
+  E_\ell = -\frac{1}{2}|\ell_1 + i\ell_2|^2\hat\phi_E \nonumber\\
+  B_\ell = -\frac{1}{2}|\ell_1 + i\ell_2|^2\hat\phi_B 
+\end{eqnarray}
+Then we can write
+\begin{eqnarray}
+  \label{EB_fourier}
+  E_\ell \pm iB_\ell = (\hat\epsilon_1 \pm i\hat\epsilon_2)e^{\mp 2i\phi_\ell}
+\end{eqnarray}
+where $\phi_\ell$ is the rotation angle of the angular component, which enters
+via the identity 
+$\exp(\mp 2i\phi_\ell) = |\ell_1 + i\ell_2|^2/(\ell_1\pm i\ell_2)^2$.
+
+Writing the Fourier transform explicitly, now, we recover the flat-sky
+definition of E/B shear modes used in Hikage et al. (2010):
+\begin{equation}
+  \label{EB_full}
+  E_\ell \pm iB_\ell = \int \mathrm{d}^2\theta 
+  [\epsilon_1(\theta) \pm i\epsilon_2(\theta) ]
+  e^{-i(\ell\cdot\theta \pm 2i\phi_\ell)}
+\end{equation}
+Note that $E_\ell$ and $B_\ell$ are, in general, complex: the two equations
+given by the $\pm$ are necessary to fully characterize them.
+
+\subsection{E/B components of KL modes}
+We express our observed ellipticity in terms of the derived KL basis:
+\begin{equation}
+  \epsilon(\theta) \equiv \epsilon_1(\theta) + i\epsilon_2(\theta) 
+  = \sum_n a_n\psi_n(\theta)
+\end{equation}
+where $\psi_n(\theta)$ are the KL basis for the shear field, and
+$a_n = a_{1,n} + ia_{2,n}$ are the complex KL coefficients.  Because
+$\psi_n$ are real, the orthogonality relation has no mixing between real
+and imaginary parts:
+\begin{eqnarray}
+  a_{j,n} = \sum_\theta \psi_n(\theta)\epsilon_j(\theta) \nonumber\\
+  \epsilon_j(\theta) = \sum_n a_{j,n}\psi_n(\theta)
+\end{eqnarray}
+with $j\in\{1,2\}$.
+
+Putting this result into equation \ref{EB_fourier} we can write
+\begin{equation}
+  E_\ell \pm iB_\ell = \sum_n (a_{1,n} \pm ia_{2,n})\hat\psi_n(\ell) e^{\mp 2i\phi_\ell}
+\end{equation}
+The E and B components can be separated and written
+\begin{eqnarray}
+  E_\ell = \sum_n\hat\psi_n(\ell)
+  \mathrm{Re}\left[ a_n e^{-2i\phi_\ell} \right] \nonumber\\
+  B_\ell = \sum_n\hat\psi_n(\ell)
+  \mathrm{Im}\left[ a_n e^{-2i\phi_\ell} \right] 
+\end{eqnarray}
+For a finite field and pixelization, the Fourier transform $\hat\psi_n(\ell)$
+is only determined over a limited range in $\ell$, 
+bounded by the field window scale for small $\ell$, 
+and the pixel window scale for large $\ell$.  
+In the intermediate range, the E/B properties of the field 
+can be well-understood, and for a given KL basis
+are encoded in the real and imaginary
+parts of $a_n \exp(-2i\phi_\ell)$.
+
+It is easy to see here why Fourier modes are ``pure'' in the E/B sense.
+The $\ell$-space representation of a Fourier mode is 
+given by a delta function in $\ell$, so that
+a careful choice of $a_n$ can lead to either $E_\ell$ or $B_\ell$ being
+identically zero.  KL modes that are very close to Fourier modes (i.e. those
+that have little ``leakage'' in $\ell$-space) can come close to this property.
+
+\end{document}				% REQUIRED
+

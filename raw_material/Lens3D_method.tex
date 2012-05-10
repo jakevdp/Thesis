@@ -1,0 +1,223 @@
+% tutorial.tex  -  a short descriptive example of a LaTeX document
+%
+% For additional information see  Tim Love's ``Text Processing using LaTeX''
+% http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/
+%
+% You may also post questions to the newsgroup <b> comp.text.tex </b> 
+
+\documentclass[12pt,preprint]{aastex}			% For LaTeX 2e
+						% other documentclass options:
+						% draft, fleqn, openbib, 12pt
+
+\usepackage{graphicx}	 			% insert PostScript figures
+\usepackage{amsfonts}
+%% \usepackage{setspace}   % controllabel line spacing
+%% If an increased spacing different from one-and-a-half or double spacing is
+%% required then the spacing environment can be used.  The spacing environment 
+%% takes one argument which is the baselinestretch to use,
+%%         e.g., \begin{spacing}{2.5}  ...  \end{spacing}
+
+
+% the following produces 1 inch margins all around with no header or footer
+%\topmargin	=10.mm		% beyond 25.mm
+%\oddsidemargin	=0.mm		% beyond 25.mm
+%\evensidemargin	=0.mm		% beyond 25.mm
+%\headheight	=0.mm
+%\headsep	=0.mm
+%\textheight	=220.mm
+%\textwidth	=165.mm
+					% SOME USEFUL OPTIONS:
+% \pagestyle{empty}			% no page numbers
+% \parindent  15.mm			% indent paragraph by this much
+% \parskip     2.mm			% space between paragraphs
+% \mathindent 20.mm			% indent math equations by this much
+
+\newcommand{\MyTabs}{ \hspace*{25.mm} \= \hspace*{25.mm} \= \hspace*{25.mm} \= \hspace*{25.mm} \= \hspace*{25.mm} \= \hspace*{25.mm} \kill }
+
+\graphicspath{{../Figures/}{../data/:}}  % post-script figures here or in /.
+
+					% Helps LaTeX put figures where YOU want
+ \renewcommand{\topfraction}{0.9}	% 90% of page top can be a float
+ \renewcommand{\bottomfraction}{0.9}	% 90% of page bottom can be a float
+ \renewcommand{\textfraction}{0.1}	% only 10% of page must to be text
+
+\newcommand{\rcom}{\chi}     %comoving distance
+\newcommand{\dd}{\mathrm{d}} %differential for integrals
+
+\alph{footnote}				% make title footnotes alpha-numeric
+
+\title{3D Lensing Tomography}	% the document title
+
+\author{Jake VanderPlas\\
+  \texttt{vanderplas@astro.washington.edu}}
+
+\date{\today}				% your own text, a date, or \today
+
+% --------------------- end of the preamble ---------------------------
+
+\begin{document}			% REQUIRED
+\bibliographystyle{apj}
+
+%\maketitle				% you need to define \title{..}
+  
+\section{Lensing Equations}
+The following results come from \citep{Hu02}.  They are the fundamental
+equations upon which the 3D lensing framework is built.
+\subsection{Mapping $\gamma\to\kappa$}
+Given the lensing potential $\psi(\theta)$, with 
+$\theta = \theta_1 +i\theta_2$ the complex angle on the sky,
+we define the shear $\gamma \equiv \gamma_1 + i\gamma_2$ 
+and convergence $\kappa$ in the usual way \citep[eg,][eqns 55-57]{Narayan96}, 
+though written in a way that belies their symmetry:
+\begin{eqnarray}
+  \label{kappa_def}
+  \kappa &\equiv& \frac{1}{2}\left|\frac{\partial}{\partial\theta_1} +
+  i\frac{\partial}{\partial\theta_2}\right|^2\psi(\theta) \\
+  \label{gamma_def}
+  \gamma &\equiv& \frac{1}{2}\left(\frac{\partial}{\partial\theta_1} +
+  i\frac{\partial}{\partial\theta_2}\right)^2 \psi(\theta)
+\end{eqnarray} 
+For simplicity, we follow \citet{Kaiser93} and write the above equations
+in a compact notation: $\gamma = D_\theta^2\psi$ and 
+$\kappa = |D_\theta|^2\psi$, where we have defined the complex
+operator $D_\theta = \partial/\partial\theta_1 + i\partial/\partial\theta_2$.  Elliminating $D_\theta\psi$ from the two equations, 
+our mapping from $\kappa$ to $\gamma$ becomes
+\begin{equation}
+  \gamma = D_\theta (D_\theta^*)^{-1}\kappa
+\end{equation}
+This inversion is easily accomplished if we define 
+the fourier transform of a function of 
+$\vec\theta$:\footnote{
+  under this fourier convention, the inverse fourier transform is given by
+  \begin{displaymath}
+    g(\vec\theta) = 
+    \frac{1}{(2\pi)^2}\int\dd^2\ell\hat g(\vec\ell)
+    e^{-i\vec\theta\cdot\vec\ell}
+  \end{displaymath}
+This convention is useful in that it leads to a particularly simple
+form of the convolution theorem:
+\begin{displaymath}
+    h(\vec \theta) = \int\dd^2\theta^\prime 
+    f(\vec \theta^\prime)g(\vec \theta-\vec \theta^\prime)
+    \ \ \ \ \ \Longleftrightarrow\ \ \ \ \ 
+    \hat h(\vec \ell) = \hat f(\vec \ell)\hat g(\vec \ell)
+\end{displaymath}
+}
+
+\begin{equation}
+  \hat g(\vec\ell) = \int\dd^2 \theta g(\vec\theta) 
+  e^{i\vec\theta\cdot\vec\ell}.
+\end{equation}
+Taking the transform of both sides, we see the mapping is equivalent to
+\begin{equation}
+  \label{gamma_kappa_fourier}
+  \hat\gamma(\ell) = \frac{\ell}{\ell^*}\hat\kappa(\ell)
+\end{equation}
+where $\ell = \ell_1 + i\ell_2$ is the complex angular wave number.  By the 
+convolution theorem, the real-space transformation between 
+$\gamma$ and $\kappa$ is simply
+\begin{equation}
+  \label{gamma_kappa}
+  \gamma(\theta) = \int\dd^2\theta^\prime 
+  \mathcal{D}(\theta-\theta^\prime)\kappa(\theta^\prime)
+\end{equation}
+with $\mathcal D(\theta)$ defined through its fourier transform,
+$\hat\mathcal D(\ell)\equiv \ell/\ell^*$.  Computing the inverse fourier
+transform leads to the form of $\mathcal D(\theta)$ 
+\citep[see][section 5.1]{Bartelmann01}:
+\begin{equation}
+  \label{D}
+  \mathcal{D}(\theta) 
+  = \frac{-1}{\pi\left[\theta^* \right]^2}
+\end{equation}
+We will compactly express equation \ref{gamma_kappa} by defining the
+operator $P_{\gamma\kappa}$ such that
+\begin{equation}
+  \gamma(\theta) = P_{\gamma\kappa}\left[\kappa(\theta)\right]
+\end{equation}
+
+In practice, the shear $\gamma$ is our observable, so we will need to invert 
+this equation.  \citet{Hu02} and \citep{Simon09} do this using matrix, 
+constructing a discrete realization of the operator $P_{\gamma\kappa}$ and
+inverting it.  We will try something different.  In fourier space, we can 
+easily invert this convolution and write
+\ref{gamma_kappa_fourier} as
+\begin{equation}
+  \label{kappa_gamma_fourier} 
+  \hat\kappa(\ell) = \frac{\ell^*}{\ell}\hat\gamma(\ell)
+\end{equation}
+Similar to above, this can be written as a convolution in normal space
+\begin{equation}
+  \label{kappa_gamma}
+  \kappa(\theta) = \int\dd^2\theta^\prime 
+  \mathcal{D^\prime}(\theta-\theta^\prime)\gamma(\theta^\prime)
+\end{equation}
+Where $\mathcal D^\prime(\theta)$ defined through its fourier transform,
+$\hat\mathcal D^\prime(\ell)\equiv \ell^*/\ell$.  Computing the inverse fourier
+transform leads to the form of $\mathcal D^\prime(\theta)$:
+\begin{equation}
+  \label{Dprime}
+  \mathcal{D^\prime}(\theta) 
+  = \frac{-1}{\pi\theta^2}
+\end{equation}
+This allows us to analytically compute the inverse of the operator 
+$P_{\gamma\kappa}$, which can most easily be computed in fourier space via
+equation \ref{kappa_gamma_fourier}.
+
+
+\subsection{Mapping $\kappa\to\delta$}
+Mapping the convergence $\kappa$ to the dimensionless density contrast
+$\delta$ is accomplished via the following integral along each line of sight
+\citep[see][eqn 24]{Hu02}:
+\begin{equation}
+  \label{kappa_delta}
+  \kappa(\theta,z_s)=\frac{3H_0^2\Omega_{m.0}}{2}\int_0^{z_s}\dd z 
+  \frac{d\rcom}{dz} \frac{(\rcom_s-\rcom)\rcom}{\rcom_s}
+  \left[\frac{\delta(\theta,z)}{a}\right]
+\end{equation}
+where $\rcom$ is the comoving distance to redshift $z$, and $\rcom_s$ is the 
+comoving distance to the source redshift $z_s$, and $a=(1+z)^{-1}$
+is the scale factor.  Thus we see that the 
+convergence $\kappa$ is just the integral of $\delta(z)$ over the
+lensing kernel $W(z;z_s)$
+\begin{equation}
+  \kappa(\theta,z_s) = \int_0^{z_s} W(z;z_s)\delta(\theta,z)
+\end{equation}
+with
+\begin{equation}
+  W(z;z_s) = \frac{3H_0^2\Omega_{m.0}}{2}\frac{d\rcom}{dz} 
+  \frac{(\rcom_s-\rcom)\rcom}{\rcom_s}(1+z)
+\end{equation}
+For compactness, we'll package the above integral in the 
+operator $Q_{\kappa\delta}^{(z_s)}$ such that
+\begin{equation}
+  \kappa(\theta,z_s) \equiv Q_{\kappa\delta}^{(z_s)}\left[\delta(\theta,z)\right]
+\end{equation}
+By taking the fourier transform along each plane perpendicular to the line
+of sight, and using the results from equation \ref{gamma_kappa_fourier}
+we find
+\begin{equation}
+  \label{f-space-solution}
+  \hat\gamma(\ell,z_s) 
+  = \frac{\ell}{\ell^*} Q_{\kappa\delta}^{(z_s)}\left[\hat\delta(\ell,z)\right]
+\end{equation}
+The real-space equivalent of this expression is just
+\begin{equation}
+  \label{r-space-solution}
+  \gamma(\theta,z_s) = P_{\gamma\kappa}Q_{\kappa\delta}^{(z_s)}\delta(\theta,z)
+\end{equation}
+
+\section{Inversion}
+These two equations, \ref{f-space-solution} and \ref{r-space-solution}, give
+two proscriptions for determining the 3D density contrast $\delta$ from 
+redshift-resolved shear estimates $\gamma$.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%             begin bibliography
+
+\bibliography{Lens3D}
+
+\end{document}				% REQUIRED
+

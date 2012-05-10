@@ -1,0 +1,226 @@
+% tutorial.tex  -  a short descriptive example of a LaTeX document
+%
+% For additional information see  Tim Love's ``Text Processing using LaTeX''
+% http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/
+%
+% You may also post questions to the newsgroup <b> comp.text.tex </b> 
+
+\documentclass[12pt,preprint]{aastex}			% For LaTeX 2e
+						% other documentclass options:
+						% draft, fleqn, openbib, 12pt
+
+\usepackage{graphicx}	 			% insert PostScript figures
+\usepackage{amsfonts}
+%% \usepackage{setspace}   % controllabel line spacing
+%% If an increased spacing different from one-and-a-half or double spacing is
+%% required then the spacing environment can be used.  The spacing environment 
+%% takes one argument which is the baselinestretch to use,
+%%         e.g., \begin{spacing}{2.5}  ...  \end{spacing}
+
+
+% the following produces 1 inch margins all around with no header or footer
+%\topmargin	=10.mm		% beyond 25.mm
+%\oddsidemargin	=0.mm		% beyond 25.mm
+%\evensidemargin	=0.mm		% beyond 25.mm
+%\headheight	=0.mm
+%\headsep	=0.mm
+%\textheight	=220.mm
+%\textwidth	=165.mm
+					% SOME USEFUL OPTIONS:
+% \pagestyle{empty}			% no page numbers
+% \parindent  15.mm			% indent paragraph by this much
+% \parskip     2.mm			% space between paragraphs
+% \mathindent 20.mm			% indent math equations by this much
+
+\newcommand{\MyTabs}{ \hspace*{25.mm} \= \hspace*{25.mm} \= \hspace*{25.mm} \= \hspace*{25.mm} \= \hspace*{25.mm} \= \hspace*{25.mm} \kill }
+
+\graphicspath{{../Figures/}{../data/:}}  % post-script figures here or in /.
+
+					% Helps LaTeX put figures where YOU want
+ \renewcommand{\topfraction}{0.9}	% 90% of page top can be a float
+ \renewcommand{\bottomfraction}{0.9}	% 90% of page bottom can be a float
+ \renewcommand{\textfraction}{0.1}	% only 10% of page must to be text
+
+\newcommand{\rcom}{\chi}     %comoving distance
+\newcommand{\dd}{\mathrm{d}} %differential for integrals
+
+\alph{footnote}				% make title footnotes alpha-numeric
+
+\title{Fourier Transforms: Discrete and Continuous}	% the document title
+
+\author{Jake VanderPlas\\
+  \texttt{vanderplas@astro.washington.edu}}
+
+\date{\today}				% your own text, a date, or \today
+
+% --------------------- end of the preamble ---------------------------
+
+\begin{document}			% REQUIRED
+\section{Continuous Fourier Transforms}
+For an $n$-dimensional function $g(\vec x)$, we can define the Fourier 
+Transform\footnote{for mathematica users, this fourier transform
+convention corresponds to the option \texttt{FourierParameters->\{1,1\}}.}
+\begin{equation}
+  \label{ft_continuous}
+  \hat{g}(\vec k) = \int \dd^nx g(\vec x)e^{-i\vec x\cdot\vec k}
+\end{equation}
+The corresponding inverse Fourier Transform is
+\begin{equation}
+  \label{ift_continuous}
+  g(\vec x) = \int \frac{\dd^nk}{(2\pi)^n} \hat{g}(\vec k)
+  e^{i\vec k\cdot\vec x}.
+\end{equation}
+From these, we can see that the n-dimensional Dirac delta 
+function can be written
+\begin{equation}
+  \label{ddelta_form}
+  \delta^n_D(\vec x-\vec x^\prime) 
+  = \frac{1}{(2\pi)^n}\int \dd^nke^{-i\vec k\cdot(\vec x-\vec x^\prime)}
+\end{equation}
+such that 
+\begin{equation}
+  \label{ddelta_def}
+  \int \dd^nx f(\vec x)\delta^n_D(\vec x-\vec x^\prime) = f(\vec x^\prime)
+\end{equation}
+Note that the fourier transform convention in eqns 
+\ref{ft_continuous}-\ref{ift_continuous}
+is useful in that it leads to a particularly simple form of the 
+convolution theorem, without any gratuitous factors of $\sqrt{2\pi}$:
+\begin{equation}
+  h(\vec x) = \int\dd^nx^\prime 
+  f(\vec x^\prime)g(\vec x-\vec x^\prime)
+  \ \ \ \ \ \Longleftrightarrow\ \ \ \ \ 
+  \hat h(\vec k) = \hat f(\vec k)\hat g(\vec k)
+\end{equation}
+
+\section{Discrete Fourier Transform}
+For computational purposes, it is more useful to consider the discrete
+fourier transform. It is helpful to define some notation to make the 
+following expressions
+more compact.  First let an element of the $n$-dimensional array
+$G_{j_1,j_2\cdots j_n}$ be written $G_\mathbf{j}$, where $\mathbf j$ is
+understood to be an $n$ dimensional vector of integers, with 
+$0 \le j_i < N_i$.  We'll also define the multiple sum
+\begin{equation}
+  \sum_{\mathbf{j}} \equiv
+  \sum_{j_1=0}^{N_1-1}\sum_{j_2=0}^{N_2-1}\cdots\sum_{j_n=0}^{N_n-1}
+\end{equation}
+Using this notation, we can write the $n$-dimensional discrete fourier
+transform as
+\begin{equation}
+  \label{ft_discrete}
+  \hat{G}_{\mathbf{k}} 
+  = \sum_{\mathbf{j}}
+  G_{\mathbf{j}} e^{(-2\pi i/N)\mathbf{j}\cdot\mathbf{k}},\ 0\le k_m< N_m
+\end{equation}
+The corresponding inverse discrete fourier transform is given by
+\begin{equation}
+  \label{ift_discrete}
+  G_{\mathbf{j}}
+  = \left[\prod_m\frac{1}{\left(N_m\right)^n}\right]
+  \sum_{\mathbf{k}}
+  \hat{G}_{\mathbf{k}} e^{(2\pi i/N)\mathbf{j}\cdot\mathbf{k}},\ 0\le j_\ell< N_\ell
+\end{equation}
+From this, we see that the Kronecker delta function can be written
+\begin{equation}
+  \delta^n_{\mathbf{j}\mathbf{j^\prime}} 
+  = \left[\prod_m\frac{1}{\left(N_m\right)^n}\right]
+  \sum_{\mathbf{k}}
+  e^{(2\pi i/N)\mathbf{k}\cdot(\mathbf{j}-\mathbf{j^\prime})}
+\end{equation}
+such that
+\begin{equation}
+  G_{\mathbf{j}} 
+  = \sum_{\mathbf{j^\prime}}
+  \delta^n_{\mathbf{j}\mathbf{j^\prime}}
+  G_{\mathbf{j^\prime}} 
+\end{equation}
+
+The expressions in equations \ref{ft_discrete} and \ref{ift_discrete} can
+be quickly computed using the Fast Fourier Transform algorithm.
+
+\section{The Relationship Between Discrete and Continuous Fourier Transforms}
+Often it is desirable to approximate a continuous fourier transform given 
+a discrete sampling of the function.  Here we will work in one dimension,
+though the generalization to multiple dimensions is straightforward.
+
+Consider a continuous function $g(x)$, which is sampled at $N$ equal intervals
+$G_j = g(x_j)$ with $x_j \equiv x_0 + j\Delta x$, $0\le j<N$.  Assuming that
+$g(x)\approx 0$ outside the range $x_0\le x \le (x_0+N\Delta x)$, we can
+approximate the integral in equation \ref{ft_continuous} as
+\begin{eqnarray}
+  \hat{g}(t) &=& \int \dd x g(x)e^{-ixt}\nonumber\\
+  &\approx& \Delta x\sum_{j=0}^{N-1}g(x_j)e^{-ixt}\nonumber\\
+  &\approx& \Delta x\sum_{j=0}^{N-1}g(x_j)e^{-it(x_0+j\Delta x)}
+\end{eqnarray}
+We would like to sample the fourier transform $\hat g(t)$ at $N$ equally
+spaced intervals in $t$.  To this end, let $t_k = t_0+k\Delta t$ such that,
+\begin{equation}
+  \hat{g}(t_k) 
+  \approx \Delta x\sum_{j=0}^{N-1}g(x_j)
+  e^{-i(t_0+k\Delta t)(x_0+j\Delta x)}
+\end{equation}
+Now to make this look like equation \ref{ft_discrete}, we let 
+$\Delta t = 2\pi/(N\Delta x)$ and rearrange to find
+\begin{equation}
+  \frac{1}{\Delta x}\hat{g}(t_k) e^{i (t_k-t_0) x_0}
+  \approx \sum_{j=0}^{N-1}g(x_j)e^{-it_0x_j}e^{-2\pi ijk/N}
+\end{equation}
+We see that this matches equation \ref{ft_discrete} with
+\begin{eqnarray}
+  G_j &\equiv& g(x_j)e^{-it_0x_j}\nonumber\\
+  \hat{G}_k &\equiv& \frac{e^{-ix_0t_0}}{\Delta x}\hat{g}(t_k) e^{i x_0t_k}
+\end{eqnarray}
+Thus the continuous fourier transform can be approximated using a discrete
+sampling and an FFT, by using the appropriate exponential weighting of
+the sampled functions.  The extension of this to multiple dimensions 
+follows by applying the correct transformation along each dimension.
+
+Note that when using the FFT and IFFT routines in, e.g. fftpack, the choice
+of $t_0$ is not necessarily free (though by exploiting the periodic boundary
+conditions implicit in an FFT, any range in $t$ can be calculated).  
+The fiducial $t$ range
+is symmetric about $t=0$, so that $t_0 = (-N/2)\Delta t = -\pi/\Delta x$.
+
+\section{A More Correct Form}
+In many cases, the discrete sampling of the previous section is not simply
+the value of $g(x)$ at each point $x_j$, but an average over a range 
+$x_j-\Delta x/2 < x < x_j+\Delta x/2$.  To be correct in this situation, we
+need to recognize that our sampled values at position $x_j$ are an estimator
+of a different quantity, namely
+\begin{equation}
+  g_W(x_j) = \int \dd x g(x)W_j(x_j-x)
+\end{equation}
+with 
+\begin{equation}
+  W_j(x) = \left\{
+\begin{array}{ll}
+  1/\Delta x,& |x-x_j| < \Delta x/2 \\
+  0,& \mathrm{otherwise}
+\end{array}\right.
+\end{equation}
+By the convolution theorem, we can write
+\begin{equation}
+  \hat{g}(t) = \hat{g}_W(t) / \hat{W}_j(t)
+\end{equation}
+Where the fourier transform of the window function is given by
+\begin{equation}
+  \label{window_ft}
+  \hat{W}_j(t) = \frac{\sin(t\Delta x/2)}{t\Delta x/2}
+\end{equation}
+Thus we can compute $\hat g(t)$ correctly by applying the FFT approach from the
+previous section to compute $\hat g_W(t)$ from the sampled values, 
+then dividing by the Fourier
+transorm of the pixel window in equation \ref{window_ft}.
+
+At first glance, it seems that there might be a problem, because $1/W_j(t)$
+diverges for $t\Delta x = 2\pi n$, with $n$ a non-zero integer.  
+It turns out that
+the limits of the fft save us here: we showed above that 
+$t_k = (k-N/2)\Delta t = \pi(2k/N-1)/\Delta x$, with $0\le k<N$, 
+so that that we are limited to the domain $-\pi \le t\Delta x < \pi$,
+which lies safely within the finite range.  The result does not change 
+the smaller wave numbers, but weights the larger wave-numbers by 
+an increasing factor of up to $\sim 1.5$.
+
+\end{document}		
