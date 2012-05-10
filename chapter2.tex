@@ -1,25 +1,230 @@
-\chapter{Introduction to KL Analysis}
+\chapter{Introduction to \KL\ Analysis}
 
-\begin{itemize}
-  \item Introduce the notational formalism
-  \item KL as an eigenvalue problem
-  \item KL as a signal-to-noise ranking
-  \item KL as an optimal low-dimensional representation
-  \item KL on noisy data
-  \item KL with missing information
-\end{itemize}
+%\begin{itemize}
+%  \item Introduce the notational formalism
+%  \item KL as an eigenvalue problem
+%  \item KL as a signal-to-noise ranking
+%  \item KL as an optimal low-dimensional representation
+%  \item KL on noisy data
+%  \item KL with missing information
+%\end{itemize}
 
-Also mention LLE and cite \cite{Vanderplas2009}, which uses a nonlinear
-alternative to PCA for dimensionalty reduction.
+%Also mention LLE and cite \cite{Vanderplas2009}, which uses a nonlinear
+%alternative to PCA for dimensionalty reduction.
 
-\section{Karhunen-Lo\`{e}ve Analysis of Shear}
-\label{KL_Intro}
-KL analysis is a commonly used statistical tool
+\KL\ (KL) analysis is a commonly used statistical tool
 in a broad range of astronomical applications, from, e.g.~studies of 
 galaxy and quasar spectra \citep{Connolly95,Connolly99,Yip04a,Yip04b}, to 
 analysis of the spatial distribution of galaxies 
 \citep{Vogeley96,Matsubara00,Pope04}, to characterization of the 
-expected errors in weak lensing surveys \citep{Kilbinger06, Munshi06}.    
+expected errors in weak lensing surveys \citep{Kilbinger06, Munshi06}.
+In this chapter, we will develop the formalism of KL which will form
+the basis of the results in the subsequent chapters.
+
+The KL formalism requires the liberal
+employment of algebra with vectors, scalars, and matrices.
+For clarity, we will begin by briefly specifying the notational
+conventions used in this chapter and throughout this work.
+
+\section{Notational Conventions}
+
+It is important to clearly distinguish between vectors, matrices, and
+scalars in the following formulation.  Vectors will be denoted by
+bold lower-case symbols; e.g. $\myvec{x}$.  Matrices will be denoted by
+bold upper-case symbols; e.g. $\mymat{X}$.  Scalars will be denoted by
+non-bold symbols, either upper or lower-case.
+All vectors are assumed to be column vectors, while a row-vector is
+indicated by the transpose, $\myvec{x}^T$.  
+Single elements of a given
+vector or matrix are given with subscripts: $x_i$ is the $i^{\rm th}$
+element of the vector $\myvec{x}$, and $X_{ij}$ is the element in the
+$i^{\rm th}$ row and $j^{\rm th}$ column of the matrix $\mymat{X}$.
+The column vector making up the $j^{\rm th}$ row of $\mymat{X}$ is
+indicated by $\myvec{x}^{(j)}$.  Note then, that by this convention,
+the $(i, j)$ component of matrix $\mymat{X}$ can be equivalently expressed
+$X_{ij}$ or $x_i^{(j)}$.
+
+In algebraic expressions, the normal linear algebra rules are assumed.
+For example, the expression 
+\begin{equation}
+  \myvec{y} = \mymat{M}\mymat{x} + \mymat{b}
+\end{equation}
+involves the vectors $\myvec{y}$, $\myvec{x}$, and $\myvec{b}$ and the
+matrix $\mymat{M}$.  This expression is short-hand for the summation:
+\begin{equation}
+  y_i = \sum_{j=1}^{n} M_{ij} x_j + b_i
+\end{equation}
+Using these rules, we can define the magnitude of a vector
+\begin{equation}
+  |\myvec{x}| \equiv \sqrt{\myvec{x}^T \myvec{x}}
+\end{equation}
+
+\section{Basis function decomposition}
+KL analysis is simply a basis function decomposition, where the basis
+functions are derived based on the variance and covariance properties
+of a class of functions.  We'll start by describing what is perhaps the
+best-known basis function decomposition, the Fourier Transform.
+We start here partly because it offers a generalization to the fundamental
+ideas of KL analysis, and partly because it becomes very important in
+cosmology when studying correlation functions and power spectra.
+
+\subsection{Fourier Transforms}
+The Fourier Transform is a means of expressing a function in terms
+of a certain class of oscillatory basis functions.
+Given an arbitrary continuous function
+$f(t)$, it can be re-expressed in terms of sinusoidal basis functions
+$\Phi_k(t) \equiv e^{ikt} / \sqrt{2\pi}$
+\begin{equation}
+  \label{eq:FT_1D}
+  f(t) = \int_{-\infty}^\infty \hat{f}_k \Phi_k(t) \dd k.
+\end{equation}
+What is more, it can be shown that this {\it Fourier Transform} $\hat{f}_k$
+is uniquely determined for a given $f(t)$.  But what does this integral mean?
+It specifies a set of basis functions $\Phi_k(t)$ and an associated set of
+coefficients $f_k$, such that the function $f(t)$ can be reconstructed
+from the basis functions.  Because of the uniqueness of $f_k$ for a given
+$f(t)$, $f_k$ is in some sense a replacement for $f(t)$.  We can compute
+the Fourier transform $f_k$ and forget the originial information $f(t)$,
+being confident that $f(t)$ can be perfectly reconstructed from the
+information on $f_k$.
+
+But how can we compute the Fourier Transform $f_k$ given $f(t)$?  Though
+the expression is well-known, we'll briefly derive it here because it
+illuminates some of the properties of Fourier transforms which will
+generalize to KL tranforms.
+
+To begin, we'll multiply both sides of Equation~\ref{eq:FT_1D} by the
+basis function $\Phi^*_{k^\prime}(t)$, and integrate over all $t$.
+Here the $\ast$ denotes the complex conjugate.  This gives
+\begin{equation}
+  \label{eq:FT_1D}
+  \int_{-\infty}^\infty \dd t \Phi^\ast_{k^\prime}(t) f(t)
+  = \int_{-\infty}^\infty \dd t \Phi^\ast_{k^\prime}(t)
+  \int_{-\infty}^\infty \dd k \hat{f}_k \Phi_k(t).
+\end{equation}
+Switching the order of integration and rearranging terms, we find
+\begin{equation}
+  \label{eq:IFT_deriv1}
+  \int_{-\infty}^\infty \dd t \Phi^\ast_{k^\prime}(t) f(t)
+  = \int_{-\infty}^\infty \dd k \hat{f}_k
+  \int_{-\infty}^\infty \dd t \Phi^\ast_{k^\prime}(t)\Phi_k(t)
+\end{equation}
+Examining the integral over $t$ on the right-hand side of the equation,
+we find
+\begin{eqnarray}
+  \int_{-\infty}^\infty \dd t \Phi^\ast_{k^\prime}(t)\Phi_k(t)
+  &=& \frac{1}{2\pi} \int_{-\infty}^\infty
+  \dd t e^{i t (k - k^\prime)}\nonumber\\
+  &=& \delta(k - k^\prime)
+\end{eqnarray}
+where in the last line we have used the definition of the dirac delta
+function,
+\begin{equation}
+  \delta(k) \equiv \frac{1}{2\pi} \int_{-\infty}^\infty e^{ikt} \dd k.
+\end{equation}
+Putting this delta function into the integral in Equation~\ref{eq:IFT_deriv1}
+and collapsing the integral gives
+\begin{equation}
+  f_{k^\prime} = \int_{-\infty}^\infty \Phi^\ast_{k^\prime}(t) f(t) \dd t.
+\end{equation}
+Substituting $k^\prime \to k$ yields the familiar expression
+\begin{equation}
+  \label{eq:IFT_1D}
+  f_k = \int_{-\infty}^\infty f(t) e^{-ikt} \dd t.
+\end{equation}
+
+Equation~\ref{eq:IFT_1D} shows how to compute the Fourier transform
+$f_k$ for a given $f(t)$.  But one might wonder if this is a unique
+result.  Could there be many different valid Fourier transforms for a given
+continuous function?
+
+Let's assume that given a function $f(t)$, there are two valid Fourier
+transforms, given by $f_k$ and $f^\prime_k$.  In this case, from
+Equation~\ref{eq:FT_1D} we have
+\begin{equation}
+  f(t) - f(t) = \int_{-\infty}^\infty (f_k - f^\prime_k) \Phi_k(t) \dd k = 0
+\end{equation}
+Similarly to above, we can multiply by $\Phi^\ast_{k^\prime}(t)$,
+integrate over all $t$, and extract a delta function to yield:
+\begin{equation}
+  \int_{-\infty}^\infty (f_k - f^\prime_k) \delta(k - k^\prime) \dd k = 0.
+\end{equation}
+Collapsing the integral we find that $f_k = f^\prime_k$ must hold for all $k$;
+that is, the Fourier transform for continuously integrable functions
+$f(t)$ is unique\footnote{The uniqueness property does not necessarily
+hold for arbitrary functions $f(t)$ which are not piecewise continuous
+or square-integrable.}
+
+Above, we have shown the case of continuous Fourier Transforms on an
+unbounded domain $x \in (-\infty, \infty)$.  Very similar results can
+be derived on bounded domains, i.e.~$x \in (a, b)$.  The primary difference
+is that the integral over $k$ becomes a sum over $k$, and the basis functions
+are given by
+\begin{equation}
+  \Phi_k(x) = \exp\left[\frac{2\pi i k (x - a)}{b - a}\right]
+\end{equation}
+with a Fourier series expansion
+\begin{equation}
+  \label{eq:FS_1D}
+  f_{(a, b)}(x) = \sum_{k=-\infty}^\infty f_k \Phi_k(x)
+\end{equation}
+and coefficients given by
+\begin{equation}
+  \label{eq:IFS_1D}
+  f_k = \frac{1}{b - a}\int_a^b f_{(a, b)}(x) \Phi^\ast_k(x) \dd x
+\end{equation}
+
+\subsection{Generalizing Orthonormal Bases}
+
+Stepping back for a moment, we have shown that for a particular
+class of functions $\Phi_k(t)$, one can find unique coefficients
+$f_k$ such that one of the expansions of
+Equations~\ref{eq:FT_1D} or \ref{eq:FS_1D} hold.
+A key observation to make is that all the derivations above rested 
+soley on the orthonomality property of the basis functions: that is,
+$\Phi_k(t)$ satisfies
+\begin{equation}
+  \int_a^b \Phi_k(t) \Phi^\star_{k^\prime}(t) 
+  = \delta(k - k^\prime).
+\end{equation}
+Aside from this, nothing more is required to repeat the above derivations.
+This suggests the possible existence of other functions which fit these
+criteria.  Some examples are the Legendre polynomials on the interval
+$[-1, 1]$, the Laguerre polynomials on the interval $[0, \infty)$, and
+the Hermite polynomials on the interval $(\infty, \infty)$.
+Just as there are an infinite number of possibile geometric
+bases in a vector space, there are an infinite number of possible orthogonal
+function bases that work in the above formalism.  Choosing the right basis
+can lead to a much easier analysis of a given problem.
+
+\section{\KL\ Analysis}
+Because of the infinite number of possible orthogonal function classes,
+one might wonder how to choose the optimal class for any particular problem.
+\KL\ Analysis Seeks to answer this question in a very general case.
+
+Imagine now that we have a centered random process $F_t$.  By {\it random
+process}, we mean that there are multiple (potentially infinite)
+realizations of this function at each value $t$.  By {\it centered},
+we mean that the expectation value $E[F_t] = 0$ for all $t$.  Furthermore,
+our random variables $F_t$ can be arbitrarily correlated: that is, the value
+drawn at one $t$ can potentially depend on every other value drawn in that
+particular realization.
+
+The \KL\ theorem states that for a centered random process $F_t$ with a
+continuous covariance $C_F(t, t^\prime)$, the eigenfunctions $e_k(t)$
+of $C_F(t, t^\prime)$ are an orthonormal basis for $F_t$,
+\begin{equation}
+  F_t = \sum_{k = 1}^\infty
+\end{equation}
+
+
+
+
+
+
+
+\section{\KL\ Analysis of Shear}
+\label{KL_Intro}
 Any set of $N$-dimensional data can be represented as a sum of 
 $N$ orthogonal basis functions: this amounts to a rotation and scaling of 
 the $N$-dimensional coordinate axis spanning the space in which the data live.
