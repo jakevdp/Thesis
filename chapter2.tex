@@ -1,4 +1,4 @@
-\chapter{Introduction to \KL\ Analysis}
+\chapter{Introduction to Karhunen-Lo\`{e}ve Analysis}
 
 %\begin{itemize}
 %  \item Introduce the notational formalism
@@ -78,8 +78,8 @@ $\Phi_k(t) \equiv e^{ikt} / \sqrt{2\pi}$
   \label{eq:FT_1D}
   f(t) = \int_{-\infty}^\infty \hat{f}_k \Phi_k(t) \dd k.
 \end{equation}
-What is more, it can be shown that this {\it Fourier Transform} $\hat{f}_k$
-is uniquely determined for a given $f(t)$.  But what does this integral mean?
+This integral shows how to express $f(t)$ in terms of its
+{\it Fourier Transform} $\hat{f}_k$.  But what does this integral mean?
 It specifies a set of basis functions $\Phi_k(t)$ and an associated set of
 coefficients $f_k$, such that the function $f(t)$ can be reconstructed
 from the basis functions.  Because of the uniqueness of $f_k$ for a given
@@ -120,17 +120,17 @@ we find
 where in the last line we have used the definition of the dirac delta
 function,
 \begin{equation}
-  \delta(k) \equiv \frac{1}{2\pi} \int_{-\infty}^\infty e^{ikt} \dd k.
+  \delta(k) \equiv \frac{1}{2\pi} \int_{-\infty}^\infty e^{ikt} \dd t.
 \end{equation}
-Putting this delta function into the integral in Equation~\ref{eq:IFT_deriv1}
+Substituting this delta function into Equation~\ref{eq:IFT_deriv1}
 and collapsing the integral gives
 \begin{equation}
   f_{k^\prime} = \int_{-\infty}^\infty \Phi^\ast_{k^\prime}(t) f(t) \dd t.
 \end{equation}
-Substituting $k^\prime \to k$ yields the familiar expression
+Relabeling $k^\prime \to k$ yields the familiar expression
 \begin{equation}
   \label{eq:IFT_1D}
-  f_k = \int_{-\infty}^\infty f(t) e^{-ikt} \dd t.
+  f_k = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty f(t) e^{-ikt} \dd t.
 \end{equation}
 
 Equation~\ref{eq:IFT_1D} shows how to compute the Fourier transform
@@ -191,7 +191,7 @@ Aside from this, nothing more is required to repeat the above derivations.
 This suggests the possible existence of other functions which fit these
 criteria.  Some examples are the Legendre polynomials on the interval
 $[-1, 1]$, the Laguerre polynomials on the interval $[0, \infty)$, and
-the Hermite polynomials on the interval $(\infty, \infty)$.
+the Hermite polynomials on the interval $(-\infty, \infty)$.
 Just as there are an infinite number of possibile geometric
 bases in a vector space, there are an infinite number of possible orthogonal
 function bases that work in the above formalism.  Choosing the right basis
@@ -202,20 +202,196 @@ Because of the infinite number of possible orthogonal function classes,
 one might wonder how to choose the optimal class for any particular problem.
 \KL\ Analysis Seeks to answer this question in a very general case.
 
-Imagine now that we have a centered random process $F_t$.  By {\it random
-process}, we mean that there are multiple (potentially infinite)
-realizations of this function at each value $t$.  By {\it centered},
-we mean that the expectation value $E[F_t] = 0$ for all $t$.  Furthermore,
-our random variables $F_t$ can be arbitrarily correlated: that is, the value
-drawn at one $t$ can potentially depend on every other value drawn in that
-particular realization.
-
-The \KL\ theorem states that for a centered random process $F_t$ with a
-continuous covariance $C_F(t, t^\prime)$, the eigenfunctions $e_k(t)$
-of $C_F(t, t^\prime)$ are an orthonormal basis for $F_t$,
+\subsection{Derivation of \KL\ theorem}
+Imagine now that we have a random process $F_t$.  This can be thought of as
+an arbitrarily large collection of functions $f^{(i)}(t)$ (note the similarity
+to the column vector notation from earlier) for $t$ on some interval
+$t \in [a, b]$.  At a given location $t$, the expectation value of the
+random process is given by
 \begin{equation}
-  F_t = \sum_{k = 1}^\infty
+  E[F_t] = \lim_{N \to \infty} \frac{1}{N} \sum_{i=1}^N f^{(i)}(t)
 \end{equation}
+For simplicity, we'll define the centered random process
+$\tilde{F}_t \equiv F_t - E[F_t]$.  It is easy to show that
+$E[\tilde{F}_t] = 0$.  A random process like $F_t$ can be characterized
+by its covariance function, which is defined as
+\begin{equation}
+  \label{eq:corrfunc_def}
+  \mathcal{C}_F(t, t^\prime) \equiv E[\tilde{F}_t \tilde{F}_{t^\prime}].
+\end{equation}
+For an {\it uncorrelated} random process $F$,
+$\mathcal{C}_F(t, t^\prime) = \mathcal{C}_F(t, t) \delta_{t, t^\prime}$
+where $\mathcal{C}_F(t, t) $ is the variance of $F_t$.
+
+\subsection{Eigenfunctions}
+We'll now introduce the {\it eigenfunctions} $e_k(t)$
+of the covariance function $\mathcal{C}_F(t, t^\prime)$, which satisfy
+\begin{equation}
+  \label{eq:eigfunc_def}
+  \int_a^b \mathcal{C}_F(t, t^\prime) e_k(t^\prime)\dd t^\prime
+  = \lambda_k e_k(t)
+\end{equation}
+subject to the constraint that $e_k(t)$ is nonzero for some value of $t$,
+and where $\lambda_k$ is the {\it eigenvalue} associated with the
+eigenfunction $e_k(t)$.
+
+Now what are the properties of these eigenfunctions?  First of all, they
+are orthogonal on the interval $[a, b]$.
+We can show this by considering two arbitrary eigenfunctions
+$e_k(t)$ and $e_{k^\prime}(t)$.  Using the fact that by definition
+$\mathcal{C}_F(t, t^\prime) = \mathcal{C}_F(t^\prime, t)$, 
+Equation~\ref{eq:eigfunc_def} leads to
+\begin{eqnarray}
+  \int_a^b \dd t e_k(t)
+  \int_a^b \dd t^\prime \mathcal{C}_F(t, t^\prime) e_{k^\prime}(t^\prime) &=&
+  \int_a^b \dd t^\prime e_{k^\prime}(t^\prime)
+  \int_a^b \dd t \mathcal{C}_F(t^\prime, t) e_k(t)
+  \nonumber\\
+  \int_a^b \dd t \lambda_{k^\prime} e_k(t) e_{k^\prime}(t) &=&
+  \int_a^b \dd t^\prime \lambda_k e_k(t^\prime) e_{k^\prime}(t^\prime)
+\end{eqnarray}
+Rearranging the bottom line leads to
+\begin{equation}
+  (\lambda_k - \lambda_{k^\prime})
+  \int_a^b \dd t e_k(t) e_{k^\prime}(t) = 0
+\end{equation}
+So for $\lambda_k \ne \lambda_{k^\prime}$, then
+$e_k$ and $e_{k^\prime}$ are orthogonal\footnote{In the degenerate case when
+$\lambda_k = \lambda_{k^\prime}$, one can still construct orthogonal
+vectors by linear combinations:
+\begin{eqnarray}
+  e_+(t) &=& \frac{e_k(t) + e_{k^\prime}(t)}{\sqrt{2}} \nonumber\\
+  e_-(t) &=& \frac{e_k(t) - e_{k^\prime}(t)}{\sqrt{2}} \nonumber
+\end{eqnarray}
+leads to two new orthogonal eigenfunctions $e_+$ and $e_-$ with the
+same eigenvalue $\lambda_k$.}.
+
+Let's now consider the expansion of the random process $F_t$ onto the
+eigenvectors $e_k(t)$.  Analogously to the Fourier case discussed
+above, we have
+\begin{equation}
+  \tilde{F}_t = \sum_{k=1}^\infty F_k e_k(t).
+\end{equation}
+Multiplying both sides by $e_{k^\prime}(t)$, integrating, and using the
+orthogonality of eigenvectors (this is analogous to the derivation
+in Equations~\ref{eq:IFT_deriv1}-\ref{eq:IFT_1D}) leads to
+\begin{equation}
+  \label{eq:F_k_def}
+  F_k = \int_a^b \tilde{F}_t e_k(t) \dd t
+\end{equation}
+
+Because the expectation value $E[\tilde{F}_t] = 0$ by construction, it
+is straightforward to show that $E[F_k] = 0$ as well.  The more interesting
+computation is that of the covariance $\mathcal{C}_F(k, k^\prime)$.
+From Equations~\ref{eq:corrfunc_def} and \ref{eq:F_k_def}, we have
+\begin{eqnarray}
+  \mathcal{C}_F(k, k^\prime)
+  &=& E[F_k F_{k^\prime}]\nonumber\\
+  &=& E\left[\int_a^b \dd t \int_a^b \dd t^\prime
+    \tilde{F}_t e_k(t)
+    \tilde{F}_{t^\prime} e_{k^\prime}(t^\prime)\right] \nonumber\\
+  &=& \int_a^b \dd t \int_a^b \dd t^\prime
+    E[\tilde{F}_t \tilde{F}_{t^\prime}]
+    e_{k^\prime}(t^\prime) e_k(t) \nonumber\\
+  &=& \int_a^b \dd t \int_a^b \dd t^\prime
+    \mathcal{C}_F(t, t^\prime)
+    e_{k^\prime}(t^\prime) e_k(t) \nonumber
+\end{eqnarray}
+Substituting Equation~\ref{eq:eigfunc_def}, we find that this gives
+\begin{eqnarray}
+  \mathcal{C}_F(k, k^\prime)
+  &=& \int_a^b \dd t \lambda_{k^\prime} e_{k^\prime}(t) e_k(t) \nonumber\\
+  &=& \lambda_k \delta_{kk^\prime}
+\end{eqnarray}
+So we see that projection of the centered random process $\tilde{F}_t$ onto
+the eigenvectors of its covariance matrix yields coefficients which
+are uncorrelated, with variance equal to the eigenvalues $\lambda_k$.
+This result is the \KL\ theorem, and it has many ramifications that will
+be discussed below.
+
+\subsection{\KL: theory to practice}
+The abstract formalism presented above is interesting in itself, but one
+might wonder what practical advantages can be gained from this discussion.
+In practice, we don't deal with an abstract stochastic process $F_t$, but
+with measured astronomical data.  In this section we will discuss the
+practical computational aspects of KL analysis.
+
+Imagine, for the moment, that an astronomer is observing the spectra of
+$N$ galaxies.  After normalization and correction for redshift effects,
+the spectra can be encoded as a series of $N$ real-valued functions
+$f{(i)}(\lambda)$ over some defined domain $\lambda \in [a, b]$.
+In practice, we measure these spectra at a finite set of wavelengths
+$\myvec{\lambda}^T = [\lambda_1, \lambda_2 \cdots \lambda_M]$ so that
+our observations $\myvec{f}^{(i)}$ become $M$-dimensional vectors.  For
+convenience, we'll store these spectra in a $M \times N$ matrix
+$\mymat{F} = [\myvec{f}^{(1)}, \myvec{f}^{(2)} \cdots \myvec{f}^{(N)}]$
+These series of spectra $\mymat{F}$ 
+can be considered a realization of a particular
+random process $F_\lambda$.
+
+The expectation value $E[F_\lambda]$ can be approximated via the sample mean:
+\begin{equation}
+  E[F_\lambda] \approx \myvec{\bar{f}}
+  = \frac{1}{N} \sum_{i=1}^N \myvec{f}^{(i)}
+\end{equation}
+and the covariance function can be approximated by the covariance matrix
+\begin{equation}
+  \label{eq:mat_corr_def}
+  E[F_\lambda F_{\lambda^\prime}] \approx 
+  \mymat{\mathcal{C}_F} = \frac{1}{N - 1} \mymat{\tilde{F}} \mymat{\tilde{F}^T}
+\end{equation}
+where we have defined the centered matrix
+\begin{equation}
+  \mymat{\tilde{F}} \equiv \mymat{F} - \myvec{\bar{f}}\myvec{1}_N^T.
+\end{equation}
+and $\myvec{1}_N$ is the length-$N$ vector of ones.
+
+We can approximate the eigenfunctions $e^{(i)}(\lambda)$ and
+eigenvalues $\lambda_i$ via the diagonalization 
+of $\mymat{\mathcal{C}_F}$, computed using standard linear algebra techniques.
+The diagonalization of the covariance matrix is
+\begin{equation}
+  \label{eq:evd_def}
+  \mymat{\mathcal{C}_F} = \mymat{V}\mymat{\Lambda}\mymat{V}^T,
+\end{equation}
+where the columns of the matrix $\mymat{V}$ are the eigenvectors
+(such that $\mymat{V}^T \mymat{V} = \mymat{I}$, the identity matrix), and
+$\mymat{\Lambda}$ is the diagonal matrix of eigenvalues, such that
+$\Lambda_{ij} = \lambda_i\delta_{ij}$.  In practice, the eigenvalues and
+eigenvectors can often be computed more efficiently via a singular value
+decomposition:
+\begin{equation}
+  \label{eq:svd_def}
+  \mymat{U}\mymat{\Sigma}\mymat{V}^T
+  = \frac{1}{\sqrt{N - 1}}\mymat{\tilde{F}}^T
+\end{equation}
+where the orthogonal matrices $\mymat{U}$ and $\mymat{V}$ are the left and
+right singular vectors, respectively, and $\Sigma$ is a diagonal matrix
+of singular values.  One can quickly show from Equations~\ref{eq:mat_corr_def}
+and \ref{eq:svd_def} that
+\begin{eqnarray}
+  \mymat{\mathcal{C}_F}
+  &=& \mymat{V}\mymat{\Sigma}\mymat{U}^T
+  \mymat{U}\mymat{\Sigma}\mymat{V}^T\nonumber\\
+  &=& \mymat{V}\mymat{\Sigma}^2\mymat{V}^T.
+\end{eqnarray}
+Comparing to Equation~\ref{eq:evd_def}, we see that 
+$\mymat{\Lambda} = \mymat{\Sigma}^2$, and the eigenvectors $\mymat{V}$ are
+identical to the right singular vectors of Equation~\ref{eq:svd_def}
+(up to an arbitrary ordering of columns).
+
+
+\newpage
+
+
+
+
+
+
+
+
+
+
 
 
 
