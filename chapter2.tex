@@ -214,14 +214,19 @@ random process is given by
 \begin{equation}
   E[F_t] = \lim_{N \to \infty} \frac{1}{N} \sum_{i=1}^N f^{(i)}(t)
 \end{equation}
-For simplicity, we'll define the centered random process
-$\tilde{F}_t \equiv F_t - E[F_t]$.  It is easy to show that
-$E[\tilde{F}_t] = 0$.  A random process like $F_t$ can be characterized
+For simplicity, we'll assume that the random process $F_t$ is {\it
+centered}; that is $E[\tilde{F}_t] = 0$.  A general random process can be
+centered by subtracting the expectation value for each $t$.
+A random process like $F_t$ can be characterized
 by its covariance function, which is defined as
-\begin{equation}
+\begin{eqnarray}
   \label{eq:corrfunc_def}
-  \mathcal{C}_F(t, t^\prime) \equiv E[\tilde{F}_t \tilde{F}_{t^\prime}].
-\end{equation}
+  \mathcal{C}_F(t, t^\prime) &\equiv& E[F_t F_{t^\prime}].
+  \nonumber\\
+  &=& \lim_{N\to\infty}\frac{1}{N} \sum_{i=1}^N
+  f^{(i)}(t)f^{(i)}(t^\prime)
+\end{eqnarray}
+where we have 
 For an {\it uncorrelated} random process,
 $\mathcal{C}_F(t, t^\prime) = \mathcal{C}_F(t, t) \delta_{t, t^\prime}$
 where $\mathcal{C}_F(t, t) $ is called the variance of $F_t$.
@@ -273,13 +278,14 @@ vectors by linear combinations:
 \end{eqnarray}
 leads to two new orthogonal eigenfunctions $e_+$ and $e_-$ with the
 same eigenvalue $\lambda_k$.}.  Because of the
-requirement that eigenfunctions not be zero everywhere, we can without
-loss of generality require that the eigenfunctions are normalized; that
-is,
+requirement that eigenfunctions be nonzero, we can without
+loss of generality require that the eigenfunctions are normalized; that is,
 \begin{equation}
-  \int_a^b \dd t e_k(t) e_{k^\prime}(t) = 1
+  \int_a^b \dd t e_k(t) e_{k^\prime}(t) = \delta_{kk^\prime}
 \end{equation}
-for all $k$.  Thus our eigenfunctions form an orthonormal basis for 
+for all $k$.
+
+Thus our eigenfunctions form an orthonormal basis for 
 the space of functions in $F_t$.  In general the eigenfunctions
 also satisfy the completeness relation: that is, 
 an arbitrary function $f(t)$ can be approximated
@@ -289,7 +295,7 @@ an arbitrary function $f(t)$ can be approximated
 and the mean square error satisfies
 \begin{equation}
   \lim_{N\to\infty} \int_a^b
-  \left[f(t) - \sum_{k=1}^{N}a_k e_k(t)\right]\dd t = 0.
+  \left[f(t) - \sum_{k=1}^{N}a_k e_k(t)\right]^2 \dd t = 0.
 \end{equation}
 The proof of the completeness of eigenfunctions for a symmetric kernel
 $\mathcal{C}_F(t^\prime, t)$ can be found in, e.g.~\citet{Courant1989}.
@@ -298,17 +304,19 @@ Let's now consider the expansion of the random process $F_t$ onto the
 eigenvectors $e_k(t)$.  Analogously to the Fourier case discussed
 above, we have
 \begin{equation}
-  \tilde{F}_t = \sum_{k=1}^\infty A_k e_k(t).
+  \label{eq:Ft_decomp}
+  F_t = \sum_{k=1}^\infty A_k e_k(t).
 \end{equation}
 Multiplying both sides by $e_{k^\prime}(t)$, integrating, and using the
 orthogonality of eigenvectors (this is analogous to the derivation
 in Equations~\ref{eq:fourier_coef_der}-\ref{eq:fourier_coef}) leads to
 \begin{equation}
   \label{eq:F_k_def}
-  A_k = \int_a^b \tilde{F}_t e_k(t) \dd t
+  A_k = \int_a^b F_t e_k(t) \dd t
 \end{equation}
 
-Because the expectation value $E[\tilde{F}_t] = 0$ by construction, it
+Because of the fact that the random process is centered,
+ $E[F_t] = 0$ and
 is straightforward to show that $E[A_k] = 0$ as well.  The more interesting
 computation is that of the covariance $\mathcal{C}_A(k, k^\prime)$.
 From Equations~\ref{eq:corrfunc_def} and \ref{eq:F_k_def}, we have
@@ -316,10 +324,10 @@ From Equations~\ref{eq:corrfunc_def} and \ref{eq:F_k_def}, we have
   \mathcal{C}_A(k, k^\prime)
   &=& E[A_k A_{k^\prime}]\nonumber\\
   &=& E\left[\int_a^b \dd t \int_a^b \dd t^\prime
-    \tilde{F}_t e_k(t)
-    \tilde{F}_{t^\prime} e_{k^\prime}(t^\prime)\right] \nonumber\\
+    {F}_t e_k(t)
+    {F}_{t^\prime} e_{k^\prime}(t^\prime)\right] \nonumber\\
   &=& \int_a^b \dd t \int_a^b \dd t^\prime
-    E[\tilde{F}_t \tilde{F}_{t^\prime}]
+    E[{F}_t {F}_{t^\prime}]
     e_{k^\prime}(t^\prime) e_k(t) \nonumber\\
   &=& \int_a^b \dd t \int_a^b \dd t^\prime
     \mathcal{C}_F(t, t^\prime)
@@ -327,6 +335,7 @@ From Equations~\ref{eq:corrfunc_def} and \ref{eq:F_k_def}, we have
 \end{eqnarray}
 Substituting Equation~\ref{eq:eigfunc_def}, we find that this gives
 \begin{eqnarray}
+  \label{eq:cov_A}
   \mathcal{C}_A(k, k^\prime)
   &=& \int_a^b \dd t \lambda_{k^\prime} e_{k^\prime}(t) e_k(t) \nonumber\\
   &=& \lambda_k \delta_{kk^\prime}
@@ -336,6 +345,117 @@ the eigenvectors of its covariance matrix yields coefficients which
 are uncorrelated, with variance equal to the eigenvalues $\lambda_k$.
 This result is the \KL\ theorem, and it has many ramifications that will
 be discussed below.
+
+\subsection{Partial Reconstructions}
+We have shown that \KL\ provides an orthonormal basis for a random field
+with uncorrelated projection coefficients.  Further, \KL\ provides the
+optimal orthonormal basis for low-rank approximations of functions in
+a random field.
+
+Let us consider an arbitrary orthonormal basis
+$\phi_k(t)$, with $F_t = \sum_k B_k\phi_k(t)$.  We'll seek to minimize
+the expectation value of the squared error
+\begin{eqnarray}
+  \mathcal{E}^2_N &=& \int_a^b \left[F_t - F_t^{(N)}\right]^2 \dd t
+  \nonumber\\
+  &=& \int_a^b \left[\sum_{k = N + 1}^\infty A_k e_k(t)\right]^2 \dd t.
+\end{eqnarray}
+
+Expanding the sum leads to
+\begin{eqnarray}
+  \mathcal{E}^2_N &=& \sum_{k=N + 1}^\infty
+  \sum_{k^\prime=N + 1}^\infty \int_a^b 
+  \left[B_k B_{k^\prime} \phi_k(t) \phi_{k^\prime}(t)\right] \dd t
+  \nonumber\\
+  &=& \sum_{k=N+1}^\infty \sum_{k^\prime=N+1}^\infty B_k B_{k^\prime}
+  \delta_{kk^\prime}\nonumber\\
+  &=& \sum_{k=N+1}^\infty B_k^2
+\end{eqnarray}
+Taking the expectation value and plugging in the equivalent of
+Equation~\ref{eq:F_k_def} for $B_k$, we find
+\begin{eqnarray}
+  E[\mathcal{E}^2_N] &=&
+  E\left[\sum_{k=N+1}^\infty \int_a^b \dd t \int_a^b \dd t^\prime
+  F_tF_{t^\prime} \phi_m(t)\phi_m(t^\prime)\right] \nonumber\\
+  &=& \sum_{k=N+1}^\infty \int_a^b \dd t \int_a^b \dd t^\prime
+  C(t, t^\prime) \phi_m(t)\phi_m(t^\prime)
+\end{eqnarray}
+
+We'd like to minimize this expected error over the basis $\phi_m(t)$, subject
+to the constraint that $\phi_m(t)$ are an orthonormal basis.  We'll accomplish
+this by the method of Lagrange multipliers.  Our Lagrangian is
+\begin{equation}
+  \mathcal{L}(\{\phi(t)\}) = \sum_{k=N+1}^\infty
+  \left[\int_a^b \dd t \int_a^b \dd t^\prime
+  C(t, t^\prime) \phi_m(t)\phi_m(t^\prime)
+  - \lambda_k(1 - \int_a^b \phi_m(t)^2 \dd t)
+  \right]
+\end{equation}
+Minimizing this with respect to $\phi_k$ gives
+\begin{equation}
+  \frac{\partial\mathcal{L}}{\partial\phi_k(t)} = \int_a^b \dd t^\prime
+  \mathcal{C}(t, t^\prime) \phi_k(t^\prime)
+  - \lambda_k \phi_k(t).
+\end{equation}
+The optimumum for each $k$ is where this derivative equals zero; setting to
+zero and solving recovers the original eigenvalue problem from which we
+derived the KL basis $\{e_k(t)\}$.  By the uniqueness of the eigenvalue
+decomposition, we show that the KL basis is the optimal basis for low-rank
+approximations of functions drawn from $F_t$.  Furthermore, for an
+approximation using $N$ eigenvectors, the mean squared error is given by
+\begin{eqnarray}
+  E[\mathcal{E}^2_N] &=& \sum_{k=N+1}^\infty E[A_k^2]\nonumber\\
+  &=& \sum_{k=N+1}^\infty \lambda_k
+\end{eqnarray}
+This is an interesting result: it says that in order to minimize the
+expectation value of the reconstruction error $\mathcal{E}_N$ for all $N$,
+we simply need to order the eigenvalues such that $\lambda_k \ge \lambda_{k+1}$
+for all eigenvalue-eigenfunction pairs $(\lambda_k, e_k(t))$.
+
+\subsection{KL in the presence of noise}
+In practice, the observed random field $F_t$ is composed of the sum of
+a signal $S_t$ and noise $N_t$.  We'll continue to assume that both of these
+are centered.  The covariance matrix then becomes
+\begin{equation}
+  \mathcal{C}_F(t, t^\prime) = E[(S_t + N_t)(S_{t^\prime}+N_{t^\prime})]
+\end{equation}
+Under the assumption that the signal $S_t$ and noise $N_t$ are uncorrelated,
+this can be simplified to
+\begin{eqnarray}
+  \mathcal{C}_F(t, t^\prime) &=& E[S_t^2] + E[N_t^2] \nonumber\\
+  &=& \mathcal{C}_S(t, t^\prime) + \mathcal{C}_N(t, t^\prime)
+\end{eqnarray}
+The \KL\ eigenfunctions always diagonalize the full covariance
+$\mathcal{C}_F(t, t^\prime)$.
+In the case of uncorrelated ``white'' noise,
+$\mathcal{C}_N(t, t^\prime) = \sigma^2 \delta(t - t^\prime)$
+and both the signal and the noise become diagonalized.  In this case,
+the noise per mode is a constant $\sigma^2$, and the ranking of the
+eigenfunctions leads to modes which are ranked in signal-to-noise.
+This is why KL modes are often referred to as ``signal-to-noise
+eigenmodes'' \citep{Vogeley96}.
+
+In cases when the noise is not white, we can still recover signal-to-noise
+information by preprocessing with a whitening transformation.  The eigenvectors
+of the noise covariance, which satisfy
+\begin{equation}
+  \int_a^b \mathcal{C}_N(t, t^\prime) n_k(t^\prime) \dd t^\prime 
+  = \sigma_i n_k(t)
+\end{equation}
+can be used to apply a whitening transform to both the signal and the
+noise.  The whitened covariance is given by
+\begin{eqnarray}
+  \mathcal{C}_F^{(W)}(k, k^\prime) &\equiv& \int_a^b\dd t\int_a^b\dd t^\prime
+  \mathcal{C}_F(t, t^\prime)
+  \frac{n_k(t) n_{k^\prime}(t^\prime)}{\sigma_k\sigma_{k^\prime}}\nonumber\\
+  &=& \mathcal{C}_S^{(W)}(k, k^\prime) + \delta_{kk^\prime}.
+\end{eqnarray}
+The signal is now expressed in the basis of the noise eigenmodes $n_k(t)$,
+and the noise has been made white with unit variance.  The KL modes derived
+from the whitened covariance $\mathcal{C}_F^{(W)}(k, k^\prime)$ will have
+eigenvalues which represent the signal-to-noise in each mode.
+
+\subsection{KL with missing data}
 
 \subsection{\KL: theory to practice}
 The abstract formalism presented above is interesting in itself, but one
@@ -394,7 +514,7 @@ decomposition:
   = \frac{1}{\sqrt{N - 1}}\mymat{\tilde{F}}^T
 \end{equation}
 where the orthogonal matrices $\mymat{U}$ and $\mymat{V}$ are the left and
-right singular vectors, respectively, and $\Sigma$ is a diagonal matrix
+right singular vectors, respectively, and $\mymat{\Sigma}$ is a diagonal matrix
 of singular values.  One can quickly show from Equations~\ref{eq:mat_corr_def}
 and \ref{eq:svd_def} that
 \begin{eqnarray}

@@ -1,0 +1,103 @@
+
+\subsection{Fourier Transforms}
+The Fourier Transform is a means of expressing a function in terms
+of a certain class of oscillatory basis functions.
+Given an arbitrary continuous function
+$f(t)$, it can be re-expressed in terms of complex oscillatory basis functions
+$\Phi_k(t) \equiv \exp[2\pi ikt]$
+\begin{equation}
+  \label{eq:FT_1D}
+  f(t) = \int_{-\infty}^\infty \hat{f}_k \Phi_k(t) \dd k.
+\end{equation}
+This integral shows how to express $f(t)$ in terms of its
+{\it Fourier Transform} $\hat{f}_k$. We should be clear on what this
+integral means.  
+It specifies a set of basis functions $\Phi_k(t)$ and an associated set of
+coefficients $f_k$, such that the function $f(t)$ can be reconstructed
+from the basis functions.  We can compute
+the Fourier transform $f_k$ and forget the originial information $f(t)$,
+being confident that $f(t)$ can be perfectly reconstructed from the
+information on $f_k$.
+
+But how can we compute the Fourier Transform $f_k$ associated
+with a function $f(t)$?  Though
+the expression is well-known, we'll briefly derive it here because it
+illuminates some of the properties of Fourier transforms which will
+generalize to KL tranforms.
+
+To begin, we'll multiply both sides of Equation~\ref{eq:FT_1D} by the
+basis function $\Phi^*_{k^\prime}(t)$, and integrate over all $t$.
+Here $\Phi^\ast$ denotes the complex conjugate of $\Phi$.  This gives
+\begin{equation}
+  \int_{-\infty}^\infty \dd t \Phi^\ast_{k^\prime}(t) f(t)
+  = \int_{-\infty}^\infty \dd t \Phi^\ast_{k^\prime}(t)
+  \int_{-\infty}^\infty \dd k \hat{f}_k \Phi_k(t).
+\end{equation}
+Switching the order of integration and rearranging the right-hand-side
+terms, we find
+\begin{equation}
+  \label{eq:IFT_deriv1}
+  \int_{-\infty}^\infty \dd t \Phi^\ast_{k^\prime}(t) f(t)
+  = \int_{-\infty}^\infty \dd k \hat{f}_k
+  \int_{-\infty}^\infty \dd t \Phi^\ast_{k^\prime}(t)\Phi_k(t)
+\end{equation}
+Inserting the expression for $\Phi_k$ gives
+\begin{eqnarray}
+  \int_{-\infty}^\infty \dd t \Phi^\ast_{k^\prime}(t) f(t)
+  &=& \int_{-\infty}^\infty \dd k \hat{f}_k
+  \left[\frac{1}{2\pi} \int_{-\infty}^\infty
+  \dd t e^{i t (k - k^\prime)}\right]\nonumber\\
+  &=& \int_{-\infty}^\infty \dd k \hat{f}_k \delta(k - k^\prime)
+\end{eqnarray}
+where in the last line we have used the definition of the dirac delta
+function,
+\begin{equation}
+  \delta(k) \equiv \frac{1}{2\pi} \int_{-\infty}^\infty e^{ikt} \dd t.
+\end{equation}
+Computing the trivial integral over the delta function, and relabeling
+$k^\prime \to k$ yields the familiar result for the Fourier Transform:
+\begin{equation}
+  \label{eq:IFT_1D}
+  f_k = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty f(t) e^{-ikt} \dd t.
+\end{equation}
+
+Equation~\ref{eq:IFT_1D} shows how to compute the Fourier transform
+$f_k$ for a given $f(t)$.  But one might wonder if this is a unique
+result.  Could there be many different valid Fourier transforms for a given
+continuous function?
+
+Let's assume that given a function $f(t)$, there are two valid Fourier
+transforms, given by $f_k$ and $f^\prime_k$.  In this case, from
+Equation~\ref{eq:FT_1D} we have
+\begin{equation}
+  f(t) - f(t) = \int_{-\infty}^\infty (f_k - f^\prime_k) \Phi_k(t) \dd k = 0
+\end{equation}
+Similarly to above, we can multiply by $\Phi^\ast_{k^\prime}(t)$,
+integrate over all $t$, and extract a delta function to yield:
+\begin{equation}
+  \int_{-\infty}^\infty (f_k - f^\prime_k) \delta(k - k^\prime) \dd k = 0.
+\end{equation}
+Collapsing the integral we find that $f_k = f^\prime_k$ must hold for all $k$;
+that is, the Fourier transform for continuously integrable functions
+$f(t)$ is unique\footnote{The uniqueness property does not necessarily
+hold for arbitrary functions $f(t)$ which are not piecewise continuous
+or square-integrable.}.
+
+Above, we have shown the case of continuous Fourier Transforms on an
+unbounded domain $x \in (-\infty, \infty)$.  Very similar results can
+be derived on bounded domains, i.e.~$x \in (a, b)$.  The primary difference
+is that the infinite integral over continuous $k$ becomes a finite sum
+over discrete $k$, and the basis functions are given by
+\begin{equation}
+  \Phi_k(x) = \exp\left[\frac{2\pi i k (x - a)}{b - a}\right]
+\end{equation}
+with a Fourier series expansion
+\begin{equation}
+  \label{eq:FS_1D}
+  f_{(a, b)}(x) = \sum_{k=-\infty}^\infty f_k \Phi_k(x)
+\end{equation}
+and coefficients given by
+\begin{equation}
+  \label{eq:IFS_1D}
+  f_k = \frac{1}{b - a}\int_a^b f_{(a, b)}(x) \Phi^\ast_k(x) \dd x
+\end{equation}
