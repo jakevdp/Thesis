@@ -455,24 +455,23 @@ and the noise has been made white with unit variance.  The KL modes derived
 from the whitened covariance $\mathcal{C}_F^{(W)}(k, k^\prime)$ will have
 eigenvalues which represent the signal-to-noise in each mode.
 
-\subsection{KL with missing data}
-
 \subsection{\KL: theory to practice}
 The abstract formalism presented above is interesting in itself, but one
 might wonder what practical advantages can be gained from this discussion.
 In practice, we don't deal with an abstract stochastic process $F_t$, but
-with measured astronomical data.  In this section we will discuss the
+with discrete, measured data.  In this section we will discuss the
 practical computational aspects of KL analysis.
 
-Imagine, for the moment, that an astronomer is observing the spectra of
+Imagine, for the moment, that an astronomer has observed the spectra of
 $N$ galaxies.  After normalization and correction for redshift effects,
 the spectra can be encoded as a series of $N$ real-valued functions
-$f{(i)}(\lambda)$ over some defined domain $\lambda \in [a, b]$.
+$f^{(i)}(\lambda)$ over some defined domain $\lambda \in [a, b]$.
 In practice, we measure these spectra at a finite set of wavelengths
 $\myvec{\lambda}^T = [\lambda_1, \lambda_2 \cdots \lambda_M]$ so that
 our observations $\myvec{f}^{(i)}$ become $M$-dimensional vectors.  For
 convenience, we'll store these spectra in a $M \times N$ matrix
-$\mymat{F} = [\myvec{f}^{(1)}, \myvec{f}^{(2)} \cdots \myvec{f}^{(N)}]$
+$\mymat{F} = [\myvec{f}^{(1)}, \myvec{f}^{(2)} \cdots \myvec{f}^{(N)}]^T$,
+where each row of the matrix represents one spectrum.
 These series of spectra $\mymat{F}$ 
 can be considered a realization of a particular
 random process $F_\lambda$.
@@ -486,7 +485,7 @@ and the covariance function can be approximated by the covariance matrix
 \begin{equation}
   \label{eq:mat_corr_def}
   E[F_\lambda F_{\lambda^\prime}] \approx 
-  \mymat{\mathcal{C}_F} = \frac{1}{N - 1} \mymat{\tilde{F}} \mymat{\tilde{F}^T}
+  \mymat{\mathcal{C}_F} = \frac{1}{N - 1} \mymat{\tilde{F}}^T \mymat{\tilde{F}}
 \end{equation}
 where we have defined the centered matrix
 \begin{equation}
@@ -511,7 +510,7 @@ decomposition:
 \begin{equation}
   \label{eq:svd_def}
   \mymat{U}\mymat{\Sigma}\mymat{V}^T
-  = \frac{1}{\sqrt{N - 1}}\mymat{\tilde{F}}^T
+  = \frac{1}{\sqrt{N - 1}}\mymat{\tilde{F}}
 \end{equation}
 where the orthogonal matrices $\mymat{U}$ and $\mymat{V}$ are the left and
 right singular vectors, respectively, and $\mymat{\Sigma}$ is a diagonal matrix
@@ -528,6 +527,92 @@ $\mymat{\Lambda} = \mymat{\Sigma}^2$, and the eigenvectors $\mymat{V}$ are
 identical to the right singular vectors of Equation~\ref{eq:svd_def}
 (up to an arbitrary ordering of columns).
 
+The columns of $\mymat{V}$ are the {\it eigenvectors}, and are the discrete
+representation of the eigenfunctions $e^{(i)}(\lambda)$.  These eigenfunctions
+satisfy all the properties of the KL bases discussed above: they diagonalize
+the sample correlation matrix, they provide the best possible low-rank
+linear approximation to any spectrum from the sample, and in the presence of
+uncorrelated noise, they allow an orthogonal decomposition with a natural
+ranking in signal-to-noise.
+
+Note that the spectrum example, we have no theoretical expectation for the
+correlation matrix $\mathcal{C}(\lambda, \lambda^\prime)$, so we are forced
+to approximate the matrix based on the sample correlation using
+Equation~\ref{eq:mat_corr_def}.  If we had sufficient physical understanding
+of every process at work in each galaxy, it might be possible to compute
+that correlation matrix from theory alone.  The number of variables involved,
+however, make this prospect near impossible.
+
+There are other situations in astronomical measurement, however, when a
+theoretical expectation of the correlation matrix is possible in practice.
+We will see in the following sections how the correlation matrix of
+particular cosmological observations can be computed from theory alone.
+
+
+\subsection{KL with missing data}
+Along with discrete data samples, another challenge when applying KL to
+real data is the presence of missing data: given a KL basis, how can
+one derive the projected coefficients when data is missing?
+Note that in this section we'll assume that the KL basis has been
+obtained independently.  For a discussion of how to approximate the
+Correlation matrix from data with missing values, refer to \citep{Yip04a}.
+
+We'll assume we have an oberved object represented by the vector 
+$\myvec{x} = [x_1, x_2 \cdots x_M]^T$ and a set of normalized
+KL basis functions 
+$\mymat{V} = [\myvec{v_1}, \myvec{v_2} \cdots \myvec{v_M}]$.
+arranged in order of decreasing eigenvalue $\lambda_i$.  We have shown above
+that the best rank-$N$ linear approximation of $\myvec{x}$ is given by
+\begin{equation}
+  \myvec{x}^{(N)} = \sum_{i=1}^{N}a_i\myvec{v_i}.
+\end{equation}
+where $a_i = \myvec{v_i}^T\myvec{x}$.  When $\myvec{x}$ has missing data,
+however, how can we compute $a_i$?  Simply setting the values to zero
+will not work: the reconstruction will then faithfully recover those
+zero values.  We desire instead to constrain the expected contribution
+of each eigenvector to $x$ while {\it ignoring} the contribution of the
+missing data.
+
+A simple solution may be to simply truncate the vectors such that the dot
+product is only computed over unmasked values.  One can quickly convince
+themselves that this is identical to the ``set to zero'' solution just
+discussed.  Furthermore, there is the problem that in general, a set
+of bases truncated in this way does not retain its orthogonality.
+
+Another approach may be to derive a new basis which {\it is} orthogonal
+over the truncated space.  This approach would be orthogonal and complete,
+but the resulting coefficients could not easily be compared to coefficients
+derived from objects observed with different masks.
+
+We need a different approach.  We have shown above that when noise is
+not present, the KL vectors define the optimal basis for rank-$N$
+reconstruction in the least-squares sense.  That is
+\begin{equation}
+  \chi^2 = \left|\left(\myvec{x}
+  - [\mymat{\Phi}^{(N)}]^T\myvec{a}^{(N)}\right)\right|^2
+\end{equation}
+for coefficients $\myvec{a}$ for the truncated orthonormal basis
+$\Phi$ is minimized on average when
+$\mymat{\Phi} = \mymat{V}^{N)}
+= [\myvec{v_1}, \myvec{v_2} \cdots \myvec{v_M}]$, $N \le M$.
+Here, instead, we know the desired basis $\mymat{V}^{(N)}$, and hope to find
+the optimal vector of coefficients $\myvec{a}^{(N)}$ which minimizes the
+$\chi^2$ in the presence of the missing data.  We'll define a 
+diagonal weight matrix $\mymat{W}$ such that $W_{ij} = w_i\delta_{ij}$,
+where $w_i=1$ where $x_i$ is defined, and $w_i=0$ where $x_i$ is
+missing.  Our expression to minimize then becomes
+\begin{equation}
+  \chi^2(\myvec{a}) = \left(\myvec{x} - \myvec{V}
+  - \sum_{i=1}^N a_i \myvec{v^{(i)}}\right)^T
+  \mymat{W}^2 \left(\myvec{x}
+  - \sum_{i=1}^N a_i \myvec{v^{(i)}}\right).
+\end{equation}
+To minimize this with respect to the coefficients $a_i$, we differentiate
+and find
+\begin{equation}
+  \frac{\partial\chi^2}{\partial a_i} = -2 \myvec{x}^t\mymat{W}^2\myvec{v^{(i)}}
+  + 2\sum_{i=1}^N 
+\end{equation}
 
 \newpage
 
