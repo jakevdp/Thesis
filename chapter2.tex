@@ -19,10 +19,11 @@ analysis of the spatial distribution of galaxies
 \citep{Vogeley96,Matsubara00,Pope04}, to characterization of the 
 expected errors in weak lensing surveys \citep{Kilbinger06, Munshi06}.
 In this chapter, we will develop the formalism of KL which will form
-the basis of the results in the subsequent chapters.
+the basis of the applications in the subsequent chapters.
 
 The KL formalism requires the liberal
-employment of algebra with vectors, scalars, and matrices.
+employment of algebra with vectors, scalars, matrices, and their
+generalizations.
 For clarity, we will begin by briefly specifying the notational
 conventions used in this chapter and throughout this work.
 
@@ -73,7 +74,7 @@ of a certain class of oscillatory basis functions.  It is a discrete version
 of the Fourier Transforms used in cosmological power spectrum analysis, and
 discussed in section XXX.
 
-We'll define a set of basis functions 
+We'll define a set of oscillatory basis functions 
 \begin{equation}
   \label{eq:fourier_basis}
   \Phi_k(t) = \frac{1}{\sqrt{b - a}}
@@ -92,7 +93,7 @@ of this statement can be found elsewhere, but below we will lend support
 to this claim.
 
 Given the claim that Equation~\ref{eq:fourier_1D} holds, how can we
-compute the fourier coefficients $a_k$ associated with 
+compute the Fourier coefficients $a_k$ associated with 
 a particular $f(t)$?  Though the expression is well-known, we'll briefly
 derive it here because it illuminates some of the properties of
 Fourier transforms which will generalize to KL transforms.
@@ -215,7 +216,7 @@ random process is given by
   E[F_t] = \lim_{N \to \infty} \frac{1}{N} \sum_{i=1}^N f^{(i)}(t)
 \end{equation}
 For simplicity, we'll assume that the random process $F_t$ is {\it
-centered}; that is $E[\tilde{F}_t] = 0$.  A general random process can be
+centered}; that is $E[F_t] = 0$.  A general random process can be
 centered by subtracting the expectation value for each $t$.
 A random process like $F_t$ can be characterized
 by its covariance function, which is defined as
@@ -253,7 +254,7 @@ $e_k(t)$ and $e_{k^\prime}(t)$.  Consider the quantity
 \end{equation}
 Because $\mathcal{C}_F(t, t^\prime) = \mathcal{C}_F(t, t^\prime)$, and
 because the order of integration can be switched, this can be evaluated
-two different ways:
+two different ways, which must be equal:
 \begin{eqnarray}
   \int_a^b \dd t e_k(t)
   \int_a^b \dd t^\prime \mathcal{C}_F(t, t^\prime) e_{k^\prime}(t^\prime) &=&
@@ -274,21 +275,28 @@ $\lambda_k = \lambda_{k^\prime}$, one can still construct orthogonal
 vectors by linear combinations:
 \begin{eqnarray}
   e_+(t) &=& \frac{e_k(t) + e_{k^\prime}(t)}{\sqrt{2}} \nonumber\\
-  e_-(t) &=& \frac{e_k(t) - e_{k^\prime}(t)}{\sqrt{2}} \nonumber
+  e_-(t) &=& \frac{e_k(t) - e_{k^\prime}(t)}{\sqrt{2}}. \nonumber
 \end{eqnarray}
-leads to two new orthogonal eigenfunctions $e_+$ and $e_-$ with the
-same eigenvalue $\lambda_k$.}.  Because of the
-requirement that eigenfunctions be nonzero, we can without
-loss of generality require that the eigenfunctions are normalized; that is,
+This leads to two new orthogonal eigenfunctions $e_+$ and $e_-$ with the
+same eigenvalue $\lambda_k$.}.  From the definition in
+Equation~\ref{eq:eigfunc_def}, we see that if $e_k(t)$ is an eigenfunction
+with eigenvalue $\lambda_k$,
+then $C\, e_k(t)$ is an eigenfunction with eigenvalue $\lambda_k$ as well.
+To make the choice of eigenfunction more definite, we will assume all
+eigenfunctions are normalized: that is
 \begin{equation}
   \int_a^b \dd t e_k(t) e_{k^\prime}(t) = \delta_{kk^\prime}
 \end{equation}
-for all $k$.
+for all $k$.  This still allows any eigenfunction to have an arbitrary
+phase: that is, an eigenfunction may be multiplied by $e^{i\theta}$ for
+any theta, and still satisfy our orthogonality condition.  This fact
+will become important later.
 
-Thus our eigenfunctions form an orthonormal basis for 
-the space of functions in $F_t$.  In general the eigenfunctions
+The net result is that the eigenfunctions $e_k(t)$ form an orthonormal
+basis for the space of functions represented by the random process $F_t$.
+In general, the eigenfunctions
 also satisfy the completeness relation: that is, 
-an arbitrary function $f(t)$ can be approximated
+an arbitrary function $f(t)$ can be approximated by
 \begin{equation}
   f(t) = \sum_{k=1}^N a_k e_k(t)
 \end{equation}
@@ -307,6 +315,9 @@ above, we have
   \label{eq:Ft_decomp}
   F_t = \sum_{k=1}^\infty A_k e_k(t).
 \end{equation}
+where here $A_k$ can be thought of as a set of coefficients $a_k^{(i)}$
+in the same way that the random process $F_t$ can be thought of as a
+set of functions $f^{(i)}(t)$.
 Multiplying both sides by $e_{k^\prime}(t)$, integrating, and using the
 orthogonality of eigenvectors (this is analogous to the derivation
 in Equations~\ref{eq:fourier_coef_der}-\ref{eq:fourier_coef}) leads to
@@ -347,19 +358,26 @@ This result is the \KL\ theorem, and it has many ramifications that will
 be discussed below.
 
 \subsection{Partial Reconstructions}
+\label{sec:partial_recons}
 We have shown that \KL\ provides an orthonormal basis for a random field
-with uncorrelated projection coefficients.  Further, \KL\ provides the
+with uncorrelated projection coefficients.  We can go further and show
+that \KL\ provides the
 optimal orthonormal basis for low-rank approximations of functions in
 a random field.
 
-Let us consider an arbitrary orthonormal basis
-$\phi_k(t)$, with $F_t = \sum_k B_k\phi_k(t)$.  We'll seek to minimize
-the expectation value of the squared error
+Let us consider an arbitrary complete orthonormal basis
+$\phi_k(t)$, with $F_t = \sum_{k=1}^\infty B_k\phi_k(t)$.
+Given this basis, we'll define the low-rank approximation of $F_t$
+\begin{equation}
+  F^{(N)}_t = \sum_{k=1}^N B_k\phi_k(t)
+\end{equation}
+We'll seek to minimize the expectation value of the squared error
 \begin{eqnarray}
   \mathcal{E}^2_N &=& \int_a^b \left[F_t - F_t^{(N)}\right]^2 \dd t
   \nonumber\\
-  &=& \int_a^b \left[\sum_{k = N + 1}^\infty A_k e_k(t)\right]^2 \dd t.
+  &=& \int_a^b \left[\sum_{k = N + 1}^\infty B_k \phi_k(t)\right]^2 \dd t.
 \end{eqnarray}
+
 
 Expanding the sum leads to
 \begin{eqnarray}
@@ -378,7 +396,7 @@ Equation~\ref{eq:F_k_def} for $B_k$, we find
   E\left[\sum_{k=N+1}^\infty \int_a^b \dd t \int_a^b \dd t^\prime
   F_tF_{t^\prime} \phi_m(t)\phi_m(t^\prime)\right] \nonumber\\
   &=& \sum_{k=N+1}^\infty \int_a^b \dd t \int_a^b \dd t^\prime
-  C(t, t^\prime) \phi_m(t)\phi_m(t^\prime)
+  C_F(t, t^\prime) \phi_m(t)\phi_m(t^\prime)
 \end{eqnarray}
 
 We'd like to minimize this expected error over the basis $\phi_m(t)$, subject
@@ -387,8 +405,8 @@ this by the method of Lagrange multipliers.  Our Lagrangian is
 \begin{equation}
   \mathcal{L}(\{\phi(t)\}) = \sum_{k=N+1}^\infty
   \left[\int_a^b \dd t \int_a^b \dd t^\prime
-  C(t, t^\prime) \phi_m(t)\phi_m(t^\prime)
-  - \lambda_k(1 - \int_a^b \phi_m(t)^2 \dd t)
+  C_F(t, t^\prime) \phi_m(t)\phi_m(t^\prime)
+  - \lambda_k\left(1 - \int_a^b \phi_m(t)^2 \dd t\right)
   \right]
 \end{equation}
 Minimizing this with respect to $\phi_k$ gives
@@ -398,9 +416,10 @@ Minimizing this with respect to $\phi_k$ gives
   - \lambda_k \phi_k(t).
 \end{equation}
 The optimumum for each $k$ is where this derivative equals zero; setting to
-zero and solving recovers the original eigenvalue problem from which we
+zero and solving recovers the original eigenvalue problem
+ (Eq. \ref{eq:eigfunc_def}) from which we
 derived the KL basis $\{e_k(t)\}$.  By the uniqueness of the eigenvalue
-decomposition, we show that the KL basis is the optimal basis for low-rank
+decomposition, this shows that the KL basis is the optimal basis for low-rank
 approximations of functions drawn from $F_t$.  Furthermore, for an
 approximation using $N$ eigenvectors, the mean squared error is given by
 \begin{eqnarray}
@@ -412,7 +431,11 @@ expectation value of the reconstruction error $\mathcal{E}_N$ for all $N$,
 we simply need to order the eigenvalues such that $\lambda_k \ge \lambda_{k+1}$
 for all eigenvalue-eigenfunction pairs $(\lambda_k, e_k(t))$.
 
+Because of this, throughout this work we will follow this convention when
+ordering the eigenvalues in and KL decomposition.
+
 \subsection{KL in the presence of noise}
+\label{sec:whitening}
 In practice, the observed random field $F_t$ is composed of the sum of
 a signal $S_t$ and noise $N_t$.  We'll continue to assume that both of these
 are centered.  The covariance matrix then becomes
@@ -422,7 +445,8 @@ are centered.  The covariance matrix then becomes
 Under the assumption that the signal $S_t$ and noise $N_t$ are uncorrelated,
 this can be simplified to
 \begin{eqnarray}
-  \mathcal{C}_F(t, t^\prime) &=& E[S_t^2] + E[N_t^2] \nonumber\\
+  \mathcal{C}_F(t, t^\prime) &=& E[S_t S_{t^\prime}]
+  + E[N_t N_{t^\prime}] \nonumber\\
   &=& \mathcal{C}_S(t, t^\prime) + \mathcal{C}_N(t, t^\prime)
 \end{eqnarray}
 The \KL\ eigenfunctions always diagonalize the full covariance
@@ -473,7 +497,7 @@ convenience, we'll store these spectra in a $M \times N$ matrix
 $\mymat{F} = [\myvec{f}^{(1)}, \myvec{f}^{(2)} \cdots \myvec{f}^{(N)}]^T$,
 where each row of the matrix represents one spectrum.
 These series of spectra $\mymat{F}$ 
-can be considered a realization of a particular
+can be considered a finite realization of a particular
 random process $F_\lambda$.
 
 The expectation value $E[F_\lambda]$ can be approximated via the sample mean:
@@ -489,9 +513,12 @@ and the covariance function can be approximated by the covariance matrix
 \end{equation}
 where we have defined the centered matrix
 \begin{equation}
-  \mymat{\tilde{F}} \equiv \mymat{F} - \myvec{\bar{f}}\myvec{1}_N^T.
+  \mymat{\tilde{F}} \equiv \mymat{F} - \myvec{1}_N\myvec{\bar{f}}^T.
 \end{equation}
-and $\myvec{1}_N$ is the length-$N$ vector of ones.
+and $\myvec{1}_N$ is the length-$N$ vector of ones.  The $N-1$ in the
+denominator of Equation~\ref{eq:mat_corr_def} is called the
+{\it Bessel Correction}, and results from the reduced number of degrees of
+freedom after the mean is subtracted.
 
 We can approximate the eigenfunctions $e^{(i)}(\lambda)$ and
 eigenvalues $\lambda_i$ via the diagonalization 
@@ -512,7 +539,8 @@ decomposition:
   \mymat{U}\mymat{\Sigma}\mymat{V}^T
   = \frac{1}{\sqrt{N - 1}}\mymat{\tilde{F}}
 \end{equation}
-where the orthogonal matrices $\mymat{U}$ and $\mymat{V}$ are the left and
+where the orthogonal matrices $\mymat{U}$ and $\mymat{V}$ are called the
+left and
 right singular vectors, respectively, and $\mymat{\Sigma}$ is a diagonal matrix
 of singular values.  One can quickly show from Equations~\ref{eq:mat_corr_def}
 and \ref{eq:svd_def} that
@@ -524,8 +552,10 @@ and \ref{eq:svd_def} that
 \end{eqnarray}
 Comparing to Equation~\ref{eq:evd_def}, we see that 
 $\mymat{\Lambda} = \mymat{\Sigma}^2$, and the eigenvectors $\mymat{V}$ are
-identical to the right singular vectors of Equation~\ref{eq:svd_def}
-(up to an arbitrary ordering of columns).
+identical to the right singular vectors of Equation~\ref{eq:svd_def},
+up to an arbitrary ordering of columns.  Ordering our eigenvalues
+according to the rule in \S\ref{sec:partial_recons} takes care of
+this uncertainty.
 
 The columns of $\mymat{V}$ are the {\it eigenvectors}, and are the discrete
 representation of the eigenfunctions $e^{(i)}(\lambda)$.  These eigenfunctions
@@ -535,7 +565,7 @@ linear approximation to any spectrum from the sample, and in the presence of
 uncorrelated noise, they allow an orthogonal decomposition with a natural
 ranking in signal-to-noise.
 
-Note that the spectrum example, we have no theoretical expectation for the
+In the case of the spectrum example, we have no theoretical expectation for the
 correlation matrix $\mathcal{C}(\lambda, \lambda^\prime)$, so we are forced
 to approximate the matrix based on the sample correlation using
 Equation~\ref{eq:mat_corr_def}.  If we had sufficient physical understanding
@@ -546,7 +576,7 @@ however, make this prospect near impossible.
 There are other situations in astronomical measurement, however, when a
 theoretical expectation of the correlation matrix is possible in practice.
 We will see in the following sections how the correlation matrix of
-particular cosmological observations can be computed from theory alone.
+particular cosmological observations can be approximated from theory alone.
 
 
 \subsection{KL with missing data}
@@ -555,27 +585,34 @@ real data is the presence of missing data: given a KL basis, how can
 one derive the projected coefficients when data is missing?
 Note that in this section we'll assume that the KL basis has been
 obtained independently.  For a discussion of how to approximate the
-Correlation matrix from data with missing values, refer to \citep{Yip04a}.
+correlation matrix from data with missing values, refer to \citet{Yip04a}.
 
-We'll assume we have an oberved object represented by the vector 
-$\myvec{x} = [x_1, x_2 \cdots x_M]^T$ and a set of normalized
+To begin, we'll assume that we have
+an observed object represented by the $K$-dimensional vector 
+$\myvec{x} = [x_1, x_2 \cdots x_K]^T$ and a set of normalized
 KL basis functions 
-$\mymat{V} = [\myvec{v_1}, \myvec{v_2} \cdots \myvec{v_M}]$.
+$\mymat{V} = [\myvec{v_1}, \myvec{v_2} \cdots \myvec{v_K}]$.
 arranged in order of decreasing eigenvalue $\lambda_i$.  We have shown above
 that the best rank-$N$ linear approximation of $\myvec{x}$ is given by
 \begin{equation}
   \myvec{x}^{(N)} = \sum_{i=1}^{N}a_i\myvec{v_i}.
 \end{equation}
-where $a_i = \myvec{v_i}^T\myvec{x}$.  When $\myvec{x}$ has missing data,
-however, how can we compute $a_i$?  Simply setting the values to zero
+where the coefficients can be calulated as
+\begin{equation}
+  \label{eq:a_coeff_def}
+  a_i = \myvec{v_i}^T\myvec{x}.
+\end{equation}
+When $\myvec{x}$ has missing data,
+however, the question of how to compute $a_i$ is not as straightforward.
+Simply setting the missing values to zero
 will not work: the reconstruction will then faithfully recover those
 zero values.  We desire instead to constrain the expected contribution
 of each eigenvector to $x$ while {\it ignoring} the contribution of the
 missing data.
 
 A simple solution may be to simply truncate the vectors such that the dot
-product is only computed over unmasked values.  One can quickly convince
-themselves that this is identical to the ``set to zero'' solution just
+product is only computed over unmasked values.  It is easy to see that this
+is identical to the  ``set to zero'' solution just
 discussed.  Furthermore, there is the problem that in general, a set
 of bases truncated in this way does not retain its orthogonality.
 
@@ -586,33 +623,98 @@ derived from objects observed with different masks.
 
 We need a different approach.  We have shown above that when noise is
 not present, the KL vectors define the optimal basis for rank-$N$
-reconstruction in the least-squares sense.  That is
+reconstruction in the least-squares sense.  That is, for an arbitrary
+truncated orthonormal basis $\mymat{\Phi}_{(N)}$, (where truncated means
+we use only the first $N$ columns of $\mymat{\Phi}$),
 \begin{equation}
   \chi^2 = \left|\left(\myvec{x}
-  - [\mymat{\Phi}^{(N)}]^T\myvec{a}^{(N)}\right)\right|^2
+  - \mymat{\Phi}_{(N)}^T\myvec{a}^{(N)}\right)\right|^2
 \end{equation}
-for coefficients $\myvec{a}$ for the truncated orthonormal basis
-$\Phi$ is minimized on average when
-$\mymat{\Phi} = \mymat{V}^{N)}
+is minimized on average when
+$\mymat{\Phi} = \mymat{V}_{(N)}
 = [\myvec{v_1}, \myvec{v_2} \cdots \myvec{v_M}]$, $N \le M$.
-Here, instead, we know the desired basis $\mymat{V}^{(N)}$, and hope to find
-the optimal vector of coefficients $\myvec{a}^{(N)}$ which minimizes the
-$\chi^2$ in the presence of the missing data.  We'll define a 
+Here we flip the problem: we know the desired basis $\mymat{V}_{(N)}$,
+and hope to find the optimal vector of coefficients $\myvec{a}^{(N)}$
+which minimizes the $\chi^2$ in the presence of the missing data
+\citep{Connolly99}.
+We'll define a 
 diagonal weight matrix $\mymat{W}$ such that $W_{ij} = w_i\delta_{ij}$,
 where $w_i=1$ where $x_i$ is defined, and $w_i=0$ where $x_i$ is
 missing.  Our expression to minimize then becomes
 \begin{equation}
-  \chi^2(\myvec{a}) = \left(\myvec{x} - \myvec{V}
-  - \sum_{i=1}^N a_i \myvec{v^{(i)}}\right)^T
+  \chi^2(\myvec{a}^{(N)}) = \left(\myvec{x}
+  - \sum_{i=1}^N a^{(N)}_i \myvec{v^{(i)}}\right)^T
   \mymat{W}^2 \left(\myvec{x}
-  - \sum_{i=1}^N a_i \myvec{v^{(i)}}\right).
+  - \sum_{i=1}^N a_{(N),i} \myvec{v^{(i)}}\right).
 \end{equation}
-To minimize this with respect to the coefficients $a_i$, we differentiate
+To minimize this with respect to the coefficients $a_{(N),i}$, we differentiate
 and find
 \begin{equation}
-  \frac{\partial\chi^2}{\partial a_i} = -2 \myvec{x}^t\mymat{W}^2\myvec{v^{(i)}}
-  + 2\sum_{i=1}^N 
+  \frac{\partial\chi^2}{\partial a_{(N),i}} = -2 \myvec{x}^t\mymat{W}^2\myvec{v^{(i)}}
+  + 2\sum_{j=1}^N a_{(N),j} \myvec{v^{(j)}}^T \mymat{W}^2 \mymat{v^{(i)}}.
 \end{equation}
+Setting the derivative to zero and combining terms gives
+\begin{equation}
+  \label{eq:masked_coeff}
+  \myvec{x}^T\mymat{W}^2\myvec{v^{(i)}} =
+  \sum_{j=1}^N a^{(N)}_j \myvec{v^{(j)}}^T \mymat{W}^2 \mymat{v^{(i)}}.
+\end{equation}
+If there are no areas of missing data, then $\mymat{W} = \mymat{I}$ and we
+simply recover $a_i = \myvec{v_i}^T\myvec{x}$, our standard expression
+for finding the KL coefficients with no missing data.
+Because the inner-product of
+$\myvec{v^{(i)}}$ and $\myvec{v^{(j)}}$ is modulated by $\mymat{W}$, however,
+there is no delta function to collapse the sum.
+
+We can simplify this notation by defining the correlation matrix of the
+mask $\mymat{M}_{(N)}$, such that
+\begin{equation}
+  [\mymat{M}_N]_{ij} \equiv \myvec{v^{(j)}}^T \mymat{W}^2 \mymat{v^{(i)}}
+\end{equation}
+so that eq.~\ref{eq:masked_coeff} can be compactly written
+\begin{equation}
+  \myvec{x}^T \mymat{W}^2 \mymat{V}_{(N)}
+  = {\myvec{a}^{(N)}}^T \mymat{M}_N.
+\end{equation}
+From this, we can quickly see that the optimal set of coefficients
+$\myvec{a}^{(N)}$ is given by
+\begin{equation}
+  \label{eq:a_truncated}
+  \myvec{a}^{(N)} = [\mymat{M}_N]^{-1}
+  \mymat{V}_{(N)}^T \mymat{W}^2 \myvec{x}.
+\end{equation}
+This is the equivalent of the expression in eq.~\ref{eq:a_coeff_def}:
+if $\mymat{W}$ is set equal to the identity matrix (indicating no
+missing data), then $\mymat{M}_N$ is also the identity and we recover
+eq.~\ref{eq:a_coeff_def} exactly.
+
+If some of the diagonal entries in $\mymat{W}$ are zero, then the
+correlation matrix for the full set of $K$ eigenvectors is rank-deficient,
+and cannot be inverted as required for eq.~\ref{eq:a_truncated}.  For this
+reason, it is essential to use the truncated eigenvectors $\mymat{V}_{(N)}$,
+with $N \le rank(\mymat{W})$, the rank of the matrix $\mymat{W}$.  For the
+case here where $\mymat{W}$ is a diagonal matrix consisting of zeros and
+ones, the rank is equivalent to the trace, or the sum of nonzero diagonal
+terms.
+
+Once these approximate KL coefficients $\myvec{a}^{(N)}$ are determined,
+it is straightforward to use these to approximate the unmasked vector
+$\myvec{x}$:
+\begin{equation}
+  \myvec{x} \approx \sum_{i=0}^N a_i^{(N)} \myvec{v^{(i)}}.
+\end{equation}
+Here we have used the coefficients determined from the unmasked region of
+the data to constrain the unobserved value in the masked regions.
+
+This could be further generalized by allowing $\mymat{W}$ to be an arbitrary
+matrix, for instance encoding the inverse of the noise covariance
+associated with the observed vector $\myvec{x}$.  In unconstrained regions,
+the noise is infinite and the inverse is zero.  This leads to very similar
+results to those expressed here (in this case, $\mymat{W}^2$ is replaced
+by $\mymat{W}^T\mymat{W}$).  This is equivalent to the whitening operation
+discussed in \S\ref{sec:whitening}.  We will not use this formalism here, so we
+leave it only as a suggested extension.
+
 
 \newpage
 
