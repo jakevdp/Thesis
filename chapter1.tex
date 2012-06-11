@@ -47,6 +47,46 @@ Throughout, we'll point out the relevant observational work which supports
 and constrains these theories.
 
 \section{FLRW Metric}
+The physical study of cosmology is based on the assumption of symmetry:
+that the universe on the largest scales is homogeneous and isotropic.
+Homogeneity is an expression of translational symmetry: the appearance of
+the universe does not depend on the location of the observer.  Isotropy
+is an expression of rotational symmetry: the appearance of the universe
+does not change with respect to the orientation of the observer.
+These assumptions are clearly incorrect at small scales -- our galaxy
+has a much higher density of stars in the central bulge than in the
+outer halo, for example -- but these assumptions appear to hold at
+the largest scales.  At distance scales larger than the size of
+typical galaxy clusters (about 10 Mpc or more), the distribution of
+quasars and galaxies reflect the nearly homogeneous and isotropic
+nature of large scale structure.  More importantly, the Cosmic Microwave
+Background appears homogeneous and isotropic to within one part in
+$10^5$, giving evidence that our assumptions of homogeneity and isotropy
+are well-founded for the universe as a whole.
+
+The most general metric for a homogeneous and isotropic space-time is due
+to Howard Robertson and Arthur Walker, who showed that the space-time
+distance $ds$ in spherical coordinates is given by
+\begin{equation}
+  \label{eq:FLRW_metric}
+  ds^2 = -c^2 dt^2 + a(t)^2\left[dr^2 + S_\kappa^2(r)d\Phi^2\right]
+\end{equation}
+where $t$ is the time coordinate, $r$ and $\Phi$ are the spatial coordinate,
+$a(t)$ describes the distance scale (which may be an arbitrary function
+of $t$), and $S_\kappa^2(r)$ is the curvature term.  The curvature term
+depends on the curvature, $\kappa$, which may be either positive, negative,
+or zero:
+\begin{equation}
+  S_\kappa(r) = \left\{
+  \begin{array}{ll}
+    R\,\sin(r/R) & \kappa = +1\\
+    r & \kappa = 0\\
+    R\,\sinh(r/R) & \kappa = -1
+  \end{array}
+  \right.
+\end{equation}
+where $R$ is the radius of curvature today.
+
 
 \section{The Friedmann Equations}
 \begin{itemize}
