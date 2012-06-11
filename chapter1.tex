@@ -90,13 +90,24 @@ where $R$ is the radius of curvature today.  Often, the curvature
 sign $\kappa$ and radius $R$ are compactly expressed in a single curvature
 parameter $k$, such that $\kappa = k/|k|$ and $R = |k|^{-1/2}$.
 
+An interesting aspect of this metric is the scale factor $a(t)$.  A general
+homogeneous and isotropic universe is not necessarily static: it can be
+expanding or contracting with time.  The nature of this expansion cannot
+be derived from purely geometric means.  The description of the dynamics
+of cosmic expansion comes from the field equations of Einstein's theory
+of General Relativity.
+
 \section{The Friedmann Equations}
-The Robinson-Walker metric shown above is a purely geometric result,
+The Robertson-Walker metric shown above is a purely geometric result,
 where the scale factor $a(t)$ is arbitrary and unspecified.
 Friedmann and Lemaitre had earlier independently derived this expression
 from Einstein's field equations, with the addition of certain dynamical
-constraints on the scale factor.  These constraints are given by the
-Friedmann equations\footnote{For a GR-based derivation of the Friedmann
+constraints on the scale factor.  For this reason, the Robertson-Walker
+metric is often referred to as the Friedmann-Robertson-Walker metric
+or the Friedmann-Lemaitre-Robertson-Walker (FLRW) metric.
+The general relativistic constraints on the scale factor $a(t)$
+are compactly expressed by the Friedmann
+equations\footnote{For a GR-based derivation of the Friedmann
   equations, refer to \citet{peebles1993principles}}:
 \begin{equation}
   \label{eq:friedmann_1}
@@ -110,7 +121,9 @@ Friedmann equations\footnote{For a GR-based derivation of the Friedmann
   = -\,\frac{4\pi G}{3c^2}(\varepsilon + 3P) + \frac{\Lambda}{3}.
 \end{equation}
 Here the scale factor $a$ is understood to be a function of time, and the
-dots represent derivatives with respect to time.  $\varepsilon$ and $P$ are
+dots represent derivatives with respect to time.
+By convention, the scale factor at the present day is $a(t_0) = 1$.
+$\varepsilon$ and $P$ are
 the energy density and pressure of the mass-energy in the universe, and
 $\Lambda$ represents the cosmological constant.
 Equations~\ref{eq:friedmann_1} and \ref{eq:friedmann_2} are the first and
@@ -120,29 +133,139 @@ can be easily derived from the first two:
   \label{eq:friedmann_3}
   \dot{\varepsilon} = -3\,\frac{\dot{a}}{a}\,(\varepsilon + P).
 \end{equation}
-This is an expression equivalent to the first law of thermodynamics.
+This expression is equivalent to the first law of thermodynamics
+expressed for the universe as a whole.
 
 We can simplify these further by writing the pressure $P$ and energy
 density $\varepsilon$ in terms of an equation of state parameter
 \begin{equation}
   \label{eq:w_EOS}
-  w = P / \varepsilon.
+  w \equiv P / \varepsilon.
 \end{equation}
-This is a convenient parametrization, because it allows us to quickly
-distinguish between the various forms of mass-energy which comprise the
-Universe.
+Using this, the solution of eqn.~\ref{eq:friedmann_3} gives
+\begin{equation}
+  \varepsilon = \varepsilon_0\, a^{-3(1 + w)}
+\end{equation}
+for $w$ constant in time\footnote{the equivalent expression for
+  non-constant $w(t)$ is slightly more complicated, but can be easily
+  derived from eqn.~\ref{eq:friedmann_3}.}.
+Here $\varepsilon_0 = \varepsilon(t_0)$ is the energy density today,
+and we have used the standard convention $a(t_0) = 1$.
+Given this parametrization, we can now
+separate the various contributions to the mass-energy of the universe
+and re-write eqn.~\ref{eq:friedmann_1} in terms of the equation of
+state for each:
+\begin{equation}
+  \label{eq:friedmann_1_split}
+  \left(\frac{\dot{a}}{a}\right)^2 = \frac{8\pi G}{3c^2}
+  \sum_w \varepsilon_{w, 0} \,\, a^{-3(1 + w)}
+\end{equation}
+where $\varepsilon_{w,0}$ is the energy density of each species at present.
+The various possible contributions are:
 \begin{description}
-  \item[Non-relativistic mass-energy:] Non-relativistic matter (often known
+  \item[Non-relativistic matter:] Non-relativistic matter (often known
     as {\it cold matter}) has kinetic energy much less than its rest mass;
     in other words $P \sim kT \ll \varepsilon$.  So non-relativistic matter
     has $w = 0$
-  \item[Relativistic mass-energy:] Relativistic matter 
-\end{itemize}
+  \item[Radiation:] Radiation has energy per particle
+    proportional to the momentum times the speed of light.  From basic
+    electrodynamics, one can show that for an ideal photon gas, each spatial
+    degree of freedom contributes equally to the energy, so that the pressure
+    is $P = dp/dt = \varepsilon / 3$.  So relativistic mass-energy has
+    $w = 1/3$.
+  \item[Vacuum energy:] The vacuum energy or cosmological constant has
+    constant energy density.  So by Equation~\ref{eq:friedmann_3},
+    $P = -\varepsilon$ and $w = -1$.
+  \item[Curvature:] Though it may seem strange to think about the curvature
+    of space as having an energy density, in General Relativity the curvature
+    is in some sense a stand-in for gravitational potential energy.  Comparing
+    eqns.~\ref{eq:friedmann_1} and \ref{eq:friedmann_1_split}, the dependence
+    of the curvature term on scale factor means it has an effective equation
+    of state parameter $w = -1/3$.  This makes it clear why curvature does
+    not appear in eqn.~\ref{eq:friedmann_2}: for $w=-1/3$,
+    $\varepsilon + 3P = 0$, and the presence of curvature cannot lead to
+    a change in the expansion rate.
+  \item[General Quintessence:] Quintessence is defined as any sort of matter
+    which can balance the gravitational attraction, leading to accelerated
+    expansion.  By Equation~\ref{eq:friedmann_2}, $\ddot{a}/a > 0$ only
+    if $w < - 1/3$.  We see that the cosmological constant is a form of
+    quintessence.
+  \item[Relativistic Matter:] Relativistic matter has energy given by
+    $E^2 = p^2c^2 + m^2 c^4$, where $p$ is the total momentum and $m$ is
+    the rest-mass.  If $pc \ll mc^2$, we have the non-relativistic
+    case above, and find $w \to 0$.  If $pc \gg mc^2$, we have the radiation
+    case, and find $w \to 1/3$.  For general relativistic matter, then, we have
+    $0 \le w \le 1/3$, with the exact value dependent on the energy density.
+\end{description}
+
+The first Friedmann equation (eqn.~\ref{eq:friedmann_1}) is commonly expressed
+in terms of dimensionless parameters via the generalization in
+eqn.~\ref{eq:friedmann_1_split}.  If we define the Hubble parameter
+\begin{equation}
+  \label{eq:hubble_parameter}
+  H \equiv \frac{\dot{a}}{a},
+\end{equation}
+and let $H_0$ be the value of the hubble parameter today, then
+eqn.~\ref{eq:friedmann_1_split} becomes
+\begin{equation}
+  \left(\frac{H}{H_0}\right)^2 = \frac{8\pi G}{3H_0^2c^2}
+  \sum_w \varepsilon_{w, 0} \,\, a^{-3(1 + w)}.
+\end{equation}
+This motivates the definition of the critical density
+\begin{equation}
+  \label{eq:critical_density}
+  \varepsilon_c \equiv \frac{3 H^2 c^2}{8\pi G},
+\end{equation}
+where, to be explicit, both the critical density $\varepsilon_c$ and
+hubble parameter $H$ are functions of time.  With this definition,
+and defining the dimensionless density parameter
+\begin{equation}
+  \label{eq:density_parameter}
+  \Omega_w(t) \equiv \varepsilon_w(t) / \varepsilon_c(t)
+\end{equation}
+the Friedmann equation can be compactly expressed
+\begin{eqnarray}
+  \left(\frac{H}{H_0}\right)^2
+  &=& \sum_w \Omega_w(t) \nonumber\\
+  &=& \sum_w \Omega_{w, 0}\,\, a^{-3(1 + w)}.
+\end{eqnarray}
+where the subscript $0$ indicates the value of a time-dependent quantity
+at the present.
+The most important contributors to the density of the universe are
+dark energy $(\Omega_\Lambda)$, matter $(\Omega_M)$, radiation $(\Omega_R)$,
+and curvature $(\Omega_\kappa)$.  Neglecting other components gives the
+familiar dimensionless form of the Friedmann Equation:
+\begin{equation}
+  \left(\frac{H}{H_0}\right)^2
+  = \Omega_{M,0}\,\,a^{-3} + \Omega_{R,0}\,\,a^{-4}
+  + \Omega_{\kappa,0}\,\,a^{-2} + \Omega_\Lambda
+\end{equation}
+
+In many ways the history of $20^{\rm th}$ century cosmology is an attempt to
+understand the relative contributions of matter, radiation, curvature,
+and dark energy to the hubble parameter, which measures the expansion
+rate of the universe.
+
+Talk about redshift and Hubble...
 
 \begin{itemize}
-  \item Discuss derivation and dimensionless representation
-  \item Cepheids, MS fitting, Tully-Fisher relationship, supernovae
+  \item Einstein's blunder
+  \item Standard candles
+  \item Cepheids and Hubble's measurement
+  \item Tully-Fisher, etc.
+  \item supernovae
 \end{itemize}
+
+The results summarized above are all related in that they are based on the
+idea of a standard candle: if we can determine the intrinsic brightness
+of an object as well as its redshift, then we can compare this to the
+apparent brightness and constrain the hubble parameter $H(t)$.
+Another path to this sort of constraint comes from standard {\it rulers}
+rather than standard candles.  If we know the redshift as well as the
+intrinsic size of an object, then we can use its apparent size to
+constrain cosmological parameters.  One standard ruler is given by the
+size-scales of structure in the universe.
+
 
 \section{The Growth of Structure}
 
