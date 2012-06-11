@@ -77,6 +77,7 @@ of $t$), and $S_\kappa^2(r)$ is the curvature term.  The curvature term
 depends on the curvature, $\kappa$, which may be either positive, negative,
 or zero:
 \begin{equation}
+  \label{eq:FLRW_curvature}
   S_\kappa(r) = \left\{
   \begin{array}{ll}
     R\,\sin(r/R) & \kappa = +1\\
@@ -85,12 +86,57 @@ or zero:
   \end{array}
   \right.
 \end{equation}
-where $R$ is the radius of curvature today.
-
+where $R$ is the radius of curvature today.  Often, the curvature
+sign $\kappa$ and radius $R$ are compactly expressed in a single curvature
+parameter $k$, such that $\kappa = k/|k|$ and $R = |k|^{-1/2}$.
 
 \section{The Friedmann Equations}
-\begin{itemize}
-  \item Just the basics
+The Robinson-Walker metric shown above is a purely geometric result,
+where the scale factor $a(t)$ is arbitrary and unspecified.
+Friedmann and Lemaitre had earlier independently derived this expression
+from Einstein's field equations, with the addition of certain dynamical
+constraints on the scale factor.  These constraints are given by the
+Friedmann equations\footnote{For a GR-based derivation of the Friedmann
+  equations, refer to \citet{peebles1993principles}}:
+\begin{equation}
+  \label{eq:friedmann_1}
+  \left(\frac{\dot{a}}{a}\right)^2
+  = \frac{8\pi G}{3c^2}\varepsilon
+  + \frac{\Lambda}{3} - \frac{\kappa c^2}{a^2 R^2}
+\end{equation}
+\begin{equation}
+  \label{eq:friedmann_2}
+  \frac{\ddot{a}}{a}
+  = -\,\frac{4\pi G}{3c^2}(\varepsilon + 3P) + \frac{\Lambda}{3}.
+\end{equation}
+Here the scale factor $a$ is understood to be a function of time, and the
+dots represent derivatives with respect to time.  $\varepsilon$ and $P$ are
+the energy density and pressure of the mass-energy in the universe, and
+$\Lambda$ represents the cosmological constant.
+Equations~\ref{eq:friedmann_1} and \ref{eq:friedmann_2} are the first and
+second Friedmann equations, respectively.  The third Friedmann equation
+can be easily derived from the first two:
+\begin{equation}
+  \label{eq:friedmann_3}
+  \dot{\varepsilon} = -3\,\frac{\dot{a}}{a}\,(\varepsilon + P).
+\end{equation}
+This is an expression equivalent to the first law of thermodynamics.
+
+We can simplify these further by writing the pressure $P$ and energy
+density $\varepsilon$ in terms of an equation of state parameter
+\begin{equation}
+  \label{eq:w_EOS}
+  w = P / \varepsilon.
+\end{equation}
+This is a convenient parametrization, because it allows us to quickly
+distinguish between the various forms of mass-energy which comprise the
+Universe.
+\begin{description}
+  \item[Non-relativistic mass-energy:] Non-relativistic matter (often known
+    as {\it cold matter}) has kinetic energy much less than its rest mass;
+    in other words $P \sim kT \ll \varepsilon$.  So non-relativistic matter
+    has $w = 0$
+  \item[Relativistic mass-energy:] Relativistic matter 
 \end{itemize}
 
 \begin{itemize}
