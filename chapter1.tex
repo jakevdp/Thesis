@@ -98,6 +98,7 @@ of cosmic expansion comes from the field equations of Einstein's theory
 of General Relativity.
 
 \section{The Friedmann Equations}
+\label{sec:friedmann}
 The Robertson-Walker metric shown above is a purely geometric result,
 where the scale factor $a(t)$ is arbitrary and unspecified.
 Friedmann and Lemaitre had earlier independently derived this expression
@@ -268,6 +269,78 @@ size-scales of structure in the universe.
 
 
 \section{The Growth of Structure}
+\label{sec:growth}
+The above probes rely on standard or standardizable candles to measure the
+luminosity distance as a function of redshift.  Other cosmological probes
+depend on standard {\it rulers}, that is, objects whose true angular extent
+is known, and can be used to determine the angular diameter distance as
+a function of redshift.  Many of these probes depend on detailed modeling
+of the growth of structure.
+
+The distribution of density throughout the universe can be expressed
+\begin{equation}
+  \label{eq:overdensity}
+  \rho(\myvec{x}, t) = \rho_b(t)[1 + \delta(\myvec{x}, t)]
+\end{equation}
+where we have taken out the background component,
+\begin{equation}
+  \rho_b(t) \propto \frac{1}{a(t)^3}.
+\end{equation}
+We can proceed by treating matter as an ideal fluid with a
+velocity field $\myvec{u}(\myvec{x}, t)$ and pressure $P(\myvec{x}, t)$
+\citep{longair2008galaxy}.
+In this case, it is governed by the
+continuity equation, which describes conservation of mass,
+\begin{equation}
+  \label{eq:continuity}
+  \left(\frac{\partial\rho}{\partial t}\right)_{\myvec{x}}
+  + \rho\myvec{\nabla}_{\myvec{x}}\cdot\myvec{u} = 0,
+\end{equation}
+the Euler equation, which specifies conservation of momentum,
+\begin{equation}
+  \label{eq:euler}
+  \left(\frac{\partial\myvec{u}}{\partial t}\right)_{\myvec{x}}
+  + (\myvec{u}\cdot\myvec{\nabla}_{\myvec{x}})\myvec{u}
+  + \frac{\myvec{\nabla}_{\myvec{x}}P}{\rho}
+  = -\myvec{\nabla}_{\myvec{x}}\Phi,
+\end{equation}
+and the Poisson equation, which describes gravity in the Newtonian limit
+\begin{equation}
+  \label{eq:poisson}
+  \nabla_{\myvec{x}}^2\Phi = 4\pi G\rho.
+\end{equation}
+Transforming to comoving coordinates $\myvec{r} = \myvec{x}/a(t)$,
+defining comoving time derivatives
+$d/dt \equiv \partial/\partial t + \myvec{u}\cdot\myvec{\nabla}$,
+and expressing in terms of the dimensionless density contrast
+$\delta(\myvec{r}, t)$ (eq.~\ref{eq:overdensity}) gives
+\begin{equation}
+  \label{eq:delta_evolution}
+  \frac{d^2\delta}{d t^2} + 2 H \frac{d\delta}{d t}
+  = \frac{c_s^2}{a^2}\nabla_{\myvec{r}}^2\delta + 4\pi G \rho_b\,\delta
+\end{equation}
+where $\nabla^2_{\myvec{r}}$ indicates the Laplacian with respect to comoving
+coordinates \citep[for derivation see][\S11.2]{longair2008galaxy}.
+
+It is convenient to look at wave-like solutions of the denstity contrast
+$\delta(\myvec{r}, t) \propto \exp[i(\myvec{k}\cdot\myvec{r} - \omega t)]$
+such that eqn.~\ref{eq:delta_evolution} becomes
+\begin{equation}
+  \label{eq:delta_evolution_k}
+  \ddot{\delta} + 2 H \dot{\delta} = \delta(4\pi G\rho_b - k^2c_s^2).
+\end{equation}
+Thus we see that the growth of perturbations $\delta$ with time depends
+on the balance between the gravitational force through $4\pi G\rho_b$ and the
+pressure through $k^2c_s^2$.  The scale where the left hand side of
+Equation~\ref{eq:delta_evolution_k} is exactly zero is called the Jeans
+length:
+\begin{equation}
+  \lambda_J \equiv c_s \sqrt{\frac{\pi}{G\rho_b}}.
+\end{equation}
+This is the approximate scale above which pressure cannot halt gravitational
+collapse.  As we saw in \S\ref{
+
+\newpage
 
 \begin{itemize}
   \item Overdensities/underdensities and linear growth approximation
