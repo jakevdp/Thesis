@@ -47,6 +47,7 @@ Throughout, we'll point out the relevant observational work which supports
 and constrains these theories.
 
 \section{FLRW Metric}
+\label{sec:FLRW}
 The physical study of cosmology is based on the assumption of symmetry:
 that the universe on the largest scales is homogeneous and isotropic.
 Homogeneity is an expression of translational symmetry: the appearance of
@@ -98,6 +99,7 @@ of cosmic expansion comes from the field equations of Einstein's theory
 of General Relativity.
 
 \section{The Friedmann Equations}
+\label{sec:friedmann}
 The Robertson-Walker metric shown above is a purely geometric result,
 where the scale factor $a(t)$ is arbitrary and unspecified.
 Friedmann and Lemaitre had earlier independently derived this expression
@@ -224,37 +226,188 @@ and defining the dimensionless density parameter
   \Omega_w(t) \equiv \varepsilon_w(t) / \varepsilon_c(t)
 \end{equation}
 the Friedmann equation can be compactly expressed
-\begin{eqnarray}
+\begin{equation}
   \left(\frac{H}{H_0}\right)^2
-  &=& \sum_w \Omega_w(t) \nonumber\\
-  &=& \sum_w \Omega_{w, 0}\,\, a^{-3(1 + w)}.
-\end{eqnarray}
-where the subscript $0$ indicates the value of a time-dependent quantity
-at the present.
+  = \sum_w \Omega_{w, 0}\,\, a^{-3(1 + w)},
+\end{equation}
+where the subscript $0$ indicates the value at present.
+Alternatively, we can express the Friedmann equation as simply
+\begin{equation}
+  \sum_w \Omega_w(t) = 1.
+\end{equation}
 The most important contributors to the density of the universe are
 dark energy $(\Omega_\Lambda)$, matter $(\Omega_M)$, radiation $(\Omega_R)$,
 and curvature $(\Omega_\kappa)$.  Neglecting other components gives the
 familiar dimensionless form of the Friedmann Equation:
 \begin{equation}
+  \label{eq:friedmann_dimensionless}
   \left(\frac{H}{H_0}\right)^2
   = \Omega_{M,0}\,\,a^{-3} + \Omega_{R,0}\,\,a^{-4}
   + \Omega_{\kappa,0}\,\,a^{-2} + \Omega_\Lambda
 \end{equation}
 
-In many ways the history of $20^{\rm th}$ century cosmology is an attempt to
-understand the relative contributions of matter, radiation, curvature,
-and dark energy to the hubble parameter, which measures the expansion
-rate of the universe.
+\section{Redshift and distance measures}
+\label{sec:redshift}
+The FLRW metric of \S\ref{sec:FLRW} and the Friedmann equations of
+\S\ref{sec:friedmann} lay the basic framework for the study of cosmology.
+In many ways the history of $20^{\rm th}$ century cosmology surrounds various
+attempts to understand the relative contributions of matter, radiation,
+curvature, and dark energy to the hubble parameter, which measures
+the expansion rate of the universe.  The exact nature of these various
+contributions has far-reaching consequences,
+determining how, when, and where galaxies, clusters and other structure
+form and evolve; determining the age of the universe and its evolution
+through time; determining cosmic abundances and 
+the initial conditions of stellar evolution
+and planet formation; and determining the nature of the universe's beginning,
+and the possibility of its eventual end.
 
-Talk about redshift and Hubble...
+Eqn.~\ref{eq:friedmann_dimensionless} is simply a first-order differential
+equation in $a$: For various choices of the density parameters $\Omega$, it
+can be solved to yield a curve describing the scale factor $a$ as a function
+of time $t$.  Placing observational constraints on the densities of
+various components, then, would require simply measuring the value of $a$ at
+several times $t$ and performing a multidimensional fit to these observed
+data points.  But how can the scale factor $a$ be measured?
+Conveniently, the nature of light allows straightforward determination
+of the scale factor at the time that light was emitted.  
 
-\begin{itemize}
-  \item Einstein's blunder
-  \item Standard candles
-  \item Cepheids and Hubble's measurement
-  \item Tully-Fisher, etc.
-  \item supernovae
-\end{itemize}
+General Relativity tells us
+that light always travels along null geodesics, that is, the space time
+interval in eqn.~\ref{eq:FLRW_metric} satisfies $ds = 0$.  For a light
+beam with no angular deflection $d\Omega$, this gives
+\begin{equation}
+  dr = \frac{c}{a(t)} dt.
+\end{equation}
+If a beam of light is emitted at time $t_e$ and travels
+a comoving distance $r$, the
+time $t_o$ that the light is observed can be found by solving
+\begin{equation}
+  r = \int_{t_e}^{t_o} \frac{c}{a(t)} dt
+\end{equation}
+If a second photon is emitted a short time later at time $t_e + \Delta t_e$,
+and arrives at time $t_o + \Delta t_o$, this gives
+\begin{eqnarray}
+  r &=& 
+  \int_{t_e + \Delta t_e}^{t_o + \Delta t_o} \frac{c}{a(t)} dt \nonumber\\
+  &\approx& \int_{t_e}^{t_o} \frac{c}{a(t)} dt + \frac{c\Delta t_o}{a(t_o)}
+  - \frac{c\Delta t_e}{a(t_e)},
+\end{eqnarray}
+where the second line is the first-order approximation.  Equating these
+two expressions gives for small $\Delta t$:
+\begin{equation}
+  \label{eq:time_dialation}
+  \Delta t_o = \Delta t_e \frac{a(t_o)}{a(t_e)}.
+\end{equation}
+If an atom emits light with a period 
+$P_e = \Delta t_e = \lambda_e / c$, then the observed wavelength $\lambda_o$
+and the emitted wavelength $\lambda_e$ are related by
+\begin{equation}
+  \lambda_o = \lambda_e \frac{a(t_o)}{a(t_e)}.
+\end{equation}
+The wavelength of light is lengthened due to the expansion of space.  For
+historical reasons, this expansion is generally parametrized using the
+redshift:
+\begin{equation}
+  1 + z \equiv \frac{a(t_o)}{a(t_e)}.
+\end{equation}
+Because we define $a(t_o) = 1$, we have
+\begin{equation}
+  a(t_e) = \frac{1}{1 + z}.
+\end{equation}
+Thus the redshift of a light source gives us a direct measurement of the
+scale factor at the time that photon was emitted.  As such, it can be
+substituted for $a$ as the dependent variable in the above equations
+with the correct change-of-variables; we will switch between these two
+conventions depending on what is convenient.
+
+Measurement of the scale factor $a$ when the light was emitted
+is only half the picture however: in order to constrain parameters in
+eqn.~\ref{eq:friedmann_dimensionless}, we must be able to measure
+information related to the time $t_e$ of emission.  This allows us to
+constrain $a$ as a function of $t$, or the equivalent quantity in some
+other parametrization.  To enable this, we'll introduce the concept
+of distances in Cosmology.
+
+Distance measures in cosmology are a potentially confusing subject.  An
+excellent resource describing these can be found in \citet{hogg1999distance}.
+We'll briefly define four relevant distance measures: the comoving distance,
+the proper distance, the angular diameter distance, and the luminosity
+distance.
+
+\begin{description}
+  \item[Comoving Distance:] The comoving distance is the distance $r$ which
+    enters into the FLRW metric, eqn.~\ref{eq:FLRW_metric}.  This distance is
+    constant for an object moving with the expansion of space.  Using the
+    FLRW metric and setting $ds=0$, one can shown that the comoving
+    distance for an object with redshift $z$ is given by
+    \begin{equation}
+      \label{eq:comoving_distance}
+      r(z) = c\,\int_0^z \frac{dz^\prime}{H(z^\prime)}.
+    \end{equation}
+  \item[Proper Distance:] The proper distance is the simultaneous separation
+    $d_p(z)$ between two objects.  From the FLRW metric with time interval
+    $dt=0$, one can show that the proper distance is given by
+    \begin{equation}
+      \label{eq:proper_distance}
+      d_p(z) = \frac{r(z)}{1 + z}.
+    \end{equation}
+  \item[Angular Diameter Distance:] The angular diameter distance $d_A(z)$
+    is the
+    ratio of the true size to the observed angular size (in radians) of
+    an extended source.  From the FLRW metric with $dt = dr = 0$, one
+    can show that the angular diameter distance is given by
+    \begin{equation}
+      \label{eq:angular_diameter_distance}
+      d_A(z) = \frac{S_\kappa(r)}{1 + z}.
+    \end{equation}
+  \item[Luminosity Distance:] The luminosity distance $d_L(z)$ relates the
+    emitted flux to the observed flux.  Taking into account the angular
+    dilution of the flux, as well as the redshifted energy of each photon
+    and time-delay of photon arrival leads to
+    \begin{eqnarray}
+      \label{eq:luminosity_distance}
+      d_L(z) &=& (1 + z)^2\,d_A(z) \nonumber\\
+      &=& (1 + z)\,S_\kappa(r)
+    \end{eqnarray}
+\end{description}
+By measuring one of these distances as a function of redshift, we are
+effectively constraining both the dependent and independent variable
+in the dimensionless Friedmann equation, eqn.~\ref{eq:friedmann_dimensionless}.
+In this way, it is possible to constrain the combinations of cosmological
+parameters $\Omega_w$ which fit the data.
+
+\section{Standard Candles: Cosmology via Luminosity Distance}
+The earliest observations confirming the cosmic expansion (i.e. a positive
+value of the hubble parameter $H_0$) were due to Edwin Hubble
+\citep{hubble1929}.  Through observations of Cepheid-type variable stars
+in nearby galaxies, Hubble found a linear correlation between the
+luminosity distance to each galaxy and its apparent recessional velocity.
+Although Hubble does not frame this measurement in terms of the Friedmann
+equations, he cautiously mentions the potential relationship of the
+observations to the ``de Sitter effect'', a particular solution of
+Einstein's equations which is a special case of the FLRW metric and
+Friedmann equations. Using our formalism above, we can show that for
+nearby objects (such that $H(z) \approx H_0$),
+the change in proper distance is approximated by
+\begin{eqnarray}
+  \frac{d}{dt}d_p(t) &=& H(t)\,\, d_p(t) \nonumber\\
+                     &\approx& H_0\,\, d_L(t),
+\end{eqnarray}
+where the second line holds up to corrections of order $z$.  Because
+Hubble used a sample with $z <\sim 0.005$, the linear fit is well within
+observed errors.
+Thus Hubble's observations can be seen as a first attempt at constraining
+cosmological parameters in Equation~\ref{eq:friedmann_dimensionless} through
+the simultaneous measurement of redshift and luminosity distance.
+
+In the 70 years after Hubble's discovery, there were many attempts to
+confirm and improve upon his discovery and use it to derive tighter
+constraints on...
+
+{\it Add some brief references to standard-candle-based constraints:
+  Cepheid, MS fitting, TF relation, and type 1a supernovae.  Mention my
+  work in this area: \citet{Kessler2009}}
 
 The results summarized above are all related in that they are based on the
 idea of a standard candle: if we can determine the intrinsic brightness
@@ -266,7 +419,6 @@ intrinsic size of an object, then we can use its apparent size to
 constrain cosmological parameters.  One standard ruler is given by the
 size-scales of structure in the universe.
 
-
 \section{The Growth of Structure}
 
 \begin{itemize}
@@ -274,7 +426,8 @@ size-scales of structure in the universe.
   \item Power spectra \& correlation functions \& the relationship to
     parameters from the previous section.
   \item nonlinear effects: clustering
-  \item power spectra, BAO, WMAP anisotropies
+  \item LRG power spectra, BAO, WMAP anisotropies
+  \item Major uncertainty: mapping luminous matter to dark
 \end{itemize}
 
 \section{Gravitational Lensing}
