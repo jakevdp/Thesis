@@ -7,6 +7,6 @@ thesis.pdf : thesis.dvi
 
 thesis.dvi : thesis.tex thesis.bib *.tex
 	latex thesis
-	latex thesis
 	bibtex thesis
+	latex thesis
 	latex thesis

@@ -489,7 +489,42 @@ length:
   \lambda_J \equiv c_s \sqrt{\frac{\pi}{G\rho_b}}.
 \end{equation}
 This is the approximate scale above which pressure cannot halt gravitational
-collapse.  As we saw in \S\ref{
+collapse.  The length is directly proportional to the sound speed
+$c_s = \sqrt{\partial P/\partial \rho}$ and so depends on the equation of
+state of the total energy in the universe,
+as well as the average density $\rho_b$.
+The different components (radiation, matter, etc.) have different
+equations of state (\S\ref{sec:friedmann}) and evolve
+with different dependencies on the scale factor
+$a$, and so the Jeans length also evolves through the course of cosmic
+history.  Thus the scale of nonlinear
+collapsed structure as a function of $z$ can
+be used to place constraints on the components which make up the Universe.
+
+For the special case of a matter-dominated universe, pressure is negligible
+and we can use $\rho_b = \Omega_M\rho_c$
+in eqn.~\ref{eq:delta_evolution} to find
+\begin{equation}
+  \ddot{\delta} + 2H\dot{\delta} - \frac{3}{2}\Omega_M H^2\delta = 0.
+\end{equation}
+In a flat universe dominated by matter, the
+Friedmann equation gives $H(t) = 2 / (3t)$, leading to solutions
+\begin{equation}
+  \delta = D_1 t^{2/3} + D_2 t^{-1}.
+\end{equation}
+The first term quickly dominates the second, and we see that for a
+matter-dominated universe, structure grows as
+$\delta \propto t^{2/3} \propto a$.
+
+In general, eqn.~\ref{eq:delta_evolution} can be solved by expressing the
+density contrast in terms of the linear growth factor
+$\delta(\myvec{r}, t) = \delta_0(\myvec{r})D(t)$ where $D$ is given by
+\begin{equation}
+  D(z) = \frac{H(z)\int_z^\infty dz^\prime(1 + z^\prime)H^{-3}(z^\prime)}
+              {H_0\int_0^\infty dz^\prime(1 + z^\prime)H^{-3}(z^\prime)}
+\end{equation}
+
+
 
 \newpage
 
