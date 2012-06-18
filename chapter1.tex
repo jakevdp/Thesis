@@ -734,7 +734,9 @@ The first-order approximation is twice the deflection predicted by Newtonian gra
   \label{eq:alpha-def-approx}
   \hat{\alpha} \approx \frac{2}{c^2}\int_{D_L-\delta D}^{D_L+\delta D} \vec{\nabla}_\perp\Phi\,\dd D
 \end{equation}
-for $\delta D$ sufficiently greater than the size scale of the mass-distribution in question.  Also note that for a large lens distance $D_L$, the contribution to $\hat{\alpha}$ becomes vanishingly small, and can be neglected.  So, to a very good approximation, the incremental deflection $\delta \hat{\alpha}$ of a photon at a given point along its trajectory is entirely due to a sheet of matter with a width $2\,\delta D$, oriented perpendicular to the unperturbed photon trajectory.  
+for $\delta D$ sufficiently greater than the size scale of the mass-distribution in question.
+%Also note that for a large lens distance $D_L$, the contribution to $\hat{\alpha}$ becomes vanishingly small, and can be neglected.
+So, to a very good approximation, the incremental deflection $\delta \hat{\alpha}$ of a photon at a given point along its trajectory is entirely due to a sheet of matter with a width $2\,\delta D$, oriented perpendicular to the unperturbed photon trajectory.  
 
 \subsection{Lensing Geometry}
 \comment{Lensing diagram figure Here?}
@@ -785,7 +787,7 @@ Using the approximation in equation \ref{eq:alpha-def-approx}, we can write this
   \hat{\psi} = \sum_i \delta \hat{\psi}_i 
   = \sum_i \int_{D_i-\delta D}^{D_i+\delta D}\Phi \dd D
 \end{equation}
-with $D_{i+1} = D_i + 2*\delta D$.
+with $D_{i+1} = D_i + 2\delta D$.
 
 The gradient of $\hat{\psi}$ with respect to 
 $\vec{\xi} \equiv D_L\vec{\theta}$ is
@@ -798,7 +800,8 @@ Comparing this with (\ref{eq:alpha-def-approx}) and (\ref{eq:alpha-def2}) gives 
 \begin{equation}
   \delta\vec{\alpha}_i = \frac{2}{c^2}\frac{D_{LS}}{D_S}\vec{\nabla}_\xi (\delta\hat{\psi}_i)
 \end{equation}
-Further simplification can be made by using the rescaling $\vec{\xi} = D_L \vec{\theta}$ and
+Further simplification can be made by rescaling the lensing potential,
+defining
 \begin{equation}
   \delta\psi_i = \frac{2}{c^2}\frac{D_{LS}}{D_L D_S} \delta\hat{\psi}_i
 \end{equation}
@@ -872,6 +875,7 @@ We can then rewrite the convergence $\kappa$ (eqn \ref{eq:psi-kappa-1}) and defi
 \end{equation}
 The local Jacobian matrix (\ref{eq:Jacobian_def}) of the lens mapping can then be written
 \begin{equation}
+  \label{eq:jacobian_kappa_gamma}
   \mathcal{A} = \left(
   \begin{array}{cc}
     1 - \kappa - \gamma_1 & -\gamma_2\\
@@ -893,19 +897,43 @@ where
   = \frac{\theta_1^2 - \theta_2^2 + 2i\theta_1\theta_2}{(\theta_1^2+\theta_2^2)^2}
   = \frac{\theta^2}{|\theta|^4}
 \end{equation}
+The lens mapping in eqn.~\ref{eq:jacobian_kappa_gamma} describes an
+image transformation consisting of a magnification with magnitude 
+given by the real convergence $\kappa$
+and a distortion with magnitude and orientation given by the complex shear
+$\gamma = \gamma_1 + i\gamma_2$.  This distortion results in a measurable
+effect, at least in principle.  If the intrinsic shape, size, or brightness
+of a distant image were known, then the observed shape, size, or brightness
+could be observed to determine the shear and convergence at that point.
+Unfortunately, the intrinsic shape and size of a galaxy cannot be known
+{\it a priori}, but using well-founded assumptions about the statistics
+of the {\it distribution} of shapes and sizes of sources can lead to
+useful estimates of the shear and/or convergence across the sky.
 
-In weak lensing, the ellipticities of source galaxies are measured, 
+\comment{add some references: using gamma \& kappa on galaxies, number counts,
+  galaxy-galaxy lensing, quasar variability-luminosity relationship, etc.}
+
+In the most typical approach to weak lensing,
+the ellipticities of source galaxies are measured, 
 giving a noisy estimate of the shear $\gamma(\theta)$.
 These measurements can be utilized in a number of ways to learn about
 fundamental physical principles; this work will focus on three areas:
 \begin{description}
-  \item[Direct mapping:] Using the relationship between shear $\gamma$ and
-    convergence $\kappa$, one can use the measured ellipticities of galaxies
-    to directly map the distribution of dark matter in two or three dimensions.
-    This is the subject of Chapter 3.
-  \item[Peak statistics:] The shear measurements encode within them the
-    distribution of clusters as a function of mass.  By comparing the
-    measured distribution to that predicted by theory, it is possible to
+  \item[Direct mapping:] Having measured the shear $\gamma$ at locations
+    across the sky, the convergence $\kappa$ can be estimated.  $\kappa$
+    relates to the projected density via eqn.~\ref{eq:kappa-sigma}.  Thus
+    the measured shear can be used to directly estimate a map of the
+    distribution of dark matter in two dimensions.  Using redshift
+    information for the lensed sources, there is the potential to extend
+    this mapping to three dimensions. This is the subject of Chapter 3.
+  \item[Peak statistics:] The two dimensional maps recovered as above
+    represent a two-dimensional projection of the three-dimensional
+    distribution of large scale structure, in particular massive galaxy
+    clusters.  As discussed in \S\ref{sec:growth}, both the number of
+    clusters and their mass distribution depend on the details of the
+    geometry, expansion, and makeup of the universe.  By computing the
+    statistics of observed lensing peaks to 
+    that predicted by theory, it is possible to
     constrain cosmological parameters using the peaks alone.  This is
     the subject of Chapter 4.
   \item[Power spectrum:] The power spectrum of the shear is closely related
@@ -915,17 +943,22 @@ fundamental physical principles; this work will focus on three areas:
     to the peak counts mentioned above.  This is the subject of Chapter 5.
 \end{description}
 
-In all three of these applications, 
+To enable these three analyses, we will develop a bit further the basic
+principles of $\kappa$-mapping and $\gamma$ power spectra.
 
-  The problem becomes, 
-given this shear estimate, to recover a local estimate of 
-$\kappa(\theta)$ using equation \ref{gamma-kappa}, and then an estimate 
-of the projected mass $\Sigma(\theta)$ via equation \ref{kappa-sigma}.  
-For 3D tomography, this procedure is repeated at various redshifts to recover 
-an estimate of the 3D mass density, $\rho(\theta,z)$. It helps to write 
+\subsection{Mapping with Weak Lensing}
+The typical weak lensing mapping problem becomes this:
+given a noisy shear estimate $\gamma_{obs}(\theta)$, recover a local
+estimate of $\kappa(\theta)$ using equation \ref{eq:gamma-kappa},
+and then an estimate 
+of the projected mass $\Sigma(\theta)$ via equation \ref{eq:kappa-sigma}.
+To obtain  a 3D map, this procedure is repeated for shear at various
+redshifts, so that these multiple estimates of $\Sigma(\theta, z)$ can
+be used to recover the 3D mass density $\rho(\theta, z)$ using
+eqn.~\label{eq:sigma-def}.  It helps to write 
 the expression for $\kappa(\theta,z)$ in terms of $\rho(\theta,z)$
- explicitly.  From (\ref{sigma-def}) and (\ref{kappa-sigma}), approximating 
-the sum as an integral, we find
+explicitly.  From (\ref{eq:sigma-def}) and (\ref{eq:kappa-sigma}),
+approximating the sum as an integral, we find
 \begin{equation}
   \kappa(\vec{\theta},z_s) 
   = 4\pi G \int_0^{z_s} 
@@ -940,8 +973,8 @@ distance $D^{(A)}$ is related to the comoving distance $D$ by
   D^{(A)}(z) = a S_\kappa (D)
 \end{equation}
 where $S_\kappa(D) = D$ for a flat universe.  Converting the angular 
-diameter distances to comoving distances, and writing this in terms 
-of $\varepsilon = \rho c^2$, we find
+diameter distances $D^{(A)}$ to comoving distances $D$,
+and writing this in terms of $\varepsilon = \rho c^2$, we find
 \begin{equation}
   \label{kappa-epsilon-1}
   \kappa(\vec{\theta},z_s) 
@@ -979,7 +1012,12 @@ Combining these equations gives
   \kappa(z_s) = \frac{3cH_0^2\Omega_{M,0}}{2}\int_0^{z_s} \dd z \frac{(1+z)}{H(z)} \frac{D(D_S-D)}{D_S}\big[1+\delta(z)\big]
 \end{equation}
 
-Because of the mass-sheet degeneracy, $\kappa(z_s)$ can only be determined up to an additive constant across a given redshift bin \citep[see][for discussion]{Seitz_Schneider96}.  Defining $\bar{\kappa}(z_s)$ to be the convergence due to matter-dominated growth and $\Delta(z) \equiv \delta(z)/a$ (see Appendix \ref{matter_dominated_growth} for motivation behind this change of variables) we find
+Because of the mass-sheet degeneracy, $\kappa(z_s)$ can only be determined
+up to an additive constant across a given redshift bin
+\citep[see][for discussion]{seitz_schneider1996}.
+Defining $\bar{\kappa}(z_s)$ to be the convergence due to the background
+matter distribution in matter-dominated growth,
+and $\Delta(z) \equiv \delta(z)/a$ we find
 \begin{equation}
   \label{kappa-delta}
   \kappa(z_s) \equiv \hat{\kappa}(z_s)-\bar\kappa(z_s) = 
@@ -991,7 +1029,10 @@ where, to be explicit,
   \bar\kappa(z_s) = \frac{3cH_0^2\Omega_{M,0}}{2}\int_0^{z_s} \dd z 
   \frac{(1+z)}{H(z)} \frac{D(D_S-D)}{D_S}
 \end{equation}
-To be clear, here, $D$ is the comoving distance to a redshift $z$, and $D_S$ is the comoving distance to the redshift $z_s$ of the photon source.  Equation \ref{kappa-delta} defines the mapping from $\kappa(z_s)$ to $\Delta(z)$ for $z<z_s$. 
+To be clear, here, $D$ is the comoving distance to a redshift $z$,
+and $D_S$ is the comoving distance to the redshift $z_s$ of the photon
+source.  Equation \ref{kappa-delta} defines the mapping from $\kappa(z_s)$
+to $\Delta(z)$ for $z<z_s$. 
 
 \begin{itemize}
   \item Weak gravitational lensing limit: $\gamma$ and $\kappa$
