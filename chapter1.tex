@@ -406,7 +406,7 @@ In the 70 years after Hubble's discovery, there were many attempts to
 confirm and improve upon his discovery and use it to derive tighter
 constraints on...
 
-{\it Add some brief references to standard-candle-based constraints:
+\comment{ Add some brief references to standard-candle-based constraints:
   Cepheid, MS fitting, TF relation, and type 1a supernovae.  Mention my
   work in this area: \citet{Kessler2009}}
 
@@ -689,18 +689,310 @@ the underlying dark matter, it would be preferable to observe the dark
 matter directly.  This is where weak gravitational lensing can be a
 useful tool.
 
-{\it Mention measurements of LRG power spectra \& cosmic parameter estimates.}
+\comment{ Mention measurements of LRG power spectra \& cosmic parameter estimates.}
 
-{\it Should we also briefly mention WMAP anisotropies and the BAO signal?
+\comment{ Should we also briefly mention WMAP anisotropies and the BAO signal?
   They're essentially very accurate standard rulers at different epochs.}
 
 \section{Gravitational Lensing}
-\begin{itemize}
-  \item Basic lensing geometry
-  \item brief description of strong lensing, microlensing, weak lensing
-\end{itemize}
+\label{sec:gravitational_lensing}
+Einstein's theory of General Relativity predicts that photons will be deflected
+in the presence of a gravitational field.  Under certain circumstances, this
+deflection can be detected and used to learn about the nature of the
+gravitating matter.
+
+\subsection{Simplifying Assumptions}
+\label{sec:lensing_simplification}
+The propagation of light through a region of gravitational potential
+$\Phi(\vec{r})$ is, in general, a very complicated\ problem, only analytically
+solvable for potentials with various symmetries.  In cosmological contexts,
+however, it is safe to assume that the universe is described by a
+Robertson-Walker metric, with only small perturbations due to the density
+fluctuations described by the potential $\Phi$.  In this case, the
+gravitational deflection of a photon can be described by an effective
+index of refraction given by 
+\citep[see][and references therein]{narayan1996lectures}:
+\begin{equation}
+  n = 1-\frac{2}{c^2}\Phi 
+\end{equation}
+As in conventional optics, light rays are deflected in proportion to the
+perpendicular gradient of the refraction index, such that the deflection angle
+$\hat{\alpha}$ is given by
+\begin{equation}
+  \label{eq:alpha-def}
+  \hat{\alpha} = -\int_0^{D_S} \vec{\nabla}_\perp n \,\,\dd D
+  = \frac{2}{c^2}\int_0^{D_S} \vec{\nabla}_\perp\Phi\,\,\dd D
+\end{equation}
+where $D_S$ is the distance from the observer to the photon source.  
+
+For a point-mass located at a distance $D_L$ and an impact parameter $b$, with $D_L \gg b$ and $D_S \approx 2D_L$, equation \ref{eq:alpha-def} can be integrated to give
+\begin{equation}
+  \hat{\alpha} = \frac{4GM}{bc^2}\Bigg[1 - \frac{1}{2}\bigg(\frac{b}{D_L}\bigg)^2 + \mathcal{O}\bigg[\frac{b}{D_L}\bigg]^3 \Bigg]
+\end{equation}
+The first-order approximation is twice the deflection predicted by Newtonian gravity for a particle of arbitrary mass moving at a speed $c$.  It is important to note here that to first order, the deflection does not depend on the distance to the lens or source.  That is, for a mass distribution located at a distance $D_L$, equation \ref{eq:alpha-def} can be approximated
+\begin{equation}
+  \label{eq:alpha-def-approx}
+  \hat{\alpha} \approx \frac{2}{c^2}\int_{D_L-\delta D}^{D_L+\delta D} \vec{\nabla}_\perp\Phi\,\dd D
+\end{equation}
+for $\delta D$ sufficiently greater than the size scale of the mass-distribution in question.  Also note that for a large lens distance $D_L$, the contribution to $\hat{\alpha}$ becomes vanishingly small, and can be neglected.  So, to a very good approximation, the incremental deflection $\delta \hat{\alpha}$ of a photon at a given point along its trajectory is entirely due to a sheet of matter with a width $2\,\delta D$, oriented perpendicular to the unperturbed photon trajectory.  
+
+\subsection{Lensing Geometry}
+\comment{Lensing diagram figure Here?}
+
+For a mass-sheet located at a distance $D_L$, and a photon source located at a distance $D_S$ (with $D_{LS} = D_S - D_L$) geometric considerations in the small-angle approximation yield the relation
+\begin{equation}
+  \vec{\theta} = \vec{\beta} + \frac{D_{LS}}{D_S}\hat{\vec{\alpha}}
+\end{equation}
+where $\vec{\theta}$ and $\vec{\beta}$ are the observed and true positions of the source, respectively.  Rescaling $\hat{\vec{\alpha}}$ in more convenient units gives
+\begin{equation}
+  \label{eq:mapping}
+  \vec{\theta} = \vec{\beta} + \vec{\alpha}
+\end{equation}
+where we have defined
+\begin{equation}
+  \label{eq:alpha-def2}
+  \vec{\alpha} \equiv \frac{D_{LS}}{D_S}\hat{\vec{\alpha}}
+\end{equation}
+
+\subsection{Continuous Mass Distribution}
+In the case of a continuous mass distribution, we can recall the remarks of section \ref{sec:lensing_simplification}, and define a surface-mass density for a mass-sheet located at a redshift $z_L$:
+\begin{equation}
+  \label{eq:sigma-def}
+  \Sigma(\vec{\theta},z_L) 
+  = \int_{D_L-\delta D}^{D_L+\delta D}\rho_M(\vec{\theta},D)\dd D 
+  = \frac{1}{c^2}\int_{z_L - \delta z}^{z_L + \delta z} 
+  \varepsilon_M(\vec{\theta},z)\frac{dD}{dz}\dd z
+\end{equation}
+where $\varepsilon_M \equiv \rho_M c^2$ is the energy density of matter,
+$\vec{\theta}$ is the apparent angular position, and $z$ and $D(z)$ are the 
+redshift and line-of-sight distance, respectively, with $D_S = D(z_s)$.  
+
+A matter distribution $\rho_M(\vec{\theta},z)$, and its Newtonian potential $\Phi(\vec{\theta},z)$ are related by Poisson's equation:
+\begin{equation}
+  \label{eq:poisson}
+  \nabla^2 \Phi(\vec{\theta},z) = 4\pi G \rho_M(\vec{\theta},z)
+\end{equation}
+
+It is convenient to define the unscaled lensing potential $\hat{\psi}$, 
+given by
+\begin{equation}
+  \hat{\psi}(\vec{\theta},z_s) 
+  = \int_{0}^{D(z_s)} \Phi(\vec{\theta},z(D))\,\,\dd D 
+  = \int_{0}^{z_s}\Phi(\vec{\theta},z)\frac{dD}{dz}\,\,\dd z
+\end{equation}
+Using the approximation in equation \ref{eq:alpha-def-approx}, we can write this in terms of multiple mass-sheets, such that
+\begin{equation}
+  \hat{\psi} = \sum_i \delta \hat{\psi}_i 
+  = \sum_i \int_{D_i-\delta D}^{D_i+\delta D}\Phi \dd D
+\end{equation}
+with $D_{i+1} = D_i + 2*\delta D$.
+
+The gradient of $\hat{\psi}$ with respect to 
+$\vec{\xi} \equiv D_L\vec{\theta}$ is
+\begin{equation}
+  \vec{\nabla}_\xi\hat{\psi} 
+  = \sum_i \vec{\nabla}_\xi\big(\delta\hat{\psi}_i\big) 
+  = \sum_i \int_{D_i - \delta D}^{D_i+\delta D}\vec{\nabla}_\xi \Phi \dd D
+\end{equation}
+Comparing this with (\ref{eq:alpha-def-approx}) and (\ref{eq:alpha-def2}) gives the incremental deflection angle in terms of the lensing potential of a mass-sheet:
+\begin{equation}
+  \delta\vec{\alpha}_i = \frac{2}{c^2}\frac{D_{LS}}{D_S}\vec{\nabla}_\xi (\delta\hat{\psi}_i)
+\end{equation}
+Further simplification can be made by using the rescaling $\vec{\xi} = D_L \vec{\theta}$ and
+\begin{equation}
+  \delta\psi_i = \frac{2}{c^2}\frac{D_{LS}}{D_L D_S} \delta\hat{\psi}_i
+\end{equation}
+so that we are left with
+\begin{equation}
+  \label{eq:alpha-psi}
+  \delta\vec{\alpha}_i(\vec{\theta},z_L) = \vec{\nabla}_\theta \Big( \delta\psi_i(\vec{\theta},z_L)\Big)
+\end{equation}
+Defining the total scaled lensing potential $\psi = \sum_i \delta\psi_i$, and the total deflection $\vec{\alpha} = \sum_i\delta\vec{\alpha}_i$, we obtain
+\begin{equation}
+  \vec{\alpha}(\vec{\theta},z_s) = \vec{\nabla}_\theta \psi(\vec{\theta},z_s)
+\end{equation}
+
+The Laplacian of $\delta\psi_i$ with respect to theta is given by
+\begin{equation}
+  \nabla_\theta^2 (\delta\psi_i) 
+  = \frac{2}{c^2}\frac{D_{LS}D_L}{D_S}\int_{D_L-\delta D}^{D_L+\delta D} 
+  \nabla_\xi^2\Phi \dd D
+\end{equation}
+Using (\ref{eq:sigma-def}) and (\ref{eq:poisson}) this becomes
+\begin{equation}
+  \label{eq:psi-sigma_init}
+  \nabla_\theta^2(\delta\psi_i) = \frac{8\pi G}{c^2}\frac{D_{LS}D_L}{D_S}\Sigma(\vec{\theta},z_i)
+\end{equation}
+
+We now define the critical surface density,
+\begin{equation}
+  \Sigma_{c}(z) \equiv\frac{c^2 D_S}{4\pi G D_L(z) D_{LS}(z)}
+\end{equation}
+and the convergence
+\begin{equation}
+  \label{eq:kappa-sigma}
+  \kappa(\vec{\theta},z_s) \equiv \sum \frac{\Sigma(\vec{\theta},z_i)}{\Sigma_c(z_i)}\ \forall\ z_i < z_s
+\end{equation}
+Now summing all the mass-sheets in (\ref{eq:psi-sigma_init}) gives the relation between the scaled lensing potential and the convergence
+\begin{equation}
+  \label{eq:psi-kappa-1}
+  \nabla_\theta^2\psi(\vec{\theta},z_s) = 2\kappa(\vec{\theta},z_s)
+\end{equation}
+
+Solving this two-dimensional differential equation gives the effective potential in terms of the convergence:
+\begin{equation}
+  \label{eq:psi-kappa}
+  \psi(\vec{\theta},z) 
+  = \frac{1}{\pi}\int_{\mathbb{R}^2} \kappa(\vec{\theta}^\prime,z) 
+  \ln|\vec{\theta} - \vec{\theta}^\prime|\dd^2\theta^\prime
+\end{equation}
 
 \section{Weak Gravitational Lensing}
+
+The local properties of the mapping in (\ref{eq:mapping}) are contained in its Jacobian matrix, given by
+\begin{equation}
+  \label{eq:Jacobian_def}
+  \mathcal{A} \equiv \frac{\partial \vec{\beta}}{\partial \vec{\theta}} = \Big(\delta_{ij} - \frac{\partial \alpha_i}{\partial \theta_j} \Big) = \Big(\delta_{ij} - \frac{\partial^2 \psi}{\partial \theta_i \partial \theta_j} \Big),
+\end{equation}
+where $i,j$ index the two components of the angular position.
+
+Introducing the abbreviation
+\begin{equation}
+  \label{eq:psi_ij}
+  \psi_{ij} = \frac{\partial^2 \psi}{\partial \theta_i \partial \theta_j}
+\end{equation}
+We can then rewrite the convergence $\kappa$ (eqn \ref{eq:psi-kappa-1}) and define the complex shear $\gamma \equiv \gamma_1 + i\gamma_2$ of the mapping:
+\begin{equation}
+  \label{eq:gamma-def}
+  \begin{array}{lcl}
+    \kappa & = & (\psi_{11} + \psi_{22})/2\\
+    \gamma_1 & = & (\psi_{11} - \psi_{22})/2\\
+    \gamma_2 & = & \psi_{21} = \psi_{12}
+  \end{array}
+\end{equation}
+The local Jacobian matrix (\ref{eq:Jacobian_def}) of the lens mapping can then be written
+\begin{equation}
+  \mathcal{A} = \left(
+  \begin{array}{cc}
+    1 - \kappa - \gamma_1 & -\gamma_2\\
+    -\gamma_2             & 1-\kappa+\gamma_1
+  \end{array}\right)
+\end{equation}
+
+Equations \ref{eq:psi-kappa}, \ref{eq:psi_ij} and \ref{eq:gamma-def} can be combined and simplified to yield the following relationship between the convergence and the shear, where for simplicity we define the complex angle $\theta = \theta_1 + i\theta_2$:
+\begin{equation}
+  \label{eq:gamma-kappa}
+  \gamma(\theta) 
+  = \frac{-1}{\pi}\int_{\mathbb{R}^2} \mathcal{D}(\theta - 
+  \theta^\prime)\kappa(\theta^\prime) \dd^2\theta^\prime
+\end{equation}
+where 
+\begin{equation}
+  \label{eq:scriptD}
+  \mathcal{D}(\theta \equiv \theta_1+i\theta_2) 
+  = \frac{\theta_1^2 - \theta_2^2 + 2i\theta_1\theta_2}{(\theta_1^2+\theta_2^2)^2}
+  = \frac{\theta^2}{|\theta|^4}
+\end{equation}
+
+In weak lensing, the ellipticities of source galaxies are measured, 
+giving a noisy estimate of the shear $\gamma(\theta)$.
+These measurements can be utilized in a number of ways to learn about
+fundamental physical principles; this work will focus on three areas:
+\begin{description}
+  \item[Direct mapping:] Using the relationship between shear $\gamma$ and
+    convergence $\kappa$, one can use the measured ellipticities of galaxies
+    to directly map the distribution of dark matter in two or three dimensions.
+    This is the subject of Chapter 3.
+  \item[Peak statistics:] The shear measurements encode within them the
+    distribution of clusters as a function of mass.  By comparing the
+    measured distribution to that predicted by theory, it is possible to
+    constrain cosmological parameters using the peaks alone.  This is
+    the subject of Chapter 4.
+  \item[Power spectrum:] The power spectrum of the shear is closely related
+    to the power spectrum of the matter distribution which generates it.
+    By measuring two point information of observed shear, it is possible
+    to constrain cosmological parameters in a way which is complementary
+    to the peak counts mentioned above.  This is the subject of Chapter 5.
+\end{description}
+
+In all three of these applications, 
+
+  The problem becomes, 
+given this shear estimate, to recover a local estimate of 
+$\kappa(\theta)$ using equation \ref{gamma-kappa}, and then an estimate 
+of the projected mass $\Sigma(\theta)$ via equation \ref{kappa-sigma}.  
+For 3D tomography, this procedure is repeated at various redshifts to recover 
+an estimate of the 3D mass density, $\rho(\theta,z)$. It helps to write 
+the expression for $\kappa(\theta,z)$ in terms of $\rho(\theta,z)$
+ explicitly.  From (\ref{sigma-def}) and (\ref{kappa-sigma}), approximating 
+the sum as an integral, we find
+\begin{equation}
+  \kappa(\vec{\theta},z_s) 
+  = 4\pi G \int_0^{z_s} 
+  \frac{D^{(A)}(z)[D^{(A)}(z_s)-D^{(A)}(z)]}{D^{(A)}(z_s)} 
+  \rho_M(\vec{\theta},z) \frac{dD^{(A)}(z)}{dz} \dd z
+\end{equation}
+The notation has been changed here to make clear that the distances in 
+question are in fact angular diameter distance, the relevant distance 
+in the context of lensing calculations.  Recall that angular diameter 
+distance $D^{(A)}$ is related to the comoving distance $D$ by
+\begin{equation}
+  D^{(A)}(z) = a S_\kappa (D)
+\end{equation}
+where $S_\kappa(D) = D$ for a flat universe.  Converting the angular 
+diameter distances to comoving distances, and writing this in terms 
+of $\varepsilon = \rho c^2$, we find
+\begin{equation}
+  \label{kappa-epsilon-1}
+  \kappa(\vec{\theta},z_s) 
+  = \frac{4\pi G}{c^2} \int_0^{z_s} \dd z\frac{dD}{dz} 
+  a^2\frac{D(D_S-D)}{D_S} \varepsilon_M(\vec{\theta},z) 
+\end{equation}
+here we've used the shorthand $D \equiv D(z)$ and 
+$D_S \equiv D(z_s)$.
+
+It is instructive to expand the energy density in equation 
+\ref{kappa-epsilon-1} about the background matter density.  
+We define $\delta(z)$, the density contrast, such that
+\begin{equation}
+  \label{delta-def}
+  \varepsilon_M(\vec{\theta},z) = \Omega_M(z) \varepsilon_c(z)\Big[1+\delta(\vec{\theta},z)\Big]
+\end{equation}
+where $\varepsilon_c(z)$ is the critical density, described by the Friedmann equation:
+\begin{equation}
+  \label{H-def}
+  \varepsilon_c(z) = \frac{3 \left[H(z)\right]^2 c^2}{8\pi G}
+\end{equation}
+Note also that the change of comoving distance $D$ with redshift $z$ is given by
+\begin{equation}
+  \label{dDdz}
+  \frac{dD}{dz} = \frac{c}{H(z)}
+\end{equation}
+and that the matter density fraction can be written
+\begin{equation}
+  \Omega_M(z) = \frac{H_0^2\Omega_{M,0}(1+z)^3}{[H(z)]^2}
+\end{equation}
+
+
+Combining these equations gives
+\begin{equation}
+  \kappa(z_s) = \frac{3cH_0^2\Omega_{M,0}}{2}\int_0^{z_s} \dd z \frac{(1+z)}{H(z)} \frac{D(D_S-D)}{D_S}\big[1+\delta(z)\big]
+\end{equation}
+
+Because of the mass-sheet degeneracy, $\kappa(z_s)$ can only be determined up to an additive constant across a given redshift bin \citep[see][for discussion]{Seitz_Schneider96}.  Defining $\bar{\kappa}(z_s)$ to be the convergence due to matter-dominated growth and $\Delta(z) \equiv \delta(z)/a$ (see Appendix \ref{matter_dominated_growth} for motivation behind this change of variables) we find
+\begin{equation}
+  \label{kappa-delta}
+  \kappa(z_s) \equiv \hat{\kappa}(z_s)-\bar\kappa(z_s) = 
+  \frac{3cH_0^2\Omega_{M,0}}{2}\int_0^{z_s} \dd z 
+  \frac{1}{H(z)} \frac{D(D_S-D)}{D_S}\Delta(z)
+\end{equation}
+where, to be explicit,
+\begin{equation}
+  \bar\kappa(z_s) = \frac{3cH_0^2\Omega_{M,0}}{2}\int_0^{z_s} \dd z 
+  \frac{(1+z)}{H(z)} \frac{D(D_S-D)}{D_S}
+\end{equation}
+To be clear, here, $D$ is the comoving distance to a redshift $z$, and $D_S$ is the comoving distance to the redshift $z_s$ of the photon source.  Equation \ref{kappa-delta} defines the mapping from $\kappa(z_s)$ to $\Delta(z)$ for $z<z_s$. 
+
 \begin{itemize}
   \item Weak gravitational lensing limit: $\gamma$ and $\kappa$
   \item Mass mapping from weak lensing surveys
