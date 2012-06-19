@@ -633,7 +633,7 @@ $(a_k / a_{rm})^2 \propto k^{-2}$.  This motivates use of the power
 spectrum of density fluctuations:
 \begin{equation}
   \label{eq:power_spectrum}
-  P_k \equiv \langle|\delta_k^2|\rangle,
+  P_k \equiv \langle|\delta_k|^2\rangle,
 \end{equation}
 in theory a measurable quantity, which will have a distinct break at
 $k = k_{rm}$ for the reasons discussed above.
@@ -883,7 +883,8 @@ The local Jacobian matrix (\ref{eq:Jacobian_def}) of the lens mapping can then b
   \end{array}\right)
 \end{equation}
 
-Equations \ref{eq:psi-kappa}, \ref{eq:psi_ij} and \ref{eq:gamma-def} can be combined and simplified to yield the following relationship between the convergence and the shear, where for simplicity we define the complex angle $\theta = \theta_1 + i\theta_2$:
+Equations \ref{eq:psi-kappa}, \ref{eq:psi_ij} and \ref{eq:gamma-def} can be combined and simplified to yield the following relationship between the convergence and the shear, where for simplicity we define the complex angle
+$\theta \equiv \theta_1 + i\theta_2$:
 \begin{equation}
   \label{eq:gamma-kappa}
   \gamma(\theta) 
@@ -893,10 +894,11 @@ Equations \ref{eq:psi-kappa}, \ref{eq:psi_ij} and \ref{eq:gamma-def} can be comb
 where 
 \begin{equation}
   \label{eq:scriptD}
-  \mathcal{D}(\theta \equiv \theta_1+i\theta_2) 
+  \mathcal{D}(\theta) 
   = \frac{\theta_1^2 - \theta_2^2 + 2i\theta_1\theta_2}{(\theta_1^2+\theta_2^2)^2}
   = \frac{\theta^2}{|\theta|^4}
 \end{equation}
+is the Kaiser-Squires kernel \citep{Kaiser93}.
 The lens mapping in eqn.~\ref{eq:jacobian_kappa_gamma} describes an
 image transformation consisting of a magnification with magnitude 
 given by the real convergence $\kappa$
@@ -947,15 +949,24 @@ To enable these three analyses, we will develop a bit further the basic
 principles of $\kappa$-mapping and $\gamma$ power spectra.
 
 \subsection{Mapping with Weak Lensing}
-The typical weak lensing mapping problem becomes this:
-given a noisy shear estimate $\gamma_{obs}(\theta)$, recover a local
-estimate of $\kappa(\theta)$ using equation \ref{eq:gamma-kappa},
-and then an estimate 
-of the projected mass $\Sigma(\theta)$ via equation \ref{eq:kappa-sigma}.
-To obtain  a 3D map, this procedure is repeated for shear at various
-redshifts, so that these multiple estimates of $\Sigma(\theta, z)$ can
-be used to recover the 3D mass density $\rho(\theta, z)$ using
-eqn.~\label{eq:sigma-def}.  It helps to write 
+The typical weak lensing mapping problem can be computed using the following
+steps:
+\begin{enumerate}
+  \item From the measured ellipticities and redshifts of photometrically
+    observed galaxies, obtain noisy estimates of the shear
+    $\gamma_{obs}(\theta, z)$.
+  \item Using eqn.~\ref{eq:gamma-kappa}, recover a local estimate of
+    $\kappa(\theta, z)$.  Note that due to the integral over the lensing
+    kernel $\mathcal{D}(\theta)$, the convergence estimate is non-local:
+    the value of $\kappa$ at a given location is related to the value of the
+    $\gamma$ at {\it all other} locations.
+  \item Using eqn.~\ref{eq:kappa-sigma}, determine the projected density
+    $\Sigma(\theta, z)$.
+  \item As a final step, it is possible in principle to use
+    eqn.~\ref{eq:sigma-def} to recover the 3D mass density
+    $\rho(\theta, z)$.  This is the subject of Chapter 3.
+\end{enumerate}
+To accomplish this, it is convenient to combine steps 3-4 and write 
 the expression for $\kappa(\theta,z)$ in terms of $\rho(\theta,z)$
 explicitly.  From (\ref{eq:sigma-def}) and (\ref{eq:kappa-sigma}),
 approximating the sum as an integral, we find
@@ -972,43 +983,45 @@ distance $D^{(A)}$ is related to the comoving distance $D$ by
 \begin{equation}
   D^{(A)}(z) = a S_\kappa (D)
 \end{equation}
-where $S_\kappa(D) = D$ for a flat universe.  Converting the angular 
-diameter distances $D^{(A)}$ to comoving distances $D$,
+where $S_\kappa(D) = D$ for a flat universe.  Assuming a flat universe,
+converting to comoving distances, 
 and writing this in terms of $\varepsilon = \rho c^2$, we find
 \begin{equation}
   \label{kappa-epsilon-1}
   \kappa(\vec{\theta},z_s) 
   = \frac{4\pi G}{c^2} \int_0^{z_s} \dd z\frac{dD}{dz} 
-  a^2\frac{D(D_S-D)}{D_S} \varepsilon_M(\vec{\theta},z) 
+  a^2\frac{D(D_S-D)}{D_S} \varepsilon_M(\vec{\theta},z),
 \end{equation}
-here we've used the shorthand $D \equiv D(z)$ and 
+where we've used the shorthand $D \equiv D(z)$ and 
 $D_S \equiv D(z_s)$.
 
-It is instructive to expand the energy density in equation 
-\ref{kappa-epsilon-1} about the background matter density.  
-We define $\delta(z)$, the density contrast, such that
+To further progress, we can follow \S\ref{sec:growth} and write the
+matter density $\varepsilon_M(\theta, z)$ in equation
+\ref{kappa-epsilon-1} in terms of the density contrast $\delta$:
 \begin{equation}
   \label{delta-def}
   \varepsilon_M(\vec{\theta},z) = \Omega_M(z) \varepsilon_c(z)\Big[1+\delta(\vec{\theta},z)\Big]
 \end{equation}
-where $\varepsilon_c(z)$ is the critical density, described by the Friedmann equation:
-\begin{equation}
-  \label{H-def}
-  \varepsilon_c(z) = \frac{3 \left[H(z)\right]^2 c^2}{8\pi G}
-\end{equation}
-Note also that the change of comoving distance $D$ with redshift $z$ is given by
+where we have assumed a flat universe, such that the total density is
+equal to the critical density $\varepsilon_c(z)$
+(eqn.~\ref{eq:critical_density}).
+We'll make use of two further algebraic substitutions:
+from the definition of comoving distance (eq.~\ref{eq:comoving_distance}),
+we can write
 \begin{equation}
   \label{dDdz}
-  \frac{dD}{dz} = \frac{c}{H(z)}
+  \frac{dD}{dz} = \frac{c}{H(z)},
 \end{equation}
-and that the matter density fraction can be written
+and from the Friedmann equation (eqn.~\ref{eq:friedmann_dimensionless})
+matter density fraction can be written
 \begin{equation}
-  \Omega_M(z) = \frac{H_0^2\Omega_{M,0}(1+z)^3}{[H(z)]^2}
+  \Omega_M(z) = \frac{H_0^2\Omega_{M,0}(1+z)^3}{[H(z)]^2}.
 \end{equation}
 
 
 Combining these equations gives
 \begin{equation}
+  \label{eq:kappa-delta}
   \kappa(z_s) = \frac{3cH_0^2\Omega_{M,0}}{2}\int_0^{z_s} \dd z \frac{(1+z)}{H(z)} \frac{D(D_S-D)}{D_S}\big[1+\delta(z)\big]
 \end{equation}
 
@@ -1019,7 +1032,7 @@ Defining $\bar{\kappa}(z_s)$ to be the convergence due to the background
 matter distribution in matter-dominated growth,
 and $\Delta(z) \equiv \delta(z)/a$ we find
 \begin{equation}
-  \label{kappa-delta}
+  \label{eq:kappa-delta-2}
   \kappa(z_s) \equiv \hat{\kappa}(z_s)-\bar\kappa(z_s) = 
   \frac{3cH_0^2\Omega_{M,0}}{2}\int_0^{z_s} \dd z 
   \frac{1}{H(z)} \frac{D(D_S-D)}{D_S}\Delta(z)
@@ -1031,8 +1044,99 @@ where, to be explicit,
 \end{equation}
 To be clear, here, $D$ is the comoving distance to a redshift $z$,
 and $D_S$ is the comoving distance to the redshift $z_s$ of the photon
-source.  Equation \ref{kappa-delta} defines the mapping from $\kappa(z_s)$
-to $\Delta(z)$ for $z<z_s$. 
+source.  Equation \ref{eq:kappa-delta-2} defines the mapping from $\kappa(z_s)$
+to $\Delta(z)$ for $z<z_s$.
+
+\subsection{Power Spectra}
+Mass mapping can lead to deep astrophysical and cosmological insights through
+the comparison of dark and luminous matter distributions
+\citep[e.g.][]{Clowe2006}, through constraints on the mass profiles of
+collapsed structures \citep[e.g.][]{Oguri2012}, or
+through the comparison of observed mass peaks to
+theoretical predictions (see Chapter 4).  Because of the noise inherent in
+lensing observations, most of these localized analyses are limited to
+very dense regions, far from the linear regime.
+
+The linear regime, as well as the presence of nonlinear effects on small
+scales, can be measured using power spectra of the weak lensing shear.  In
+order to accomplish this, however, the power spectra of observed shear must
+be related to the mass power spectra discussed in \S\ref{sec:growth}.
+
+In \S\ref{sec:growth}, we defined the power spectrum
+\begin{equation}
+  P_\delta(k) = \langle |\hat\delta_k|^2 \rangle,
+\end{equation}
+where
+The power spectrum 
+
+\subsection{E and B modes}
+In this section, we will outline the basic results of \citet{Schneider02b}.
+We will start by defining the E/B decomposition of the shear field $\gamma$.
+If the shear $\gamma$ and convergence $\kappa$ can be expressed as shown
+in eqn.~\ref{eq:gamma-def}, then the gradient of $\kappa$ can be written
+\begin{equation}
+  \label{eq:u_def}
+  \myvec{u} \equiv
+  \nabla_\theta \kappa =
+  \left(
+  \begin{array}{l}
+    \partial \kappa / \partial\theta_1\\
+    \partial \kappa / \partial\theta_2 
+  \end{array}
+  \right) 
+  =
+  \left(
+  \begin{array}{l}
+    \partial \gamma_1 / \partial\theta_1 + \partial\gamma_2/\partial\theta_2\\
+    \partial \gamma_2 / \partial\theta_1 - \partial\gamma_1/\partial\theta_2
+  \end{array}
+  \right).
+\end{equation}
+If $\kappa$ and $\gamma$ are due entirely to weak lensing, then the vector
+$\myvec{u}$ should be a pure gradient field, and this will hold for the
+quantity on the left hand side of eqn.~\ref{eq:u_def} as well.
+If, however, other effects are involved (e.g.~shot noise, second-order effects,
+intrinsic alignments, systematic errors, etc.)
+then $\myvec{u}$ will not be a pure gradient field and will have a curl
+component as well.  This ``curl-free'' condition can be compactly expressed
+\begin{equation}
+  \label{eq:curl-free}
+  \myvec{\nabla} \times \myvec{u} = 0.
+\end{equation}
+When effects other than pure weak lensing are present, however, this condition
+may not hold.
+With this in mind, we will use an analogy from electrodynamics and decompose
+$\kappa$ into a curl-free ``E-mode'' $\kappa_E$ and a divergence-free
+``B-mode'' $\kappa_B$ such that
+\begin{eqnarray}
+  \nabla^2 \kappa_E &=& \myvec{\nabla} \cdot \myvec{u}\\
+  \nabla^2 \kappa_B &=& \myvec{\nabla} \times \myvec{u}.
+\end{eqnarray}
+We'll also define the E-mode and B-mode lensing potential following
+eqn.~\ref{eq:psi-kappa-1}:
+\begin{equation}
+  \nabla^2 \psi_{E, B} = 2\kappa_{E, B}.
+\end{equation}
+This allows us to define the E and B modes of $\gamma$ via
+eqn.~\ref{eq:gamma-def}.  Explicitly,
+\begin{equation}
+  \gamma_{E,B} = \left(\frac{1}{2}\left[\frac{\partial^2}{\partial \theta_1\partial\theta_1}
+  - \frac{\partial^2}{\partial \theta_2\partial\theta_2}\right]
+  + i\frac{\partial^2}{\partial \theta_1\partial\theta_2}\right)
+  \psi_{E,B}.
+\end{equation}
+Combining the convergence E and B modes as a complex linear combination
+$\kappa = \kappa_E + i\kappa_B$, we find in analogy to
+eqn.~\ref{eq:gamma-kappa},
+\begin{equation}
+  \label{eq:gamma-kappa}
+  \left[\gamma_E(\theta) + i\gamma_B(\theta)\right]
+  = \frac{-1}{\pi}\int_{\mathbb{R}^2} \mathcal{D}(\theta - 
+  \theta^\prime)
+  \left[\kappa_E(\theta^\prime) + i\kappa_B(\theta^\prime)\right]
+  \dd^2\theta^\prime
+\end{equation}
+
 
 \begin{itemize}
   \item Weak gravitational lensing limit: $\gamma$ and $\kappa$
