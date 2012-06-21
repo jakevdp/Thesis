@@ -698,9 +698,9 @@ spectrum of density fluctuations:
 \end{equation}
 in theory a measurable quantity, which will have a distinct break at
 $k = k_{rm}$ for the reasons discussed above.
-In particular, if the initial power spectrum is a simple power law
-with $P_k \propto k^n$, then after decoupling the power spectrum will have
-the form
+In particular, if the power spectrum of primordial fluctuations
+is a simple power law with $P_k \propto k^n$,
+then after decoupling the power spectrum will be approximately
 \begin{equation}
   P_k \propto \left\{
   \begin{array}{ll}
@@ -767,7 +767,8 @@ useful tool.
 \comment{ Mention measurements of LRG power spectra \& cosmic parameter estimates.}
 
 \comment{ Should we also briefly mention WMAP anisotropies and the BAO signal?
-  They're essentially very accurate standard rulers at different epochs.}
+  They're essentially very accurate standard rulers at different epochs.
+  But I don't want to digress too much...}
 
 \section{Gravitational Lensing}
 \label{sec:gravitational_lensing}
@@ -987,13 +988,22 @@ Unfortunately, the intrinsic shape and size of a galaxy cannot be known
 of the {\it distribution} of shapes and sizes of sources can lead to
 useful estimates of the shear and/or convergence across the sky.
 
-\comment{add some references: using gamma \& kappa on galaxies, number counts,
+\comment{add some references: measuring gamma \& kappa from galaxy shapes
+  and sizes, from number counts,
   galaxy-galaxy lensing, quasar variability-luminosity relationship, etc.}
 
-In the most typical approach to weak lensing,
+In the most common approach to weak lensing,
 the ellipticities of source galaxies are measured, 
-giving a noisy estimate of the shear $\gamma(\theta)$.
-These measurements can be utilized in a number of ways to learn about
+giving a noisy estimate of the reduced shear
+\begin{equation}
+  \gamma_r(\theta) = \frac{\gamma(\theta)}{1 - \kappa(\theta)}.
+\end{equation}
+In the weak limit where $\kappa(\theta) \ll 1$, analyses often assume
+$\gamma_r(\theta) \approx \gamma(\theta)$, though with higher-precision
+measurements, this second-order effect can introduce systematic
+errors in mass maps and power spectra \citep{Dodelson06, Shapiro09, Krause10}.
+Once the shear field is estimated, the
+measurements can be utilized in a number of ways to learn about
 fundamental physical principles; this work will focus on three areas:
 \begin{description}
   \item[Direct mapping:] Having measured the shear $\gamma$ at locations
@@ -1021,7 +1031,7 @@ fundamental physical principles; this work will focus on three areas:
 \end{description}
 
 To enable these three analyses, we will develop a bit further the basic
-principles of $\kappa$-mapping and $\gamma$ power spectra.
+principles of weak lensing mappings and power spectra.
 
 \subsection{Mapping with Weak Lensing}
 The typical weak lensing mapping problem can be computed using the following
@@ -1204,27 +1214,78 @@ Combining the convergence E and B modes as a complex linear combination
 $\kappa = \kappa_E + i\kappa_B$, we find in analogy to
 eqn.~\ref{eq:gamma-kappa},
 \begin{equation}
-  \label{eq:gamma-kappa}
+  \label{eq:gamma-kappa-EB}
   \left[\gamma_E(\theta) + i\gamma_B(\theta)\right]
   = \frac{-1}{\pi}\int_{\mathbb{R}^2} \mathcal{D}(\theta - 
   \theta^\prime)
   \left[\kappa_E(\theta^\prime) + i\kappa_B(\theta^\prime)\right]
   \dd^2\theta^\prime
 \end{equation}
+We can define the Fourier transform of the convergence
+\begin{equation}
+  \hat{\kappa}_{E,B}(\myvec\ell)
+  = \int\dd^2\myvec{\theta}\,e^{i\myvec{\ell}\cdot\myvec{\theta}}
+  \kappa_{E,B}(\myvec{\theta}),
+\end{equation}
+where $\myvec{\ell}$ is the angular Fourier variable.  We can then define
+the power spectra \citep[e.g.][]{Schneider02b}
+\begin{eqnarray}
+  \langle\hat{\kappa}_{E, B}(\myvec{\ell})
+  \hat{\kappa}^\ast_{E,B}(\myvec{\ell}^\prime)\rangle
+  =(2\pi)^2\delta_D(\myvec{\ell} - \myvec{\ell}^\prime)P_{E,B}(\ell).
+\end{eqnarray}
+Taking the Fourier transform of eqn.~\ref{eq:gamma-kappa-EB} gives
+\begin{equation}
+  \hat{\gamma}_{E,B}(\myvec{\ell})
+  =\left(\frac{\ell_1^2 - \ell_2^2 + 2i\ell_1\ell_2}{|\myvec{\ell}|^2}\right)
+  \hat{\kappa}_{E,B}(\myvec{\ell}).
+\end{equation}
+The factor relating $\hat{\gamma}$ and $\hat{\kappa}$ can be expressed
+as a simple phase $e^{2i\beta}$, so that
+\begin{equation}
+  \langle\hat{\gamma}_{E, B}(\myvec{\ell})
+  \hat{\gamma}^\ast_{E,B}(\myvec{\ell}^\prime)\rangle = 
+  \langle\hat{\kappa}_{E, B}(\myvec{\ell})
+  \hat{\kappa}^\ast_{E,B}(\myvec{\ell}^\prime)\rangle.
+\end{equation}
+From this we can define the shear correlation function
+\begin{eqnarray}
+  \label{eq:xi_plus}
+  \xi_+(\theta)
+  &\equiv& \langle\gamma(\myvec{0})\gamma^\ast(\myvec{\theta})\rangle\nonumber\\
+  &=& \int_0^\infty\frac{\dd\ell\,\ell}{2\pi}J_0(\ell\,\theta)
+     [P_E(\ell) + P_B(\ell)],
+\end{eqnarray}
+where $J_0(x)$ is a Bessel function of the first kind.
+The ``+'' distinguishes this correlation measure from two other shear
+correlations which can be defined \citep[see][for details]{Schneider02}.
+We will limit the discussion here to $\xi_+$, because this is the relevant
+measure for our purposes.
 
+The E-mode angular shear power spectrum $P_E(\ell)$ can be expressed as a
+weighted line-of-sight integral over the matter power 
+spectrum via eqn.~\ref{eq:kappa-delta}.  Taking into account the redshift
+distribution of galaxies gives \citep[see][]{Takada04}
+\begin{equation}
+  \label{eq:P_gamma}
+  P_E(\ell) = \int_0^{r_s}dr W^2(r)r^{-2}
+  P_\delta\left(k=\frac{\ell}{r};z(r)\right)
+\end{equation}
+Here $r$ is the comoving distance, $r_s$ is the distance to the
+source, and $W(r)$ is the lensing weight function,
+\begin{equation}
+  \label{eq:lensing_weight}
+  W(r) = \frac{3\Omega_{m,0}H_0^2}{2a(r)}\frac{r}{\bar{n}_g}
+  \int_{z(r)}^{z(r_s)}dz\ n(z) \frac{r(z)-r}{r(z)}
+\end{equation}
+where $n(z)$ is the empirical redshift distribution of galaxies,
+with $\bar{n}_g = \int_0^\infty n(z)dz$.
+%The nonlinear mass fluctuation power spectrum $P_\delta(k, z)$ can be
+%predicted semianalytically: in this work we use the halo model of
+%\citet{Smith03}.  With this as an input, we can analytically
+%construct the measurement covariance matrix $\mymat\xi$ using 
+%Equations~\ref{eq:xi_analytic}-\ref{eq:lensing_weight}.
 
-\begin{itemize}
-  \item Weak gravitational lensing limit: $\gamma$ and $\kappa$
-  \item Mass mapping from weak lensing surveys
-  \item Power spectra of $\gamma$ and $\kappa$: how do these relate to
-    the correlation functions from previous section?
-  \item A note about the practical side: shape measurement, shot noise,
-    etc.
-\end{itemize}
-
-{\it Notes:}
-\begin{itemize}
-  \item Mention work with the supernova collaboration \citep{Kessler2009}.
-  \item We also should briefly mention here \cite{Jain2011} and alternatives
-    to standard cosmological models \citep[also][]{Sollerman2009}.
-\end{itemize}
+\comment{Mention work with the supernova collaboration \citep{Kessler2009},
+  We also should briefly mention here \cite{Jain2011} and alternatives
+  to standard cosmological models \citep[also][]{Sollerman2009}.}
