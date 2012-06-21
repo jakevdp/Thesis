@@ -10,3 +10,8 @@ thesis.dvi : thesis.tex thesis.bib *.tex
 	bibtex thesis
 	latex thesis
 	latex thesis
+clean :
+	rm *.aux
+	rm *.bbl
+	rm *.blg
+	rm *.log

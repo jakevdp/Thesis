@@ -739,6 +739,78 @@ by $\mymat{W}^T\mymat{W}$).  This is equivalent to the whitening operation
 discussed in \S\ref{sec:whitening}.  We will not use this formalism here, so we
 leave it only as a suggested extension.
 
+\section{\KL\ Analysis and Bayesian Inference}
+Because of the signal-to-noise optimality properties of KL, it can be
+very useful within Bayesian parameter estimation.  
+Given observations $D$ and prior information $I$, Bayes' theorem specifies the
+posterior probability of a model described by the parameters $\{\theta_i\}$:
+\begin{equation}
+  \label{eq:bayes}
+  P(\{\theta_i\}|DI) = P(\{\theta_i\}|I) \frac{P(D|\{\theta_i\}I)}{P(D|I)}
+\end{equation}
+The term on the left hand side
+is the \textit{posterior} probability of the set of
+model parameters $\{\theta_i\}$, which is the quantity we are interested in.
+
+The first term on the RHS is the \textit{prior}.  It quantifies how our prior
+information $I$ affects the probabilities of the model parameters.  The 
+prior is where information from other surveys (e.g. WMAP, etc) can be
+included. The likelihood function for the observed coefficients $\myvec{a}$
+enters into the numerator $P(D|\{\theta_i\}I)$.  The denominator $P(D|I)$
+is essentially a normalization constant, set so that the sum of probabilities
+over the parameter space equals unity.
+
+KL is useful in the case where the model $\{\theta\}$ can be expressed in
+terms of a covariance $\mymat{\mathcal{C}}_{\{\theta\}}$ \citep[see][]{Vogeley96}.
+Given a data vector $\mymat{d}$ with observed noise covariance
+$\mymat{\mathcal{N}}$, the KL vectors are the eigenvectors
+$\mymat{V}_{\{\theta\}}$ of the whitened total covariance 
+\begin{equation}
+  \mymat{\mathcal{C}}_{\{\theta\}, W} =
+  \mymat{\mathcal{N}}^{-1/2}
+  \mymat{\mathcal{C}}_{\{\theta\}}
+  \mymat{\mathcal{N}}^{-1/2}.
+\end{equation}
+These eigenvectors can be used to quickly compute the KL coefficients of
+the observed data,
+\begin{equation}
+  \myvec{a}_{\{\theta\}} = \mymat{V}^\dagger_{\{\theta\}}
+  \mymat{\mathcal{N}}^{-1/2}\myvec{d}
+\end{equation}
+For a given model $\{\theta_i\}$, we can predict the expected
+distribution of coefficients $\myvec{a}_{\{\theta_i\}}$:
+\begin{eqnarray}
+  \mymat{X}_{\{\theta_i\}}
+  & \equiv & \langle\myvec{a}_{\{\theta_i\}}
+  \myvec{a}_{\{\theta_i\}}^\dagger\rangle\nonumber\\
+  &=& \mymat{V}_{\{\theta\}}^\dagger \mymat{\mathcal{N}}^{-1/2} 
+  \mymat{\mathcal{C}}_{\{\theta_i\}}\mymat{\mathcal{N}}^{-1/2}\mymat{V}_{\{\theta\}}
+  + \mymat{I}.
+\end{eqnarray}
+If the length of the data vector $\myvec{d}$ is $N$, then the full
+analysis results in $\mymat{X}_{\{\theta_i\}}$ being an $N\times N$ matrix.
+Alternatively, one can truncate the eigenvectors to $n < N$ terms:
+this leads to $\mymat{X}_{\{\theta_i\}}$ being an $n\times n$ matrix, and
+is equivalent to working with an optimal low-rank approximation of the
+data $\myvec{d}$.
+Using this, the measure of departure from the model $\{\theta\}$
+is given by the quadratic form
+\begin{equation}
+  \chi_{\{\theta\}}^2 = \myvec{a}^\dagger\mymat{X}_{\{\theta_i\}}^{-1}\myvec{a}
+\end{equation}
+The likelihood is then given by
+\begin{equation}
+  \label{eq:likelihood}
+  P(D|\{\theta\}I) =
+  \mathcal{L}(\myvec{a}|\{\theta_i\}) = 
+  (2\pi)^{n/2} |\det(X_{\{\theta_i\}})|^{-1/2}
+  \exp(-\chi_{\{\theta\}}^2/2)
+\end{equation}
+where $n$ is the number of degrees of freedom: that is, the number
+of eigenmodes included in the analysis.  The likelihood given by
+Equation~\ref{eq:likelihood} enters into Equation~\ref{eq:bayes} when
+computing the posterior probability.  This sort of approach will be
+applied to observed shear in Chapter 5.
 
 \section{\KL\ Analysis of Shear}
 In the case of shear observations, the observed vector $\myvec{\gamma}$
@@ -755,7 +827,7 @@ observed shear $\myvec{\gamma}$ is given by
 where the matrix $\mymat{\mathcal{N}}_{ij}$ is the noise covariance between
 bins.  The shear correlation function $\xi_+$ can be computed from the
 theoretical 3D mass power spectrum, using the results from the previous
-chapter (eqs.~\ref{eq:xi_plus}-\label{eq:lensing_weight}).
+chapter (eqs.~\ref{eq:xi_plus}-\ref{eq:lensing_weight}).
 
 The noise matrix $\mymat{\mathcal{N}}$ can be estimated from the measurement
 process: in the simplest case where noise is due to shot-noise only and

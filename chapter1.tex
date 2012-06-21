@@ -1161,7 +1161,6 @@ If the shear $\gamma$ and convergence $\kappa$ can be expressed as shown
 in eqn.~\ref{eq:gamma-def}, then the gradient of $\kappa$ can be written
 \begin{equation}
   \label{eq:u_def}
-  \myvec{u} \equiv
   \nabla_\theta \kappa =
   \left(
   \begin{array}{l}
@@ -1175,21 +1174,22 @@ in eqn.~\ref{eq:gamma-def}, then the gradient of $\kappa$ can be written
     \partial \gamma_1 / \partial\theta_1 + \partial\gamma_2/\partial\theta_2\\
     \partial \gamma_2 / \partial\theta_1 - \partial\gamma_1/\partial\theta_2
   \end{array}
-  \right).
+  \right)
+  \equiv
+  \myvec{u}.
 \end{equation}
 If $\kappa$ and $\gamma$ are due entirely to weak lensing, then the vector
 $\myvec{u}$ should be a pure gradient field, and this will hold for the
 quantity on the left hand side of eqn.~\ref{eq:u_def} as well.
-If, however, other effects are involved (e.g.~shot noise, second-order effects,
-intrinsic alignments, systematic errors, etc.)
-then $\myvec{u}$ will not be a pure gradient field and will have a curl
-component as well.  This ``curl-free'' condition can be compactly expressed
+This ``curl-free'' condition can be compactly expressed
 \begin{equation}
   \label{eq:curl-free}
   \myvec{\nabla} \times \myvec{u} = 0.
 \end{equation}
-When effects other than pure weak lensing are present, however, this condition
-may not hold.
+If, however, other effects are involved (e.g.~shot noise, second-order effects,
+intrinsic alignments, systematic errors, etc.)
+then $\myvec{u}$ will not be a pure gradient field and will have a curl
+component as well.
 With this in mind, we will use an analogy from electrodynamics and decompose
 $\kappa$ into a curl-free ``E-mode'' $\kappa_E$ and a divergence-free
 ``B-mode'' $\kappa_B$ such that
@@ -1258,7 +1258,8 @@ From this we can define the shear correlation function
 \end{eqnarray}
 where $J_0(x)$ is a Bessel function of the first kind.
 The ``+'' distinguishes this correlation measure from two other shear
-correlations which can be defined \citep[see][for details]{Schneider02}.
+correlations which can be defined, $\xi_-$ and $\xi_\times$
+\citep[see][for details]{Schneider02}.
 We will limit the discussion here to $\xi_+$, because this is the relevant
 measure for our purposes.
 
