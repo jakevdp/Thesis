@@ -34,12 +34,13 @@ This chapter will cover the basic physical and mathematical background of
 cosmology.  We will begin with a discussion of the
 FLRW metric (named for Friedmann, Lemaitre,
 Robinson, and Walker) which describes the geometry of space-time.
-Next we'll move on to define the Friedmann Equations, which boil-down
+Next we'll move on to define the Friedmann Equations, which condense
 the field equations of Einstein's General Relativity to the basic pieces
 needed to describe the dynamics of a globally homogeneous and isotropic
-universe.  We will briefly discuss the relevant theory behind gravitational
-structure formation within this model, including the use of clustering
-models and Fourier power spectra to relate observations to theory.
+universe.  We will then briefly discuss the relevant theory behind
+gravitational structure formation within this model.
+This paves the way to relate theory to observations, including cluster counts
+models and Fourier power spectra.
 Finally, we will develop the equations describing gravitational lensing
 in the weak limit, and show how weak lensing observations can be used
 to gain insight into the parameters of our cosmological model.
@@ -57,13 +58,16 @@ does not change with respect to the orientation of the observer.
 These assumptions are clearly incorrect at small scales -- our galaxy
 has a much higher density of stars in the central bulge than in the
 outer halo, for example -- but these assumptions appear to hold at
-the largest scales.  At distance scales larger than the size of
-typical galaxy clusters (about 10 Mpc or more), the distribution of
+the largest scales.
+At distance scales larger than the size of typical superclusters
+(about 50 Mpc or more), the distribution of
 quasars and galaxies reflect the nearly homogeneous and isotropic
-nature of large scale structure.  More importantly, the Cosmic Microwave
+nature of large scale structure \citep{Yadav2005, Sarkar2009}.
+More importantly, the Cosmic Microwave
 Background appears homogeneous and isotropic to within one part in
 $10^5$, giving evidence that our assumptions of homogeneity and isotropy
-are well-founded for the universe as a whole.
+are well-founded for the universe as a whole \citep[For an interesting
+discussion of the limits of this approach, see][]{Maartens2011}.
 
 The most general metric for a homogeneous and isotropic space-time is due
 to Howard Robertson and Arthur Walker, who showed that the space-time
@@ -72,11 +76,11 @@ distance $ds$ in spherical coordinates is given by
   \label{eq:FLRW_metric}
   ds^2 = -c^2 dt^2 + a(t)^2\left[dr^2 + S_\kappa^2(r)d\Phi^2\right]
 \end{equation}
-where $t$ is the time coordinate, $r$ and $\Phi$ are the spatial coordinate,
+where $t$ is the time coordinate, $r$ and $\Phi$ are comoving spherical
+coordinates,
 $a(t)$ describes the distance scale (which may be an arbitrary function
 of $t$), and $S_\kappa^2(r)$ is the curvature term.  The curvature term
-depends on the curvature, $\kappa$, which may be either positive, negative,
-or zero:
+depends on the curvature, $\kappa$, which may be either $+1$, $-1$, or $0$:
 \begin{equation}
   \label{eq:FLRW_curvature}
   S_\kappa(r) = \left\{
@@ -165,16 +169,12 @@ state for each:
 where $\varepsilon_{w,0}$ is the energy density of each species at present.
 The various possible contributions are:
 \begin{description}
-  \item[Non-relativistic matter:] Non-relativistic matter (often known
-    as {\it cold matter}) has kinetic energy much less than its rest mass;
-    in other words $P \sim kT \ll \varepsilon$.  So non-relativistic matter
-    has $w = 0$
-  \item[Radiation:] Radiation has energy per particle
-    proportional to the momentum times the speed of light.  From basic
-    electrodynamics, one can show that for an ideal photon gas, each spatial
-    degree of freedom contributes equally to the energy, so that the pressure
-    is $P = dp/dt = \varepsilon / 3$.  So relativistic mass-energy has
-    $w = 1/3$.
+  \item[General Quintessence:] Quintessence is defined as any sort of matter
+    or energy field
+    which can balance the gravitational attraction, leading to accelerated
+    expansion.  By Equation~\ref{eq:friedmann_2}, $\ddot{a}/a > 0$ only
+    if $w < - 1/3$.  We see that the cosmological constant is a form of
+    quintessence.
   \item[Vacuum energy:] The vacuum energy or cosmological constant has
     constant energy density.  So by Equation~\ref{eq:friedmann_3},
     $P = -\varepsilon$ and $w = -1$.
@@ -187,19 +187,28 @@ The various possible contributions are:
     not appear in eqn.~\ref{eq:friedmann_2}: for $w=-1/3$,
     $\varepsilon + 3P = 0$, and the presence of curvature cannot lead to
     a change in the expansion rate.
-  \item[General Quintessence:] Quintessence is defined as any sort of matter
-    which can balance the gravitational attraction, leading to accelerated
-    expansion.  By Equation~\ref{eq:friedmann_2}, $\ddot{a}/a > 0$ only
-    if $w < - 1/3$.  We see that the cosmological constant is a form of
-    quintessence.
-  \item[Relativistic Matter:] Relativistic matter has energy given by
+  \item[Non-relativistic matter:] Non-relativistic matter (often known
+    as {\it cold matter}) has kinetic energy much less than its rest mass;
+    in other words $P \sim kT \ll \varepsilon$.  So non-relativistic matter
+    has $w \ll 1$, and we will often approximate this as simply $w=0$.
+  \item[Relativistic Matter:] Relativistic matter 
+    (known as {\it warm matter}) has energy given by
     $E^2 = p^2c^2 + m^2 c^4$, where $p$ is the total momentum and $m$ is
     the rest-mass.  If $pc \ll mc^2$, we have the non-relativistic
-    case above, and find $w \to 0$.  If $pc \gg mc^2$, we have the radiation
-    case, and find $w \to 1/3$.  For general relativistic matter, then, we have
+    case above, and find $w \to 0$.  If $pc \gg mc^2$, then in analogy to
+    the radiation case discussed below, we find $w \to 1/3$.
+    For general relativistic matter, this leads to
     $0 \le w \le 1/3$, with the exact value dependent on the energy density.
+  \item[Radiation:] Radiation has energy per particle
+    proportional to the momentum times the speed of light.  From basic
+    electrodynamics, one can show that for an ideal photon gas, each spatial
+    degree of freedom contributes equally to the energy, so that the pressure
+    is $P = dp/dt = \varepsilon / 3$.  So relativistic mass-energy has
+    $w = 1/3$.
 \end{description}
 
+\subsection{Hubble Parameter}
+\label{sec:hubble_parameter}
 The first Friedmann equation (eqn.~\ref{eq:friedmann_1}) is commonly expressed
 in terms of dimensionless parameters via the generalization in
 eqn.~\ref{eq:friedmann_1_split}.  If we define the Hubble parameter
@@ -207,7 +216,7 @@ eqn.~\ref{eq:friedmann_1_split}.  If we define the Hubble parameter
   \label{eq:hubble_parameter}
   H \equiv \frac{\dot{a}}{a},
 \end{equation}
-and let $H_0$ be the value of the hubble parameter today, then
+and let $H_0$ be the value of the Hubble parameter today, then
 eqn.~\ref{eq:friedmann_1_split} becomes
 \begin{equation}
   \left(\frac{H}{H_0}\right)^2 = \frac{8\pi G}{3H_0^2c^2}
@@ -218,8 +227,8 @@ This motivates the definition of the critical density
   \label{eq:critical_density}
   \varepsilon_c \equiv \frac{3 H^2 c^2}{8\pi G},
 \end{equation}
-where, to be explicit, both the critical density $\varepsilon_c$ and
-hubble parameter $H$ are functions of time.  With this definition,
+where, to be explicit, both the critical density $\varepsilon_c = \rho_c c^2$
+and hubble parameter $H$ are functions of time.  With this definition,
 and defining the dimensionless density parameter
 \begin{equation}
   \label{eq:density_parameter}
@@ -235,7 +244,21 @@ Alternatively, we can express the Friedmann equation as simply
 \begin{equation}
   \sum_w \Omega_w(t) = 1.
 \end{equation}
-The most important contributors to the density of the universe are
+Neglecting curvature, if the sum of components $\Omega_w$ is unity, then
+we must have curvature $\Omega_\kappa = 0$.  This shows the meaning of
+the critical density (eqn.~\ref{eq:critical density}).  If the energy density
+in the universe satisfies $\epsilon > \epsilon_c$ (i.e. $\Omega > 1$), then
+$\kappa > 1$ and the universe is {\it spatially closed}.
+If $\epsilon < \epsilon_c$ (i.e. $\Omega < 1$), then $\kappa < 1$ and
+the universe is {\it spatially open}. If the energy density is
+exactly equal to the critical density, then the curvature $\kappa = 0$
+and the universe is {\it flat}.  Constraints from the Cosmic Microwave
+Background show that our universe is flat to a very high precision
+\citep{WMAP7}.  For this reason, in many of the below derivations we will
+assume for simplicity that $\Omega_\kappa = 0$ and $S_\kappa(r) = r$.
+
+For simplicity, we can limit our consideration to the principal contributors
+to the density of the universe:
 dark energy $(\Omega_\Lambda)$, matter $(\Omega_M)$, radiation $(\Omega_R)$,
 and curvature $(\Omega_\kappa)$.  Neglecting other components gives the
 familiar dimensionless form of the Friedmann Equation:
@@ -252,15 +275,17 @@ The FLRW metric of \S\ref{sec:FLRW} and the Friedmann equations of
 \S\ref{sec:friedmann} lay the basic framework for the study of cosmology.
 In many ways the history of $20^{\rm th}$ century cosmology surrounds various
 attempts to understand the relative contributions of matter, radiation,
-curvature, and dark energy to the hubble parameter, which measures
+curvature, and dark energy to the Hubble parameter, which measures
 the expansion rate of the universe.  The exact nature of these various
 contributions has far-reaching consequences,
 determining how, when, and where galaxies, clusters and other structure
-form and evolve; determining the age of the universe and its evolution
-through time; determining cosmic abundances and 
+form and evolve; determining the age of the universe and the character of
+its evolution through time; determining cosmic abundances and 
 the initial conditions of stellar evolution
 and planet formation; and determining the nature of the universe's beginning,
 and the possibility of its eventual end.
+Observational measures of these consequences allow constraints of the
+properties of the various $\Omega_w(z)$.
 
 Eqn.~\ref{eq:friedmann_dimensionless} is simply a first-order differential
 equation in $a$: For various choices of the density parameters $\Omega$, it
@@ -319,10 +344,9 @@ Thus the redshift of a light source gives us a direct measurement of the
 scale factor at the time that photon was emitted.  As such, it can be
 substituted for $a$ as the dependent variable in the above equations
 with the correct change-of-variables; we will switch between these two
-conventions depending on what is convenient.
+conventions depending on which is convenient.
 
-Measurement of the scale factor $a$ when the light was emitted
-is only half the picture however: in order to constrain parameters in
+In order to constrain parameters in
 eqn.~\ref{eq:friedmann_dimensionless}, we must be able to measure
 information related to the time $t_e$ of emission.  This allows us to
 constrain $a$ as a function of $t$, or the equivalent quantity in some
@@ -354,7 +378,7 @@ distance.
     \end{equation}
   \item[Angular Diameter Distance:] The angular diameter distance $d_A(z)$
     is the
-    ratio of the true size to the observed angular size (in radians) of
+    ratio of the proper size to the observed angular size (in radians) of
     an extended source.  From the FLRW metric with $dt = dr = 0$, one
     can show that the angular diameter distance is given by
     \begin{equation}
@@ -372,23 +396,28 @@ distance.
     \end{eqnarray}
 \end{description}
 By measuring one of these distances as a function of redshift, we are
-effectively constraining both the dependent and independent variable
+effectively measuring both the dependent and independent variable
 in the dimensionless Friedmann equation, eqn.~\ref{eq:friedmann_dimensionless}.
 In this way, it is possible to constrain the combinations of cosmological
 parameters $\Omega_w$ which fit the data.
 
 \section{Standard Candles: Cosmology via Luminosity Distance}
 \label{sec:std_candles}
-The earliest observations confirming the cosmic expansion (i.e. a positive
-value of the hubble parameter $H_0$) were due to Edwin Hubble
-\citep{hubble1929}.  Through observations of Cepheid-type variable stars
+``Standard candles'' have been one of the primary methods for measuring
+cosmological parameters.  The earliest measure, from Edwin \citet{hubble1929}
+used Cepheid-type variable stars which have an absolute magnitude correlated
+with their pulsation period.  Through observations of Cepheids
 in nearby galaxies, Hubble found a linear correlation between the
-luminosity distance to each galaxy and its apparent recessional velocity.
+luminosity distance to each galaxy and its apparent recessional velocity,
+supporting a postive value of the Hubble parameter $H_0$\footnote{
 Although Hubble does not frame this measurement in terms of the Friedmann
 equations, he cautiously mentions the potential relationship of the
-observations to the ``de Sitter effect'', a particular solution of
+observations to the ``de Sitter effect'', a predicted redshift within
+a particular solution of
 Einstein's equations which is a special case of the FLRW metric and
-Friedmann equations. Using our formalism above, we can show that for
+Friedmann equations (i.e., that with $\Omega_M = 0$, $\Omega_\kappa = 0$,
+and $\Omega_\Lambda = 1$).}.
+Using our formalism above, we can show that for
 nearby objects (such that $H(z) \approx H_0$),
 the change in proper distance is approximated by
 \begin{eqnarray}
@@ -413,7 +442,7 @@ constraints on...
 The results summarized above are all related in that they are based on the
 idea of a standard candle: if we can determine the intrinsic brightness
 of an object as well as its redshift, then we can compare this to the
-apparent brightness and constrain the hubble parameter $H(t)$.
+apparent brightness and constrain the Hubble parameter $H(t)$.
 Another path to this sort of constraint comes from standard {\it rulers}
 rather than standard candles.  If we know the redshift as well as the
 intrinsic size of an object, then we can use its apparent size to
@@ -430,20 +459,26 @@ a function of redshift.  Many of these probes depend on detailed modeling
 of the growth of structure.
 
 The distribution of density throughout the universe can be expressed
+in terms of the density contrast
 \begin{equation}
   \label{eq:overdensity}
-  \rho(\myvec{x}, t) = \rho_b(t)[1 + \delta(\myvec{x}, t)]
+  \delta(\myvec{x}, t) = \frac{\rho(\myvec{x}, t) - \rho_b(t)}{\rho_b(t)},
 \end{equation}
-where we have taken out the background component,
+where the background density is
 \begin{equation}
   \rho_b(t) \propto \frac{1}{a(t)^3}.
+\end{equation}
+Rearranging this definition results in expressing the density field of the
+universe as
+\begin{equation}
+  \rho(\myvec{x}, t) = \rho_b(t)[1 + \delta(\myvec{x}, t)].
 \end{equation}
 
 \subsection{Gravitational Instability}
 We can proceed by treating matter as an ideal fluid with a
 velocity field $\myvec{u}(\myvec{x}, t)$ and pressure $P(\myvec{x}, t)$
 \citep{longair2008galaxy}.
-In this case, it is governed by the
+In this case, it is governed by three equations: the
 continuity equation, which describes conservation of mass,
 \begin{equation}
   \label{eq:continuity}
@@ -474,21 +509,24 @@ $\delta(\myvec{r}, t)$ (eq.~\ref{eq:overdensity}) gives
   = \frac{c_s^2}{a^2}\nabla_{\myvec{r}}^2\delta + 4\pi G \rho_b\,\delta
 \end{equation}
 where $\nabla^2_{\myvec{r}}$ indicates the Laplacian with respect to comoving
-coordinates \citep[for derivation see][\S11.2]{longair2008galaxy}.
+coordinates \citep[for derivation see section 11.2 of][]{longair2008galaxy}.
 
-It is convenient to look at wave-like solutions of the denstity contrast
-$\delta(\myvec{r}, t) \propto \exp[i(\myvec{k}\cdot\myvec{r} - \omega t)]$
-such that eqn.~\ref{eq:delta_evolution} for each fourier mode $\delta_k$
-becomes
+We can gain insight by expressing this in terms of
+wave-like solutions of the denstity contrast
+$\delta_k(\myvec{r}, t) \propto \exp[i(\myvec{k}\cdot\myvec{r} - \omega t)]$,
+where $\myvec{k}$ is the vector of spatial wave-numbers, and $\myvec{\omega}$
+is the oscillation frequency.  In terms of these Fourier modes,
+eqn.~\ref{eq:delta_evolution} becomes
 \begin{equation}
   \label{eq:delta_evolution_k}
   \ddot{\delta}_k + 2 H \dot{\delta}_k - \delta_k(4\pi G\rho_b - k^2c_s^2) = 0.
 \end{equation}
-Thus we see that the growth of perturbations $\delta$ with time depends
+This differential equation describes an exponentially growing (or decaying)
+density fluctuation, with a ``drag'' term governed by the Hubble parameter
+$H(z)$.  The rate of growth of perturbations $\delta_k$ depends
 on the balance between the gravitational force through $4\pi G\rho_b$ and the
-pressure through $k^2c_s^2$.  The scale where the left hand side of
-Equation~\ref{eq:delta_evolution_k} is exactly zero is called the Jeans
-length:
+pressure through $k^2c_s^2$.  The scale where these forces balance
+is called the Jeans length:
 \begin{equation}
   \label{eq:jeans_length}
   \lambda_J \equiv c_s \sqrt{\frac{\pi}{G\rho_b}}.
@@ -516,20 +554,40 @@ and the Jeans length can be expressed
   \lambda_J^{(R)} = \frac{\pi c \sqrt{8}}{3 H}.
 \end{equation}
 This scale is on the same order as that of the horizon scale,
-$\lambda_s \approx 2c / (H\sqrt{3})$.
+$\lambda_s \approx 2c / (H\sqrt{3})$.  This means that sub-horizon modes
+cannot collapse during the epoch when radiation dominates the energy
+of the universe.
 
 In the matter-dominated regime, there are two possibilities: if radiation and
-matter is coupled, the pressure comes from the radiation
-even as the density is dominated by matter.  This gives
-$c_s^2 \sim c^2 \Omega_r / \Omega_M \sim c^2 (1 + z) \Omega_{r,0}/\Omega_{m, 0}$.
-Putting in numbers from WMAP, we find approximately
+matter are coupled, the pressure comes from the radiation
+while the density is dominated by matter.  This gives
+$c_s^2 \sim c^2 \Omega_r / \Omega_M \sim c^2 (1 + z)
+\Omega_{r,0}/\Omega_{m, 0}$.
+Putting in numbers from WMAP \citep{WMAP7}, we find approximately
 $c_s \approx 10^{-2} c \sqrt{1 + z}$.
 If radiation and matter are decoupled, the pressure comes from the nonzero
 temperature of matter itself:
 $c_s^2 \sim kT/m_p$ where $m_p$ is the proton mass.  Assuming the matter
 is in thermal equilibrium with the CMB, then temperature goes as
-$T \propto (1 + z)$.  Putting in observational numbers, we find
-$c_s \approx 10^{-7} c \sqrt{1 + z}$.
+$T \propto (1 + z)$.  Putting in observational constraints, we find
+$c_s \approx 10^{-7} c \sqrt{1 + z}$.  Thus the Jeans length during the
+matter-dominated epoch is given by
+\begin{equation}
+  \label{eq:jeans_matter}
+  \lambda_J^{(M)} \approx \lambda_J^{(R)}\sqrt{1 + z}\,\, \times \left\{
+  \begin{array}{ll}
+    10^{-2} & \mathrm{before\ decoupling}\\
+    10^{-7} & \mathrm{after\ decoupling}
+  \end{array}
+  \right.
+\end{equation}
+The redshift of decoupling is approximately $z \sim 1100$ \citep[for a physical
+argument for this, see][]{ryden2003cosmology}.  This means that prior to
+decoupling, growth below approximately sub-horizon scales is suppressed by
+pressure.  After decoupling, the Jeans length shrinks by five orders of
+magnitude, allowing linear structure on this scale to form.  The observable
+effect of this sharp transition in the growth of structure will be discussed
+further below.
 
 A related question is that of the rate of structure growth
 on scales larger than the Jeans length. 
@@ -540,7 +598,8 @@ factor $D(t)$ such that
   \delta(\myvec{r}, t) = \delta_0(\myvec{r})D(t).
 \end{equation}
 Using $\rho_b = \Omega_M\rho_c$ and assuming negligible pressure (i.e. scales
-above the Jeans length), we can express eqn.~\ref{eq:delta_evolution} to find
+above the Jeans length), we can rewrite
+eqn.~\ref{eq:delta_evolution} as
 \begin{equation}
   \label{eq:linear_growth_eqn}
   \ddot{D} + 2H\dot{D} - \frac{3}{2}\Omega_M H^2D = 0.
@@ -555,14 +614,13 @@ Friedmann equation gives $H(t) = 2 / (3t)$, leading to solutions
 \begin{equation}
   D(t) = A_1 t^{2/3} + A_2 t^{-1}.
 \end{equation}
-The first term quickly dominates the second, and we see that for a
-matter-dominated universe, structure grows as
+The first term quickly dominates the second, and structure grows as
 $\delta \propto t^{2/3} \propto a$.
 
 In general, the growth factor for a flat universe is
 \begin{equation}
   \label{eq:linear_growth}
-  D(a) \propto \int_0^a [a^\prime H(a^\prime)]^{-3}da^\prime,
+  D(a) \propto \int_0^a \frac{da^\prime}{[a^\prime H(a^\prime)]^3},
 \end{equation}
 where the normalization is usually chosen such that $D(a) = 1$ at the
 present day.
@@ -598,20 +656,20 @@ two; combining these we find
   = \frac{3\kappa c^4}{8\pi G R_0^2}\,\frac{1}{a^2 \varepsilon_0}.
 \end{equation}
 For a matter-dominated universe, $\varepsilon_0 \propto a^{-3}$
-and we find $\delta \propto a$ as above.
+which gives $\delta \propto a$ as above.
 For a radiation-dominated universe, $\varepsilon_0 \propto a^{-4}$
-and we find $\delta \propto a^2$.
+which gives $\delta \propto a^2$.
 
 \subsection{Matter Power Spectrum}
 In summary, the above results show that
-\begin{description}
-  \item[In the radiation-dominated regime], fluctuations on scales above
+\begin{itemize}
+  \item In the radiation-dominated regime, fluctuations on scales above
     $\lambda_J^{(R)} = (\pi c \sqrt{8})/(3 H)$ grow as
     $\delta(a) \propto a^2$.
-  \item[In the matter-dominated regime], after decoupling, scales above
+  \item In the matter-dominated regime, after decoupling, scales above
     $\lambda_J^{(M)}\approx 10^{-7} \lambda_J^{(R)} \sqrt{1 + z}$
     grow as $\delta(a) \propto a$.
-\end{description}
+\end{itemize}
 The ratio of radiation density to matter density is
 \begin{equation}
   \frac{\Omega_R(z)}{\Omega_M(z)} = (1 + z)\frac{\Omega_{R,0}}{\Omega_{M,0}}.
@@ -619,7 +677,8 @@ The ratio of radiation density to matter density is
 So before the redshift of radiation-matter equality,
 $z_{rm} \approx \Omega_{M,0}/\Omega_{R,0}$, radiation
 dominates, while after this redshift matter dominates.
-Thus the important scale is the horizon scale at $z_{rm}$.
+Thus the important scale is the horizon scale $\lambda_{rm}$ at
+redshift $z=z_{rm}$.
 Modes on length-scales $k > \lambda_{rm}$ will grow as $\delta \propto a^2$
 for $a < a_{rm}$, and $\delta \propto a$ for $a > a_{rm}$.  Modes with
 length-scales $k < \lambda_{rm}$ will grow as $\delta \propto a^2$ as long
@@ -627,6 +686,8 @@ as the horizon distance $d_{hor}(a) < k$, at which point the growth will
 be suppressed by radiation pressure.  At $a > a_{rm}$, the Jeans length
 shrinks by a factor of about $10^5$, and modes larger than $\lambda_J^{M}$
 resume growth with $\delta \propto a$.
+
+\comment{add a picture of this here?}
 
 Thus, density modes with $k < k_{rm}$ are suppressed by a factor of
 $(a_k / a_{rm})^2 \propto k^{-2}$.  This motivates use of the power
@@ -637,6 +698,19 @@ spectrum of density fluctuations:
 \end{equation}
 in theory a measurable quantity, which will have a distinct break at
 $k = k_{rm}$ for the reasons discussed above.
+In particular, if the initial power spectrum is a simple power law
+with $P_k \propto k^n$, then after decoupling the power spectrum will have
+the form
+\begin{equation}
+  P_k \propto \left\{
+  \begin{array}{ll}
+    k^{n-4}, & {\rm for\ } k < k_{rm} \\
+    k^n, & {\rm for\ } k > k_{rm}.
+  \end{array}
+  \right.
+\end{equation}
+Under most inflationary scenarios, it is expected that the power spectral
+index $n \approx 1$ \citep{peacock1999cosmological}.
 
 \subsection{Putting it all together}
 The sum of the above discussion paints a general picture of the growth of
@@ -660,7 +734,7 @@ observable consequences:
     \S\ref{sec:std_candles}.
   \item The linear growth factor (eqn.~\ref{eq:linear_growth}) affects the
     normalization of the power spectrum.  Therefore, measuring the power
-    spectrum as a function of $z$ can lead to cosmological constraints
+    spectrum as a function of $z$ leads to cosmological constraints
     through the dependence of $D(z)$ on cosmological parameters.
 \end{itemize}
 
@@ -684,7 +758,8 @@ The power spectrum of luminous matter can be theoretically mapped to the
 underlying mass power spectrum, but this mapping introduces systematic
 errors which can be difficult to correct for.
 
-In order to circumvent the error involved with mapping luminous matter to
+In order to circumvent the astrophysical bias
+involved with mapping luminous matter to
 the underlying dark matter, it would be preferable to observe the dark
 matter directly.  This is where weak gravitational lensing can be a
 useful tool.

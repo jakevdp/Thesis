@@ -13,10 +13,11 @@
 %alternative to PCA for dimensionalty reduction.
 
 \KL\ (KL) analysis is a commonly used statistical tool
-in a broad range of astronomical applications, from, e.g.~studies of 
-galaxy and quasar spectra \citep{Connolly95,Connolly99,Yip04a,Yip04b}, to 
-analysis of the spatial distribution of galaxies 
-\citep{Vogeley96,Matsubara00,Pope04}, to characterization of the 
+in a broad range of astronomical applications, from, e.g.~studies of
+correlations in observed properties of galaxy photometry \citep{Efstathiou84}
+and galaxy and quasar spectra \citep{Connolly95,Connolly99,Yip04a,Yip04b},
+to  analysis of the spatial distribution of galaxies 
+\citep{Vogeley96, Matsubara00, Pope04}, to characterization of the 
 expected errors in weak lensing surveys \citep{Kilbinger06, Munshi06}.
 In this chapter, we will develop the formalism of KL which will form
 the basis of the applications in the subsequent chapters.
@@ -77,9 +78,11 @@ discussed in section XXX.
 We'll define a set of oscillatory basis functions 
 \begin{equation}
   \label{eq:fourier_basis}
-  \Phi_k(t) = \frac{1}{\sqrt{b - a}}
-  \exp\left[\frac{2\pi i k (t-a)}{b - a}\right].
+  \Phi_k(t) = \frac{1}{\sqrt{t_b - t_a}}
+  \exp\left[\frac{2\pi i k (t-t_a)}{t_b - t_a}\right]
 \end{equation}
+where $t$ is the arbitrary dependent variable, $k$ is the wave-number,
+and the function is defined in the region $t_a \le t \le t_b$.
 and postulate that a function $f(t)$ can be expressed as a linear combination
 of these basis functions:
 \begin{equation}
@@ -88,7 +91,8 @@ of these basis functions:
 \end{equation}
 Here $a_k$ are an infinite set of complex coefficients.  Our claim is that
 any piecewise continuous and square-integrable function $f(t)$ in the
-interval $[a, b]$ can be represented this way.  A rigorous mathematical proof
+interval $[t_a, t_b]$ can be represented this way.
+A rigorous mathematical proof
 of this statement can be found elsewhere, but below we will lend support
 to this claim.
 
@@ -101,30 +105,30 @@ Fourier transforms which will generalize to KL transforms.
 To begin, we'll multiply both sides of Equation~\ref{eq:fourier_1D} by the
 complex conjugate $\Phi^\ast_{k^\prime}(x)$ of the basis function given
 in Equation~\ref{eq:fourier_basis}, and integrate both sides over $t$
-from $a$ to $b$:
+from $t_a$ to $t_b$:
 \begin{equation}
-  \int_a^b \Phi^\ast_{k^\prime}(t) f(t) \dd t
-  = \int_a^b \Phi^\ast_{k^\prime}(t) \sum_{k=-\infty}^\infty a_k\Phi_k(x)\dd t
+  \int_{t_a}^{t_b} \Phi^\ast_{k^\prime}(t) f(t) \dd t
+  = \int_{t_a}^{t_b} \Phi^\ast_{k^\prime}(t) \sum_{k=-\infty}^\infty a_k\Phi_k(x)\dd t
 \end{equation}
 On the right-hand side, we can exchange the order of integration and
 summation to find 
 \begin{equation}
   \label{eq:fourier_coef_der}
-  \int_a^b \Phi^\ast_{k^\prime}(t) f(t) \dd t
-  =  \sum_{k=-\infty}^\infty a_k \left[\int_a^b \Phi^\ast_{k^\prime}(t)\Phi_k(x)\dd t\right].
+  \int_{t_a}^{t_b} \Phi^\ast_{k^\prime}(t) f(t) \dd t
+  =  \sum_{k=-\infty}^\infty a_k \left[\int_{t_a}^{t_b} \Phi^\ast_{k^\prime}(t)\Phi_k(x)\dd t\right].
 \end{equation}
 Let's examine the term in the square brackets.  Plugging in the definition
 of the basis functions from Equation~\ref{eq:fourier_basis}, we have
 \begin{equation}
-  \left[\int_a^b \Phi^\ast_{k^\prime}(t)\Phi_k(x)\dd t\right]
-  = \left[\frac{1}{b-a}\int_a^b \exp\left(\frac{2\pi i (k - k^\prime) (t-a)}
-    {b - a}\right)\dd t\right]
+  \left[\int_{t_a}^{t_b} \Phi^\ast_{k^\prime}(t)\Phi_k(x)\dd t\right]
+  = \left[\frac{1}{t_b-t_a}\int_{t_a}^{t_b} \exp\left(\frac{2\pi i (k - k^\prime) (t-t_a)}
+    {t_b - t_a}\right)\dd t\right]
 \end{equation}
 This gives two distinct situations for the integral on the right-hand side:
 when $k=k^\prime$, both the integrand 
 and the term in the brackets is exactly $1$.  When $k\ne k^\prime$,
 the integrand oscillates through an integer number of cycles between
-$a$ and $b$ (remember that $k$ and $k^\prime$ here are integers),
+$t_a$ and $t_b$ (remember that $k$ and $k^\prime$ here are integers),
 and the result of the integral is exactly $0$.
 So we see that the term in brackets is equal to simply 
 the Kronecker delta function $\delta_{kk^\prime}$, defined as
@@ -140,7 +144,7 @@ Putting this result into Equation~\ref{eq:fourier_coef_der}, only one
 term of the sum remains and we find
 \begin{equation}
   \label{eq:fourier_coef}
-  a_k = \frac{1}{b - a}\int_a^b \Phi^\ast_k(t) f(t) \dd t
+  a_k = \frac{1}{t_b - t_a}\int_{t_a}^{t_b} \Phi^\ast_k(t) f(t) \dd t
 \end{equation}
 
 Equation~\ref{eq:fourier_coef} shows how to compute the Fourier coefficients
@@ -156,14 +160,16 @@ gives
   f(t) - f(t) = \sum_{k=-\infty}^\infty (a_k - a^\prime_k)\Phi_k(t) = 0.
 \end{equation}
 In a similar manner to above, we can multiply by $\Phi^\ast_k(t)$, integrate
-over $t$ from $a$ to $b$, and extract a kronecker delta function to
+over $t$ from $t_a$ to $t_b$, and extract a kronecker delta function to
 yield
 \begin{equation}
   \sum_{k=-\infty}^\infty (a_k - a^\prime_k) \delta_{kk^\prime} = 0
 \end{equation}
 Collapsing the sum, we find that $a_k = a^\prime_k$ for all $k$.  This
 shows the uniqueness of the fourier coefficients $a_k$ for a given function
-$f(t)$ on an interval $[a, b]$.
+$f(t)$ on an interval $[t_a, t_b]$.  Thus, given an orthonormal basis $\Phi_k$,
+there is a single unique linear combination which reconstructs a function
+$f(t)$ on the defined interval.
 
 \subsection{Generalizing Orthonormal Bases}
 
@@ -177,16 +183,20 @@ soley on two special properties of these basis functions:
     The basis functions are {\it orthonormal} on the interval $[a, b]$.
     That is, $\Phi_k(t)$ satisfies
     \begin{equation}
-      \int_a^b \Phi_k(t) \Phi^\star_{k^\prime}(t) = \delta_{kk^\prime}
+      \int_{t_a}^{t_b} \Phi_k(t) \Phi^\star_{k^\prime}(t) = \delta_{kk^\prime}
     \end{equation}
   \item
-    The basis functions are {\it complete} on the interval $[a, b]$.
-    That is, for every $t_0$ satisfying $a \le t_0 \le b$, there exists
-    a $k$ such that
+    The basis functions are {\it complete} on the interval $[t_a, t_b]$.
+    That is, an arbitrary function $f(t)$ can be approximated by
     \begin{equation}
-      \Phi_k(t_0) \ne 0.
+      f(t) = \sum_{k=1}^N a_k \Phi_k(t)
     \end{equation}
-    for at least one choice of $k$.
+    and the mean square error satisfies
+    \begin{equation}
+      \label{eq:completeness}
+      \lim_{N\to\infty} \int_{t_a}^{t_b}
+      \left[f(t) - \sum_{k=1}^{N}a_k \Phi_k(t)\right]^2 \dd t = 0.
+    \end{equation}
 \end{enumerate}
 As long as these two properties hold for a class of functions $\Phi_k(t)$,
 we would be able to repeat the above derivations and express any $f(t)$
@@ -222,22 +232,21 @@ A random process like $F_t$ can be characterized
 by its covariance function, which is defined as
 \begin{eqnarray}
   \label{eq:corrfunc_def}
-  \mathcal{C}_F(t, t^\prime) &\equiv& E[F_t F_{t^\prime}].
+  \mathcal{C}_F(t, t^\prime) &\equiv& E[F_t F_{t^\prime}]
   \nonumber\\
   &=& \lim_{N\to\infty}\frac{1}{N} \sum_{i=1}^N
-  f^{(i)}(t)f^{(i)}(t^\prime)
+  f^{(i)}(t)f^{(i)}(t^\prime).
 \end{eqnarray}
-where we have 
 For an {\it uncorrelated} random process,
 $\mathcal{C}_F(t, t^\prime) = \mathcal{C}_F(t, t) \delta_{t, t^\prime}$
-where $\mathcal{C}_F(t, t) $ is called the variance of $F_t$.
+where $\mathcal{C}_F(t, t) $ is the {\it variance} of $F_t$.
 
 \subsection{Eigenfunctions}
 We'll now introduce the {\it eigenfunctions} $e_k(t)$
 of the covariance function $\mathcal{C}_F(t, t^\prime)$, which satisfy
 \begin{equation}
   \label{eq:eigfunc_def}
-  \int_a^b \mathcal{C}_F(t, t^\prime) e_k(t^\prime)\dd t^\prime
+  \int_{t_a}^{t_b} \mathcal{C}_F(t, t^\prime) e_k(t^\prime)\dd t^\prime
   = \lambda_k e_k(t)
 \end{equation}
 subject to the constraint that $e_k(t)$ is not everywhere zero.
@@ -249,25 +258,26 @@ are orthogonal on the interval $[a, b]$.
 We can show this by considering two arbitrary eigenfunctions
 $e_k(t)$ and $e_{k^\prime}(t)$.  Consider the quantity
 \begin{equation}
-  \int_a^b \dd t \int_a^b \dd t^\prime \mathcal{C}_F(t, t^\prime)
+  \int_{t_a}^{t_b} \dd t \int_{t_a}^{t_b} \dd t^\prime\,\, \mathcal{C}_F(t, t^\prime)
   e_{k^\prime}(t^\prime) e_k(t)
 \end{equation}
-Because $\mathcal{C}_F(t, t^\prime) = \mathcal{C}_F(t, t^\prime)$, and
+Because of the symmetry of the covarience,
+i.e.~$\mathcal{C}_F(t, t^\prime) = \mathcal{C}_F(t^\prime, t)$, and
 because the order of integration can be switched, this can be evaluated
 two different ways, which must be equal:
 \begin{eqnarray}
-  \int_a^b \dd t e_k(t)
-  \int_a^b \dd t^\prime \mathcal{C}_F(t, t^\prime) e_{k^\prime}(t^\prime) &=&
-  \int_a^b \dd t^\prime e_k^\prime(t^\prime)
-  \int_a^b \dd t \mathcal{C}_F(t^\prime, t) e_{k}(t)
+  \int_{t_a}^{t_b} \dd t\,\, e_k(t)
+  \int_{t_a}^{t_b} \dd t^\prime\,\, \mathcal{C}_F(t, t^\prime) e_{k^\prime}(t^\prime) &=&
+  \int_{t_a}^{t_b} \dd t^\prime\,\, e_k^\prime(t^\prime)
+  \int_{t_a}^{t_b} \dd t\,\, \mathcal{C}_F(t^\prime, t) e_{k}(t)
   \nonumber\\
-  \int_a^b \dd t \lambda_{k^\prime} e_k(t) e_{k^\prime}(t) &=&
-  \int_a^b \dd t^\prime \lambda_k e_k(t^\prime) e_{k^\prime}(t^\prime)
+  \int_{t_a}^{t_b} \dd t\,\, \lambda_{k^\prime} e_k(t) e_{k^\prime}(t) &=&
+  \int_{t_a}^{t_b} \dd t^\prime\,\, \lambda_k e_k(t^\prime) e_{k^\prime}(t^\prime)
 \end{eqnarray}
 Rearranging the bottom line leads to
 \begin{equation}
   (\lambda_k - \lambda_{k^\prime})
-  \int_a^b \dd t e_k(t) e_{k^\prime}(t) = 0
+  \int_{t_a}^{t_b} \dd t\,\, e_k(t) e_{k^\prime}(t) = 0
 \end{equation}
 So for $\lambda_k \ne \lambda_{k^\prime}$, then $e_k$ and $e_{k^\prime}$
 must be orthogonal\footnote{In the degenerate case when
@@ -281,11 +291,12 @@ This leads to two new orthogonal eigenfunctions $e_+$ and $e_-$ with the
 same eigenvalue $\lambda_k$.}.  From the definition in
 Equation~\ref{eq:eigfunc_def}, we see that if $e_k(t)$ is an eigenfunction
 with eigenvalue $\lambda_k$,
-then $C\, e_k(t)$ is an eigenfunction with eigenvalue $\lambda_k$ as well.
+then for any arbitrary constant $K$,
+$K\, e_k(t)$ is an eigenfunction with eigenvalue $\lambda_k$ as well.
 To make the choice of eigenfunction more definite, we will assume all
 eigenfunctions are normalized: that is
 \begin{equation}
-  \int_a^b \dd t e_k(t) e_{k^\prime}(t) = \delta_{kk^\prime}
+  \int_{t_a}^{t_b} \dd t e_k(t) e_{k^\prime}(t) = \delta_{kk^\prime}
 \end{equation}
 for all $k$.  This still allows any eigenfunction to have an arbitrary
 phase: that is, an eigenfunction may be multiplied by $e^{i\theta}$ for
@@ -295,16 +306,7 @@ will become important later.
 The net result is that the eigenfunctions $e_k(t)$ form an orthonormal
 basis for the space of functions represented by the random process $F_t$.
 In general, the eigenfunctions
-also satisfy the completeness relation: that is, 
-an arbitrary function $f(t)$ can be approximated by
-\begin{equation}
-  f(t) = \sum_{k=1}^N a_k e_k(t)
-\end{equation}
-and the mean square error satisfies
-\begin{equation}
-  \lim_{N\to\infty} \int_a^b
-  \left[f(t) - \sum_{k=1}^{N}a_k e_k(t)\right]^2 \dd t = 0.
-\end{equation}
+also satisfy the completeness relation (see eqn.~\ref{eq:completeness}).
 The proof of the completeness of eigenfunctions for a symmetric kernel
 $\mathcal{C}_F(t^\prime, t)$ can be found in, e.g.~\citet{Courant1989}.
 
@@ -323,24 +325,24 @@ orthogonality of eigenvectors (this is analogous to the derivation
 in Equations~\ref{eq:fourier_coef_der}-\ref{eq:fourier_coef}) leads to
 \begin{equation}
   \label{eq:F_k_def}
-  A_k = \int_a^b F_t e_k(t) \dd t
+  A_k = \int_{t_a}^{t_b} F_t e_k(t) \dd t
 \end{equation}
 
-Because of the fact that the random process is centered,
- $E[F_t] = 0$ and
-is straightforward to show that $E[A_k] = 0$ as well.  The more interesting
-computation is that of the covariance $\mathcal{C}_A(k, k^\prime)$.
+Because of the fact that the random process is centered (i.e.~$E[F_t] = 0$),
+it is straightforward to show that $E[A_k] = 0$ as well.  The more interesting
+computation is that of the covariance of the eigenvectors,
+$\mathcal{C}_A(k, k^\prime)$.
 From Equations~\ref{eq:corrfunc_def} and \ref{eq:F_k_def}, we have
 \begin{eqnarray}
   \mathcal{C}_A(k, k^\prime)
   &=& E[A_k A_{k^\prime}]\nonumber\\
-  &=& E\left[\int_a^b \dd t \int_a^b \dd t^\prime
+  &=& E\left[\int_{t_a}^{t_b} \dd t \int_{t_a}^{t_b} \dd t^\prime
     {F}_t e_k(t)
     {F}_{t^\prime} e_{k^\prime}(t^\prime)\right] \nonumber\\
-  &=& \int_a^b \dd t \int_a^b \dd t^\prime
+  &=& \int_{t_a}^{t_b} \dd t \int_{t_a}^{t_b} \dd t^\prime
     E[{F}_t {F}_{t^\prime}]
     e_{k^\prime}(t^\prime) e_k(t) \nonumber\\
-  &=& \int_a^b \dd t \int_a^b \dd t^\prime
+  &=& \int_{t_a}^{t_b} \dd t \int_{t_a}^{t_b} \dd t^\prime
     \mathcal{C}_F(t, t^\prime)
     e_{k^\prime}(t^\prime) e_k(t) \nonumber
 \end{eqnarray}
@@ -348,7 +350,7 @@ Substituting Equation~\ref{eq:eigfunc_def}, we find that this gives
 \begin{eqnarray}
   \label{eq:cov_A}
   \mathcal{C}_A(k, k^\prime)
-  &=& \int_a^b \dd t \lambda_{k^\prime} e_{k^\prime}(t) e_k(t) \nonumber\\
+  &=& \int_{t_a}^{t_b} \dd t \lambda_{k^\prime} e_{k^\prime}(t) e_k(t) \nonumber\\
   &=& \lambda_k \delta_{kk^\prime}
 \end{eqnarray}
 So we see that projection of the centered random process $\tilde{F}_t$ onto
@@ -365,6 +367,23 @@ that \KL\ provides the
 optimal orthonormal basis for low-rank approximations of functions in
 a random field.
 
+Above, we expressed the completeness relation for a single function $f(t)$
+(eqn.~\ref{eq:completeness}).
+For a random process, an orthonormal basis
+$\phi_k(t)$ is complete if and only if there
+exists a random process $B_k$ such that
+\begin{equation}
+  \label{eq:completeness_rp}
+  \lim_{N\to\infty} \int_{t_a}^{t_b}
+  \left[F_t - \sum_{k=1}^{N}B_k \phi_k(t)\right]^2 \dd t = 0.
+\end{equation}
+A random process is {\it low-rank} if and only if there exists a complete
+orthonormal
+basis $\phi_k(t)$ such that $E[B_k^2] = 0$ for one or more values of $k$.
+In other words, a random process is low-rank if for some basis $\phi_k(t)$,
+some values of $k$ are not required for a perfect reconstruction of the
+function.
+
 Let us consider an arbitrary complete orthonormal basis
 $\phi_k(t)$, with $F_t = \sum_{k=1}^\infty B_k\phi_k(t)$.
 Given this basis, we'll define the low-rank approximation of $F_t$
@@ -373,16 +392,16 @@ Given this basis, we'll define the low-rank approximation of $F_t$
 \end{equation}
 We'll seek to minimize the expectation value of the squared error
 \begin{eqnarray}
-  \mathcal{E}^2_N &=& \int_a^b \left[F_t - F_t^{(N)}\right]^2 \dd t
+  \mathcal{E}^2_N &=& \int_{t_a}^{t_b} \left[F_t - F_t^{(N)}\right]^2 \dd t
   \nonumber\\
-  &=& \int_a^b \left[\sum_{k = N + 1}^\infty B_k \phi_k(t)\right]^2 \dd t.
+  &=& \int_{t_a}^{t_b} \left[\sum_{k = N + 1}^\infty B_k \phi_k(t)\right]^2 \dd t.
 \end{eqnarray}
 
 
 Expanding the sum leads to
 \begin{eqnarray}
   \mathcal{E}^2_N &=& \sum_{k=N + 1}^\infty
-  \sum_{k^\prime=N + 1}^\infty \int_a^b 
+  \sum_{k^\prime=N + 1}^\infty \int_{t_a}^{t_b} 
   \left[B_k B_{k^\prime} \phi_k(t) \phi_{k^\prime}(t)\right] \dd t
   \nonumber\\
   &=& \sum_{k=N+1}^\infty \sum_{k^\prime=N+1}^\infty B_k B_{k^\prime}
@@ -393,9 +412,9 @@ Taking the expectation value and plugging in the equivalent of
 Equation~\ref{eq:F_k_def} for $B_k$, we find
 \begin{eqnarray}
   E[\mathcal{E}^2_N] &=&
-  E\left[\sum_{k=N+1}^\infty \int_a^b \dd t \int_a^b \dd t^\prime
+  E\left[\sum_{k=N+1}^\infty \int_{t_a}^{t_b} \dd t \int_{t_a}^{t_b} \dd t^\prime
   F_tF_{t^\prime} \phi_m(t)\phi_m(t^\prime)\right] \nonumber\\
-  &=& \sum_{k=N+1}^\infty \int_a^b \dd t \int_a^b \dd t^\prime
+  &=& \sum_{k=N+1}^\infty \int_{t_a}^{t_b} \dd t \int_{t_a}^{t_b} \dd t^\prime
   C_F(t, t^\prime) \phi_m(t)\phi_m(t^\prime)
 \end{eqnarray}
 
@@ -404,20 +423,20 @@ to the constraint that $\phi_m(t)$ are an orthonormal basis.  We'll accomplish
 this by the method of Lagrange multipliers.  Our Lagrangian is
 \begin{equation}
   \mathcal{L}(\{\phi(t)\}) = \sum_{k=N+1}^\infty
-  \left[\int_a^b \dd t \int_a^b \dd t^\prime
+  \left[\int_{t_a}^{t_b} \dd t \int_{t_a}^{t_b} \dd t^\prime
   C_F(t, t^\prime) \phi_m(t)\phi_m(t^\prime)
-  - \lambda_k\left(1 - \int_a^b \phi_m(t)^2 \dd t\right)
+  - \lambda_k\left(1 - \int_{t_a}^{t_b} \phi_m(t)^2 \dd t\right)
   \right]
 \end{equation}
 Minimizing this with respect to $\phi_k$ gives
 \begin{equation}
-  \frac{\partial\mathcal{L}}{\partial\phi_k(t)} = \int_a^b \dd t^\prime
+  \frac{\partial\mathcal{L}}{\partial\phi_k(t)} = \int_{t_a}^{t_b} \dd t^\prime
   C_F(t, t^\prime) \phi_k(t^\prime)
   - \lambda_k \phi_k(t).
 \end{equation}
 The optimumum for each $k$ is where this derivative equals zero; setting to
 zero and solving recovers the original eigenvalue problem
- (Eq. \ref{eq:eigfunc_def}) from which we
+ (Eq.~\ref{eq:eigfunc_def}) from which we
 derived the KL basis $\{e_k(t)\}$.  By the uniqueness of the eigenvalue
 decomposition, this shows that the KL basis is the optimal basis for low-rank
 approximations of functions drawn from $F_t$.  Furthermore, for an
@@ -461,15 +480,15 @@ eigenmodes'' \citep{Vogeley96}.
 
 In cases when the noise is not white, we can still recover signal-to-noise
 information by preprocessing with a whitening transformation.  The eigenvectors
-of the noise covariance, which satisfy
+$n_k(t)$ of the noise covariance, which satisfy
 \begin{equation}
-  \int_a^b \mathcal{C}_N(t, t^\prime) n_k(t^\prime) \dd t^\prime 
+  \int_{t_a}^{t_b} \mathcal{C}_N(t, t^\prime) n_k(t^\prime) \dd t^\prime 
   = \sigma_i n_k(t)
 \end{equation}
 can be used to apply a whitening transform to both the signal and the
 noise.  The whitened covariance is given by
 \begin{eqnarray}
-  \mathcal{C}_F^{(W)}(k, k^\prime) &\equiv& \int_a^b\dd t\int_a^b\dd t^\prime
+  \mathcal{C}_F^{(W)}(k, k^\prime) &\equiv& \int_{t_a}^{t_b}\dd t\int_{t_a}^{t_b}\dd t^\prime
   \mathcal{C}_F(t, t^\prime)
   \frac{n_k(t) n_{k^\prime}(t^\prime)}{\sigma_k\sigma_{k^\prime}}\nonumber\\
   &=& \mathcal{C}_S^{(W)}(k, k^\prime) + \delta_{kk^\prime}.
@@ -483,7 +502,9 @@ eigenvalues which represent the signal-to-noise in each mode.
 The abstract formalism presented above is interesting in itself, but one
 might wonder what practical advantages can be gained from this discussion.
 In practice, we don't deal with an abstract stochastic process $F_t$, but
-with discrete, measured data.  In this section we will discuss the
+with discrete, measured data.  For this reason, the continuous formalism
+from above can be transformed into a discrete linear algebraic formalism,
+as seen below.  In this section we will discuss the
 practical computational aspects of KL analysis.
 
 Imagine, for the moment, that an astronomer has observed the spectra of
@@ -582,7 +603,7 @@ particular cosmological observations can be approximated from theory alone.
 \subsection{KL with missing data}
 Along with discrete data samples, another challenge when applying KL to
 real data is the presence of missing data: given a KL basis, how can
-one derive the projected coefficients when data is missing?
+one derive the projected coefficients when data are missing?
 Note that in this section we'll assume that the KL basis has been
 obtained independently.  For a discussion of how to approximate the
 correlation matrix from data with missing values, refer to \citet{Yip04a}.
@@ -597,7 +618,7 @@ that the best rank-$N$ linear approximation of $\myvec{x}$ is given by
 \begin{equation}
   \myvec{x}^{(N)} = \sum_{i=1}^{N}a_i\myvec{v_i}.
 \end{equation}
-where the coefficients can be calulated as
+where the coefficients can be calculated as
 \begin{equation}
   \label{eq:a_coeff_def}
   a_i = \myvec{v_i}^T\myvec{x}.
@@ -617,11 +638,14 @@ discussed.  Furthermore, there is the problem that in general, a set
 of bases truncated in this way does not retain its orthogonality.
 
 Another approach may be to derive a new basis which {\it is} orthogonal
-over the truncated space.  This approach would be orthogonal and complete,
-but the resulting coefficients could not easily be compared to coefficients
-derived from objects observed with different masks.
+over the truncated space.  This is similar in spirit to the method
+explored by \citet{Gorski1994} in analysis of CMB data.
+While this leads to a complete orthogonal basis for the observed portion
+of the field, coefficients of these new modes have no simple relationship to
+coefficients of modes covering the full field.  In general, a low-rank
+transformation matrix must be inverted in order to convert between the two.
 
-We need a different approach.  We have shown above that when noise is
+We'll use a different approach.  We have shown above that when noise is
 not present, the KL vectors define the optimal basis for rank-$N$
 reconstruction in the least-squares sense.  That is, for an arbitrary
 truncated orthonormal basis $\mymat{\Phi}_{(N)}$, (where truncated means
