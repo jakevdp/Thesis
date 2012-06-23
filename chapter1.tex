@@ -494,7 +494,7 @@ observations to the ``de Sitter effect'', a predicted redshift within
 a particular solution of
 Einstein's equations which is a special case of the FLRW metric and
 Friedmann equations (i.e., that with $\Omega_M = 0$, $\Omega_\kappa = 0$,
-and $\Omega_\Lambda = 1$).}.
+and $\Omega_\Lambda = 1$).}
 Using our formalism above, we can show that for
 nearby objects (such that $H(z) \approx H_0$),
 the change in proper distance is approximated by
@@ -511,7 +511,8 @@ the simultaneous measurement of redshift and luminosity distance.
 
 In the 70 years after Hubble's discovery, there were many attempts to
 confirm and improve upon his discovery and use it to derive tighter
-constraints on the slope $H_0$ of the Hubble relation.  All of these have
+constraints on the slope $H_0$ of the Hubble relation.  A large majority
+of these have
 been based on standard or standardizable candles.  These standardizable
 candles are based on the period-luminosity relationship of Cepheid
 variables \citep{Leavitt1912}; on the Tully-Fisher relationship between
@@ -529,8 +530,8 @@ Perhaps the most comprehensive study to date of these various standard
 candles is the HST Key project \citep{Freedman01}, which combined
 the above measures and others to arrive
 at a value of $H_0 = 72 \pm 8$ km/s/Mpc.  This is consistent with the
-tighter constraint from the WMAP 7-year analysis, $H_0 = 70.4 \pm 2.5$
-km/s/Mpc.
+tighter constraint from the WMAP 7-year CMB analysis, which gave
+$H_0 = 70.4 \pm 2.5$ km/s/Mpc.
 
 The common theme in the above methods is that they are based on the idea
 of a standard candle: if we can determine the intrinsic brightness
@@ -540,7 +541,7 @@ Another path to this sort of constraint comes from standard {\it rulers}
 rather than standard candles.  If we know the redshift as well as the
 intrinsic size of an object, then we can use its apparent size to
 constrain cosmological parameters.  One such standard ruler is given by the
-size-scales of structure in the universe.
+characteristic scales of structure in the universe.
 
 \section{The Growth of Structure}
 \label{sec:growth}
@@ -637,7 +638,7 @@ equations of state (\S\ref{sec:friedmann}) and evolve
 with different dependencies on the scale factor
 $a$, and so the Jeans length also evolves through the course of cosmic
 history.  Thus the scale of nonlinear
-collapsed structure as a function of $z$ contains information which
+collapsed structure as a function of $z$ contains information which can
 be used to place constraints on the components which make up the Universe.
 
 In particular, we can consider two relevant regimes: radiation dominance
@@ -665,7 +666,7 @@ If radiation and matter are decoupled, the pressure comes from the nonzero
 temperature of matter itself:
 $c_s^2 \sim kT/m_p$ where $m_p$ is the proton mass.  Assuming the matter
 is in thermal equilibrium with the CMB, then temperature goes as
-$T \propto (1 + z)$.  Putting in observational constraints, we find
+$T \propto (1 + z)$.  Again using observational constraints from WMAP, we find
 $c_s \approx 10^{-7} c \sqrt{1 + z}$.  Thus the Jeans length during the
 matter-dominated epoch is given by
 \begin{equation}
@@ -882,11 +883,11 @@ however, it is safe to assume that the universe is described by a
 Robertson-Walker metric, with only small perturbations due to the density
 fluctuations described by the potential $\Phi$.  In this case, the
 gravitational deflection of a photon can be described by an effective
-index of refraction given by 
-\citep[see][and references therein]{narayan1996lectures}:
+index of refraction given by
 \begin{equation}
   n = 1-\frac{2}{c^2}\Phi 
 \end{equation}
+\citep[see][and references therein]{narayan1996lectures}.
 As in conventional optics, light rays are deflected in proportion to the
 perpendicular gradient of the refraction index, such that the deflection angle
 $\hat{\alpha}$ is given by
@@ -901,14 +902,14 @@ For a point-mass located at a distance $D_L$ and an impact parameter $b$, with $
 \begin{equation}
   \hat{\alpha} = \frac{4GM}{bc^2}\Bigg[1 - \frac{1}{2}\bigg(\frac{b}{D_L}\bigg)^2 + \mathcal{O}\bigg[\frac{b}{D_L}\bigg]^3 \Bigg]
 \end{equation}
-The first-order approximation is twice the deflection predicted by Newtonian gravity for a particle of arbitrary mass moving at a speed $c$.  It is important to note here that to first order, the deflection does not depend on the distance to the lens or source.  That is, for a mass distribution located at a distance $D_L$, equation \ref{eq:alpha-def} can be approximated
+The first-order approximation is twice the deflection predicted by Newtonian gravity for a particle of arbitrary mass moving at a speed $c$.  It is important to note here that to first order, the deflection does not depend on the distance to the lens or source.  That is, for a mass distribution located at a distance $D_L \gg b$, equation \ref{eq:alpha-def} can be approximated
 \begin{equation}
   \label{eq:alpha-def-approx}
   \hat{\alpha} \approx \frac{2}{c^2}\int_{D_L-\delta D}^{D_L+\delta D} \vec{\nabla}_\perp\Phi\,\dd D
 \end{equation}
 for $\delta D$ sufficiently greater than the size scale of the mass-distribution in question.
 %Also note that for a large lens distance $D_L$, the contribution to $\hat{\alpha}$ becomes vanishingly small, and can be neglected.
-So, to a very good approximation, the incremental deflection $\delta \hat{\alpha}$ of a photon at a given point along its trajectory is entirely due to a sheet of matter with a width $2\,\delta D$, oriented perpendicular to the unperturbed photon trajectory.  
+So, to a very good approximation, the incremental deflection $\delta \hat{\alpha}$ of a photon at a given point along its trajectory is entirely due to a sheet of matter with a width $2\,\delta D$, oriented perpendicular to the unperturbed photon trajectory.  This is the {\it thin lens} approximation.
 
 \subsection{Lensing Geometry}
 \comment{Lensing diagram figure Here?}
@@ -1036,7 +1037,7 @@ Introducing the abbreviation
   \label{eq:psi_ij}
   \psi_{ij} = \frac{\partial^2 \psi}{\partial \theta_i \partial \theta_j}
 \end{equation}
-We can then rewrite the convergence $\kappa$ (eqn \ref{eq:psi-kappa-1}) and define the complex shear $\gamma \equiv \gamma_1 + i\gamma_2$ of the mapping:
+We can then rewrite the convergence $\kappa$ (eqn \ref{eq:psi-kappa-1}) and define the complex shear $\gamma \equiv \gamma_1 + i\gamma_2$ of the mapping and write:
 \begin{equation}
   \label{eq:gamma-def}
   \begin{array}{lcl}
@@ -1090,7 +1091,7 @@ useful estimates of the shear and/or convergence across the sky.
 
 In the most common approach to weak lensing,
 the ellipticities of source galaxies are measured, 
-giving a noisy estimate of the reduced shear
+giving a noisy estimate of the {\it reduced shear}
 \begin{equation}
   \gamma_r(\theta) = \frac{\gamma(\theta)}{1 - \kappa(\theta)}.
 \end{equation}
@@ -1136,7 +1137,7 @@ steps:
   \item From the measured ellipticities and redshifts of photometrically
     observed galaxies, obtain noisy estimates of the shear
     $\gamma_{obs}(\theta, z)$.
-  \item Using eqn.~\ref{eq:gamma-kappa}, recover a local estimate of
+  \item Using eqn.~\ref{eq:gamma-kappa}, recover an estimate of
     $\kappa(\theta, z)$.  Note that due to the integral over the lensing
     kernel $\mathcal{D}(\theta)$, the convergence estimate is non-local:
     the value of $\kappa$ at a given location is related to the value of the
@@ -1209,6 +1210,9 @@ Combining these equations gives
 Because of the mass-sheet degeneracy, $\kappa(z_s)$ can only be determined
 up to an additive constant across a given redshift bin
 \citep[see][for discussion]{seitz_schneider1996}.
+Assuming the observed field is large enough to average the effects of cosmic
+variance, the additive constant will be due simply to the background
+matter distribution.
 Defining $\bar{\kappa}(z_s)$ to be the convergence due to the background
 matter distribution in matter-dominated growth,
 and $\Delta(z) \equiv \delta(z)/a$ we find
@@ -1231,7 +1235,7 @@ to $\Delta(z)$ for $z<z_s$.
 \subsection{Power Spectra}
 Mass mapping can lead to deep astrophysical and cosmological insights through
 the comparison of dark and luminous matter distributions
-\citep[e.g.][]{Clowe2006}, through constraints on the mass profiles of
+\citep[e.g.][]{Clowe06}, through constraints on the mass profiles of
 collapsed structures \citep[e.g.][]{Oguri2012}, or
 through the comparison of observed mass peaks to
 theoretical predictions (see Chapter 4).  Because of the noise inherent in
@@ -1243,12 +1247,11 @@ scales, can be measured using power spectra of the weak lensing shear.  In
 order to accomplish this, however, the power spectra of observed shear must
 be related to the mass power spectra discussed in \S\ref{sec:growth}.
 
-In \S\ref{sec:growth}, we defined the power spectrum
-\begin{equation}
-  P_\delta(k) = \langle |\hat\delta_k|^2 \rangle,
-\end{equation}
-where
-The power spectrum 
+%In \S\ref{sec:growth}, we defined the power spectrum
+%\begin{equation}
+%  P_\delta(k) = \langle |\hat\delta_k|^2 \rangle,
+%\end{equation}
+%where
 
 \subsection{E and B modes}
 In this section, we will outline the basic results of \citet{Schneider02b}.
@@ -1275,17 +1278,18 @@ in eqn.~\ref{eq:gamma-def}, then the gradient of $\kappa$ can be written
   \myvec{u}.
 \end{equation}
 If $\kappa$ and $\gamma$ are due entirely to weak lensing, then the vector
-$\myvec{u}$ should be a pure gradient field, and this will hold for the
-quantity on the left hand side of eqn.~\ref{eq:u_def} as well.
-This ``curl-free'' condition can be compactly expressed
+$\myvec{u}$ should be a pure gradient field, as will every
+quantity in the equality in eqn.~\ref{eq:u_def}.  This condition can be
+compactly expressed by noting that the curl of a gradient is identically
+zero:
 \begin{equation}
   \label{eq:curl-free}
   \myvec{\nabla} \times \myvec{u} = 0.
 \end{equation}
 If, however, other effects are involved (e.g.~shot noise, second-order effects,
 intrinsic alignments, systematic errors, etc.)
-then $\myvec{u}$ will not be a pure gradient field and will have a curl
-component as well.
+then $\myvec{u}$ will not be a pure gradient field and will have
+a nonzero curl.
 With this in mind, we will use an analogy from electrodynamics and decompose
 $\kappa$ into a curl-free ``E-mode'' $\kappa_E$ and a divergence-free
 ``B-mode'' $\kappa_B$ such that
@@ -1344,7 +1348,8 @@ as a simple phase $e^{2i\beta}$, so that
   \langle\hat{\kappa}_{E, B}(\myvec{\ell})
   \hat{\kappa}^\ast_{E,B}(\myvec{\ell}^\prime)\rangle.
 \end{equation}
-From this we can define the shear correlation function
+Based on this equality, we can define the shear correlation function
+and relate it to the convergence power spectra $P_{EB}$,
 \begin{eqnarray}
   \label{eq:xi_plus}
   \xi_+(\theta)
@@ -1377,12 +1382,15 @@ source, and $W(r)$ is the lensing weight function,
 \end{equation}
 where $n(z)$ is the empirical redshift distribution of galaxies,
 with $\bar{n}_g = \int_0^\infty n(z)dz$.
-%The nonlinear mass fluctuation power spectrum $P_\delta(k, z)$ can be
-%predicted semianalytically: in this work we use the halo model of
-%\citet{Smith03}.  With this as an input, we can analytically
-%construct the measurement covariance matrix $\mymat\xi$ using 
-%Equations~\ref{eq:xi_analytic}-\ref{eq:lensing_weight}.
-
-\comment{Mention work with the supernova collaboration \citep{Kessler2009},
-  We also should briefly mention here \cite{Jain2011} and alternatives
-  to standard cosmological models \citep[also][]{Sollerman2009}.}
+This allows us to predict an analytic relation between the 3D mass
+fluctuation power spectrum $P_\delta(k, z)$ and the correlation function
+of the shear signal $\xi_+(\ell, z)$.
+The nonlinear mass fluctuation power spectrum $P_\delta(k, z)$ can be
+predicted semianalytically (e.g. \citet{Smith03}) and changes based on
+the cosmological model.  The shear correlation function $\xi_+(\myvec{\ell})$
+can be computed from observed data.  The important point is that this
+relation measures the mass density field directly: it requires no assumptions
+about the mass to light ratio or how the non-baryonic matter distribution
+relates to that of luminous matter.
+This offers a powerful technique for constraining cosmological parameters
+in the Universe.
