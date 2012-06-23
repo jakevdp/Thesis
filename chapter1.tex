@@ -1,39 +1,75 @@
 \chapter{Introduction to Cosmology}
 
-By the early part of the 20th century, the general scientific concensus
-was that the Universe comprised a collection of perhaps a few billion
-stars in a ``bun-shaped'' distribution, occupying a static space
-of perhaps infinite age \citep{smith2009expanding}.
-That model was challenged by the work of many in the early years of the
-twentieth century.
-Harlow Shapley's observations of globular clusters showed that our solar
-system is not near the center of our Galaxy. Edwin Hubble's discovery of
-Henrietta Levitt's Cepheid variables in the so-called ``spiral nebulae''
-showed their distances to be larger than we had ever imagined.  Hubble's
-observational discovery of the seemingly uniform expansion of the
-universe gave credence to the theoretical work of Einstein, Lemaitre,
-Friedmann, Robinson, Walker, and other luminaries of Physical Cosmology.
-Since then, a huge mass of theoretical and observational work has aided
-our understanding of the dynamics of this expansion, as
-well as it's implications on observations of Big Bang Nucleosynthesis
-and the baryonic content of the universe,
-recombination and the resulting cosmic background radiation,
-gravitational instabilities and the formation of structure,
-and the gravitational and dynamical effects postulated to be due to
-previously unknown quantities dubbed
-``dark matter'' and ``dark energy'', which together
-make up over 95\% of the mass-energy content of the universe.
+By the late part of the 20th century, the standard model of Cosmology
+seemed to rest on firm foundations.  The model, known as the Cold Dark Matter
+(CDM) model, consisted of a uniformly
+expanding universe, comprised of baryonic matter, cold
+non-baryonic (dark) matter, and radiation, with space-time evolving
+according to the dynamics of Einstein's Theory of General Relativity.
+This dynamical description, as was realized by Alexander Friedmann,
+George Lemaitre, Howard Robertson, and Arthur Walker during the
+1920s and 1930s,
+predicts a dynamic universe, where space itself must expand or contract
+under the influence of the energy within it.  The expansion of the universe,
+first observed in the characteristic redshifts of distant galaxies
+\citep{hubble1929}, was thought to be slowing under the
+gravitational effect of the the matter within it.
+
+This uniform expansion of space-time indicated that the early universe
+was filled with a hot, dense plasma from which the constituents of
+chemical elements
+formed.  This theory of {\it Big Bang Nucleosynthesis} \citep[BBN:][]{Alpher48}
+was and remains extremely successful in explaining the relative
+abundance of chemical elements in the universe.  Another important prediction
+within the BBN model is that a Cosmic Background Radiation should be present,
+due to the photons which free-streamed once the universe cooled enough for
+the gas within it to no longer be ionized \citep{Alpher48b}.
+The CBR signal had been observed in detail \citep{Smoot92},
+resulting in a confirmation of the inflationalry
+hypothesis and the standard model of cosmology.
+
+Nonetheless, the standard model had some cracks in its foundation:
+cosmological probes and
+studies of collapsed structures yielded widely discrepant estimates of the
+matter content in the universe.  The implied age of the universe in the CDM
+model was younger than the age inferred for the oldest observed globular
+clusters and white dwarfs.  Something needed to change.
+
+Observations of type Ia supernovae by \citet{Riess98}, and confirmed by
+\citet{Perlmutter99} offered a solution: these showed that distant supernovae
+were fainter than expected in a standard CDM model.  This implied that the
+expansion of the universe was accelerating, due to a cosmological component
+dubbed {\it dark energy}.  This dark energy has an effective negative pressure,
+which overcomes the gravitational attraction of matter and causes the
+expansion of space to accelerate.  This additional energy component in the
+universe solved many of the problems posed by CDM, and is now part of the
+standard $\Lambda$-CDM cosmological model ($\Lambda$ refers to the cosmological
+constant first proposed by Einstein).
+
+Led by these supernova results, as well as new observations of the cosmic
+microwave background \citep[CMB;][]{WMAP1}, the baryon acoustic oscillations
+\citep[BAO;][]{Eisenstein05}, and other observational
+campaigns, the last 15 years has seen a surge in precision cosmologial
+measurements.
+The dark energy postulated to explain supernova distances is now known
+to make up over 70\% of the energy density of the universe, and having
+an equation of state consistent with it being due to
+vacuum energy or a cosmological constant \citep{Kessler2009, WMAP7}.
+Future surveys in many diverse areas of astronomy are seeking to place even
+tighter constraints, allowing greater insight into the nature and evolution
+of dark energy.
 
 With such a wide and diverse field as Cosmology, we can't hope to offer
-a complete introduction of the relevant theory.  For this purpose there
+a complete introduction of the relevant theory in this document.
+For this purpose there
 are several very well-written books available; much of the material
 discussed below is taken from formalism developed more fully in these works
-\citep[see, e.g.][]{ryden2003cosmology, peebles1993principles, peacock1999cosmological}
-
+\citep[see, e.g.][]{peebles1993principles, peacock1999cosmological,
+  ryden2003cosmology, longair2008galaxy}.
 This chapter will cover the basic physical and mathematical background of
 cosmology.  We will begin with a discussion of the
 FLRW metric (named for Friedmann, Lemaitre,
-Robinson, and Walker) which describes the geometry of space-time.
+Robertson, and Walker) which describes the geometry of space-time.
 Next we'll move on to define the Friedmann Equations, which condense
 the field equations of Einstein's General Relativity to the basic pieces
 needed to describe the dynamics of a globally homogeneous and isotropic
@@ -57,7 +93,7 @@ is an expression of rotational symmetry: the appearance of the universe
 does not change with respect to the orientation of the observer.
 These assumptions are clearly incorrect at small scales -- our galaxy
 has a much higher density of stars in the central bulge than in the
-outer halo, for example -- but these assumptions appear to hold at
+outer halo, for example -- but they appear to hold at
 the largest scales.
 At distance scales larger than the size of typical superclusters
 (about 50 Mpc or more), the distribution of
@@ -67,7 +103,7 @@ More importantly, the Cosmic Microwave
 Background appears homogeneous and isotropic to within one part in
 $10^5$, giving evidence that our assumptions of homogeneity and isotropy
 are well-founded for the universe as a whole \citep[For an interesting
-discussion of the limits of this approach, see][]{Maartens2011}.
+discussion of the limits of this approach, however, see][]{Maartens2011}.
 
 The most general metric for a homogeneous and isotropic space-time is due
 to Howard Robertson and Arthur Walker, who showed that the space-time
@@ -94,17 +130,19 @@ depends on the curvature, $\kappa$, which may be either $+1$, $-1$, or $0$:
 where $R$ is the radius of curvature today.  Often, the curvature
 sign $\kappa$ and radius $R$ are compactly expressed in a single curvature
 parameter $k$, such that $\kappa = k/|k|$ and $R = |k|^{-1/2}$.
+Robertson and Walker derived this from purely geometric arguments.
 
 An interesting aspect of this metric is the scale factor $a(t)$.  A general
 homogeneous and isotropic universe is not necessarily static: it can be
-expanding or contracting with time.  The nature of this expansion cannot
-be derived from purely geometric means.  The description of the dynamics
+expanding or contracting with time.  The detailed nature of this expansion
+cannot be derived from purely geometric means: the description of the dynamics
 of cosmic expansion comes from the field equations of Einstein's theory
 of General Relativity.
 
 \section{The Friedmann Equations}
 \label{sec:friedmann}
-The Robertson-Walker metric shown above is a purely geometric result,
+The Robertson-Walker metric (eq.~\ref{eq:FLRW_metric})
+is a purely geometric result,
 where the scale factor $a(t)$ is arbitrary and unspecified.
 Friedmann and Lemaitre had earlier independently derived this expression
 from Einstein's field equations, with the addition of certain dynamical
@@ -142,6 +180,7 @@ can be easily derived from the first two:
 This expression is equivalent to the first law of thermodynamics
 expressed for the universe as a whole.
 
+\subsection{Equation of State}
 We can simplify these further by writing the pressure $P$ and energy
 density $\varepsilon$ in terms of an equation of state parameter
 \begin{equation}
@@ -150,11 +189,10 @@ density $\varepsilon$ in terms of an equation of state parameter
 \end{equation}
 Using this, the solution of eqn.~\ref{eq:friedmann_3} gives
 \begin{equation}
+  \label{eq:w_constant}
   \varepsilon = \varepsilon_0\, a^{-3(1 + w)}
 \end{equation}
-for $w$ constant in time\footnote{the equivalent expression for
-  non-constant $w(t)$ is slightly more complicated, but can be easily
-  derived from eqn.~\ref{eq:friedmann_3}.}.
+for $w$ constant in time.
 Here $\varepsilon_0 = \varepsilon(t_0)$ is the energy density today,
 and we have used the standard convention $a(t_0) = 1$.
 Given this parametrization, we can now
@@ -207,6 +245,43 @@ The various possible contributions are:
     $w = 1/3$.
 \end{description}
 
+\subsection{Evolving Equation of State}
+In Equation~\ref{eq:w_constant} we show the solution of
+eqn.~\ref{eq:friedmann_3} for constant $w$.  Another possibility
+(especially applicable for general quintessence models) is that
+the equation of state parameter $w$ evolves with time.
+\begin{equation}
+  \label{eq:w_general}
+  \varepsilon(a) = \varepsilon_0\, \exp\left[-3\int_1^a
+    \frac{1 + w(a^\prime)}{a^\prime}\dd a^\prime\right].
+\end{equation}
+Many parametrizations of the form of $w(a)$ have been proposed.  Perhaps
+the simplest is a model which is simply linear in the redshift $z$
+(see below), i.e.
+\begin{equation}
+  w(z) \approx w_0 + w_1 z.
+\end{equation}
+Though simple, this parametrization is encumbered by the fact that $z$ changes
+very quickly with time, especially in the early universe.  A better 
+choice is the CPL parametrization \citep{Chevallier01, Linder03a}, which is
+of the form
+\begin{equation}
+  w(z) \approx w_0 + w_a\frac{z}{1 + z},
+\end{equation}
+or equivalently
+\begin{equation}
+  w(a) \approx w_0 + w_a(1 - a)
+\end{equation}
+which is linear in the scale factor rather than the redshift.  Adopting this
+parametrization gives
+\begin{equation}
+  \label{eq:w_first_order}
+  \varepsilon(a) = \varepsilon_0\, a^{-3(1 + w_0 + w_a)}e^{-3w_a(1-a)}.
+\end{equation}
+One of the main goals of future cosmological surveys is to put meaningful
+constraints on the time-evolution of dark energy.  This will be discussed
+further in later sections.
+
 \subsection{Hubble Parameter}
 \label{sec:hubble_parameter}
 The first Friedmann equation (eqn.~\ref{eq:friedmann_1}) is commonly expressed
@@ -246,7 +321,7 @@ Alternatively, we can express the Friedmann equation as simply
 \end{equation}
 Neglecting curvature, if the sum of components $\Omega_w$ is unity, then
 we must have curvature $\Omega_\kappa = 0$.  This shows the meaning of
-the critical density (eqn.~\ref{eq:critical density}).  If the energy density
+the critical density (eqn.~\ref{eq:critical_density}): if the energy density
 in the universe satisfies $\epsilon > \epsilon_c$ (i.e. $\Omega > 1$), then
 $\kappa > 1$ and the universe is {\it spatially closed}.
 If $\epsilon < \epsilon_c$ (i.e. $\Omega < 1$), then $\kappa < 1$ and
@@ -273,7 +348,8 @@ familiar dimensionless form of the Friedmann Equation:
 \label{sec:redshift}
 The FLRW metric of \S\ref{sec:FLRW} and the Friedmann equations of
 \S\ref{sec:friedmann} lay the basic framework for the study of cosmology.
-In many ways the history of $20^{\rm th}$ century cosmology surrounds various
+A large portion of
+the history of $20^{\rm th}$ century cosmology surrounds various
 attempts to understand the relative contributions of matter, radiation,
 curvature, and dark energy to the Hubble parameter, which measures
 the expansion rate of the universe.  The exact nature of these various
@@ -288,9 +364,10 @@ Observational measures of these consequences allow constraints of the
 properties of the various $\Omega_w(z)$.
 
 Eqn.~\ref{eq:friedmann_dimensionless} is simply a first-order differential
-equation in $a$: For various choices of the density parameters $\Omega$, it
+equation in $a$: For various choices of the density parameters $\Omega_w$, it
 can be solved to yield a curve describing the scale factor $a$ as a function
-of time $t$.  Placing observational constraints on the densities of
+of time $t$.  A straightforward path to placing
+observational constraints on the densities of
 various components, then, would require simply measuring the value of $a$ at
 several times $t$ and performing a multidimensional fit to these observed
 data points.  But how can the scale factor $a$ be measured?
@@ -318,7 +395,7 @@ and arrives at time $t_o + \Delta t_o$, this gives
   &\approx& \int_{t_e}^{t_o} \frac{c}{a(t)} dt + \frac{c\Delta t_o}{a(t_o)}
   - \frac{c\Delta t_e}{a(t_e)},
 \end{eqnarray}
-where the second line is the first-order approximation.  Equating these
+where we have used a first-order approximation.  Equating these
 two expressions gives for small $\Delta t$:
 \begin{equation}
   \label{eq:time_dialation}
@@ -404,12 +481,13 @@ parameters $\Omega_w$ which fit the data.
 \section{Standard Candles: Cosmology via Luminosity Distance}
 \label{sec:std_candles}
 ``Standard candles'' have been one of the primary methods for measuring
-cosmological parameters.  The earliest measure, from Edwin \citet{hubble1929}
+cosmological parameters.  The earliest measure, from Edwin Hubble,
 used Cepheid-type variable stars which have an absolute magnitude correlated
-with their pulsation period.  Through observations of Cepheids
-in nearby galaxies, Hubble found a linear correlation between the
+with their pulsation period \citep{hubble1929}.
+Through observations of Cepheids
+in nearby galaxies, Hubble found a positive correlation between the
 luminosity distance to each galaxy and its apparent recessional velocity,
-supporting a postive value of the Hubble parameter $H_0$\footnote{
+indicating a positive value for $H_0$.\footnote{
 Although Hubble does not frame this measurement in terms of the Friedmann
 equations, he cautiously mentions the potential relationship of the
 observations to the ``de Sitter effect'', a predicted redshift within
@@ -433,30 +511,47 @@ the simultaneous measurement of redshift and luminosity distance.
 
 In the 70 years after Hubble's discovery, there were many attempts to
 confirm and improve upon his discovery and use it to derive tighter
-constraints on...
+constraints on the slope $H_0$ of the Hubble relation.  All of these have
+been based on standard or standardizable candles.  These standardizable
+candles are based on the period-luminosity relationship of Cepheid
+variables \citep{Leavitt1912}; on the Tully-Fisher relationship between
+brightness and rotation speed of spiral galaxies \citep{Tully77}; on
+the Faber-Jackson/Fundamental Plane relationship between brightness,
+velocity, and surface brightness for elliptical galaxies
+\citep{Faber76, Djorgovski87}; and on the relationship between luminosity
+and decay timescale for type Ia supernovae \citep{Philips93}.  Due to
+their extreme intrinsic brightness and minimal intrinsic scatter in
+calibrated luminosity, type Ia supernovae have become a very important
+tool for determining cosmological parameters, but they cannot be used
+alone: independent measures are required to calibrate the distance
+scale of type-I supernovae, making all the above approaches important.
+Perhaps the most comprehensive study to date of these various standard
+candles is the HST Key project \citep{Freedman01}, which combined
+the above measures and others to arrive
+at a value of $H_0 = 72 \pm 8$ km/s/Mpc.  This is consistent with the
+tighter constraint from the WMAP 7-year analysis, $H_0 = 70.4 \pm 2.5$
+km/s/Mpc.
 
-\comment{ Add some brief references to standard-candle-based constraints:
-  Cepheid, MS fitting, TF relation, and type 1a supernovae.  Mention my
-  work in this area: \citet{Kessler2009}}
-
-The results summarized above are all related in that they are based on the
-idea of a standard candle: if we can determine the intrinsic brightness
+The common theme in the above methods is that they are based on the idea
+of a standard candle: if we can determine the intrinsic brightness
 of an object as well as its redshift, then we can compare this to the
 apparent brightness and constrain the Hubble parameter $H(t)$.
 Another path to this sort of constraint comes from standard {\it rulers}
 rather than standard candles.  If we know the redshift as well as the
 intrinsic size of an object, then we can use its apparent size to
-constrain cosmological parameters.  One standard ruler is given by the
+constrain cosmological parameters.  One such standard ruler is given by the
 size-scales of structure in the universe.
 
 \section{The Growth of Structure}
 \label{sec:growth}
-The above probes rely on standard or standardizable candles to measure the
-luminosity distance as a function of redshift.  Other cosmological probes
-depend on standard {\it rulers}, that is, objects whose true angular extent
-is known, and can be used to determine the angular diameter distance as
-a function of redshift.  Many of these probes depend on detailed modeling
-of the growth of structure.
+There are several methods of cosmological parameter estimation which rely
+on the idea of standard rulers.  Some examples are the observation of the
+anisotropy scale in the Cosmic Microwave Background, and the observation
+of the Baryon Acoustic Oscillation scale.
+Another powerful method relies on detailed modeling of the growth of structure.
+As we will see, along with offering the possibility of a standard ruler,
+consideration of structure growth can offer other cosmologically interesting
+observables.
 
 The distribution of density throughout the universe can be expressed
 in terms of the density contrast
@@ -464,10 +559,11 @@ in terms of the density contrast
   \label{eq:overdensity}
   \delta(\myvec{x}, t) = \frac{\rho(\myvec{x}, t) - \rho_b(t)}{\rho_b(t)},
 \end{equation}
-where the background density is
+where the background matter density is
 \begin{equation}
-  \rho_b(t) \propto \frac{1}{a(t)^3}.
+  \rho_b(t) \propto \frac{1}{a(t)^3}
 \end{equation}
+(i.e.~we assume the background consists of cold matter with $w=0$).
 Rearranging this definition results in expressing the density field of the
 universe as
 \begin{equation}
