@@ -1,6 +1,22 @@
 \chapter{Shear Peak Statistics with KL}
 
-This chapter will cover the results from \citep{Vanderplas2012}
+This chapter will cover the results from \citep{Vanderplas2012}. In it,
+we explore the utility of Karhunen Lo\`{e}ve (KL) analysis in 
+solving practical problems in the analysis of gravitational
+shear surveys.  Shear catalogs from large-field weak lensing
+surveys will be subject to many systematic limitations, notably
+incomplete coverage and pixel-level masking due to foreground sources.  
+We develop a method to use two dimensional KL eigenmodes of 
+shear to interpolate noisy shear measurements across masked regions.  
+We explore the results of this method with simulated shear catalogs, 
+using statistics of high-convergence regions in the resulting map.  
+We find that the KL procedure not only
+minimizes the bias due to masked regions in the field, it also reduces
+spurious peak counts from shape noise by a factor of $\sim 3$ in the
+cosmologically sensitive regime.  This indicates that KL reconstructions 
+of masked shear are not only useful for creating robust convergence maps
+from masked shear catalogs, but also offer promise of improved parameter
+constraints within studies of shear peak statistics.
 
 
 \section{Introduction}
@@ -588,22 +604,22 @@ contribute two orders-of-magnitude more noise than signal.
    \label{fig_reconstruction_2} }
 \end{figure*}
  
-\begin{figure*}
- \centering
- \includegraphics[width=\textwidth]{fig06_kappa_multires.eps}
- %created by ../fig_code/fig06_kappa_multires.py
- \caption{The large-field convergence map from the noiseless input
-   shear \textit{(upper panels)} and the 900-mode, $\alpha=0.15$
-   reconstruction of the noisy shear, with 20\% of pixels masked out 
-   \textit{(lower panels)}.  
-   The rightmost plots cover one square degree.
-   Maps are smoothed with gaussian filters of width 4, 2 and 1 arcmin,
-   as labeled.  This shows that even with 20\% masking of the input signal, 
-   the KL interpolation procedure recovers the most significant peaks.
-   Note that the spurious structure in the KL plots is primarily due 
-   to the shape noise of the input shear, not to the KL procedure itself.
-   \label{fig_kappa_reconstruction} }
-\end{figure*} 
+%\begin{figure*}
+% \centering
+% \includegraphics[width=\textwidth]{fig06_kappa_multires.eps}
+% %created by ../fig_code/fig06_kappa_multires.py
+% \caption{The large-field convergence map from the noiseless input
+%   shear \textit{(upper panels)} and the 900-mode, $\alpha=0.15$
+%   reconstruction of the noisy shear, with 20\% of pixels masked out 
+%   \textit{(lower panels)}.  
+%   The rightmost plots cover one square degree.
+%   Maps are smoothed with gaussian filters of width 4, 2 and 1 arcmin,
+%   as labeled.  This shows that even with 20\% masking of the input signal, 
+%   the KL interpolation procedure recovers the most significant peaks.
+%   Note that the spurious structure in the KL plots is primarily due 
+%   to the shape noise of the input shear, not to the KL procedure itself.
+%   \label{fig_kappa_reconstruction} }
+%\end{figure*} 
 
 \begin{figure*}
  \centering
