@@ -73,7 +73,7 @@ the fundamental ideas of KL analysis.
 The Fourier Series is a means of expressing a bounded function in terms
 of a certain class of oscillatory basis functions.  It is a discrete version
 of the Fourier Transforms used in cosmological power spectrum analysis, and
-discussed in section XXX.
+discussed in \S\ref{sec:EBmode}.
 
 We'll define a set of oscillatory basis functions 
 \begin{equation}
@@ -83,8 +83,8 @@ We'll define a set of oscillatory basis functions
 \end{equation}
 where $t$ is the arbitrary dependent variable, $k$ is the wave-number,
 and the function is defined in the region $t_a \le t \le t_b$.
-and postulate that a function $f(t)$ can be expressed as a linear combination
-of these basis functions:
+We'll postulate that a function $f(t)$ can be expressed as a linear
+combination of these basis functions:
 \begin{equation}
   \label{eq:fourier_1D}
   f(t) = \sum_{k=-\infty}^\infty a_k\Phi_k(t).
@@ -160,7 +160,7 @@ gives
   f(t) - f(t) = \sum_{k=-\infty}^\infty (a_k - a^\prime_k)\Phi_k(t) = 0.
 \end{equation}
 In a similar manner to above, we can multiply by $\Phi^\ast_k(t)$, integrate
-over $t$ from $t_a$ to $t_b$, and extract a kronecker delta function to
+over $t$ from $t_a$ to $t_b$, and extract a Kronecker delta function to
 yield
 \begin{equation}
   \sum_{k=-\infty}^\infty (a_k - a^\prime_k) \delta_{kk^\prime} = 0
@@ -205,7 +205,10 @@ This suggests the possible existence of other functions which fit these
 criteria.  Some examples are the Legendre polynomials on the interval
 $[-1, 1]$, the Laguerre polynomials on the interval $[0, \infty)$, and
 the Hermite polynomials on the interval $(-\infty, \infty)$.
-In fact, just as there are an infinite number of possibile orientations for
+In fact, these different orthonormal basis functions are simply a
+generalization of well-known geometric bases (such as the $x$ and $y$ axis
+of a two dimensional vector space) into an abstract function space.
+Just as there are an infinite number of possibile orientations for
 an $(x, y)$ axis in a two-dimensional vector space, there are an infinite
 number of possible orthogonal function bases that work in the above
 formalism.  Choosing the right basis can lead to a much easier analysis of
@@ -238,8 +241,8 @@ by its covariance function, which is defined as
   f^{(i)}(t)f^{(i)}(t^\prime).
 \end{eqnarray}
 For an {\it uncorrelated} random process,
-$\mathcal{C}_F(t, t^\prime) = \mathcal{C}_F(t, t) \delta_{t, t^\prime}$
-where $\mathcal{C}_F(t, t) $ is the {\it variance} of $F_t$.
+$\mathcal{C}_F(t, t^\prime) = \mathcal{V}_F(t) \delta_{t, t^\prime}$
+where $\mathcal{V}_F(t) $ is the {\it variance} of $F_t$.
 
 \subsection{Eigenfunctions}
 We'll now introduce the {\it eigenfunctions} $e_k(t)$
@@ -249,12 +252,13 @@ of the covariance function $\mathcal{C}_F(t, t^\prime)$, which satisfy
   \int_{t_a}^{t_b} \mathcal{C}_F(t, t^\prime) e_k(t^\prime)\dd t^\prime
   = \lambda_k e_k(t)
 \end{equation}
-subject to the constraint that $e_k(t)$ is not everywhere zero.
+subject to the constraint that $\int_{t_a}^{t_b}|e_k(t)|^2\dd t \ne 0$
+(i.e. $e_k(t)$ is not everywhere zero).
 Here $\lambda_k$ is the {\it eigenvalue} associated with the
 eigenfunction $e_k(t)$.
 
 Now what are the properties of these eigenfunctions?  First of all, they
-are orthogonal on the interval $[a, b]$.
+are orthogonal on the interval $[t_a, t_b]$.
 We can show this by considering two arbitrary eigenfunctions
 $e_k(t)$ and $e_{k^\prime}(t)$.  Consider the quantity
 \begin{equation}
@@ -308,7 +312,7 @@ basis for the space of functions represented by the random process $F_t$.
 In general, the eigenfunctions
 also satisfy the completeness relation (see eqn.~\ref{eq:completeness}).
 The proof of the completeness of eigenfunctions for a symmetric kernel
-$\mathcal{C}_F(t^\prime, t)$ can be found in, e.g.~\citet{Courant1989}.
+$\mathcal{C}_F(t, t^\prime)$ can be found in, e.g.~\citet{Courant1989}.
 
 Let's now consider the expansion of the random process $F_t$ onto the
 eigenvectors $e_k(t)$.  Analogously to the Fourier case discussed
