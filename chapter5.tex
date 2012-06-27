@@ -399,11 +399,22 @@ this data available to us}.  The description of this catalog and detailed
 tests of its systematics are presented in
 \citet[][hereafter S10]{Schrabback10}.  We will not repeat that information
 here.  The catalog contains shape measurements of 446,934 source galaxies 
-in a 1.64 square-degree field.  194,976
-of these source galaxies have well-defined photometric redshifts from the
-COSMOS30 pipeline \citep{Hildebrandt2009, Schrabback2010},
-while the remaining source galaxies have poorly fitted redshifts
-source galaxies have poorly fitted redshifts.
+in a 1.64 square-degree field.
+The ``bright'' sample of 194,976 galaxies are those with well-behaved
+photometric redshifts drawn from the COSMOS30 pipeline
+\citep[][S10]{Hildebrandt2009},  The angular distribution of these
+galaxies is shown in the upper panel of Figure~\ref{fig:COSMOS_locations},
+and the redshift distribution is shown in the upper panel of
+Figure~\ref{fig:COSMOS_zdist}.  The redshift distribution is marked by
+spikes indicating the presence of clusters of galaxies at the same redshift.
+
+The remaining 446,909 galaxies are too faint to have been included
+in the reference catalog \citep[the COSMOS30 redshifts are limited to
+$i^+ < 25$; See][]{Ilbert09}, and S10 estimates their redshift distribution
+using the correlation between absolute $i$-band magnitude and redshift.
+The spatial distribution and redshift distribution of this ``faint'' galaxy
+sample are shown in the lower panels of Figures~\ref{fig:COSMOS_locations}
+and \ref{fig:COSMOS_zdist}, respectively.
 
 \begin{figure}
   \centering
@@ -413,19 +424,58 @@ source galaxies have poorly fitted redshifts.
     redshift measurements (top panel)
     and the 251,958 COSMOS galaxies without photometric redshift estimates
     (bottom panel).}
-  \label{fig:COSMOS_zdist}
+  \label{fig:COSMOS_locations}
 \end{figure}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{zdist.eps}
-  \caption{Redshift distributions of the COSMOS data}
+  \caption{Redshift distributions of the COSMOS data.  The top panel shows the
+    distribution of photometric redshifts of the shear catalog cross-matched
+    with the COSMOS30 photometric redshift catalog \citep{Ilbert09}, while
+    the bottom panel includes the inferred redshift distribution of the
+    remaining faint galaxies.}
   \label{fig:COSMOS_zdist}
 \end{figure}
 
+In addition, S10 identifies potential catastrophic outliers in the redshifts.
+Photometric redshifts gain significant leverage from broad spectral features
+such as the lyman and balmer spectral breaks.  The Balmer limit is
+$\sim 364$nm, while the Lyman limit is $\sim 91$nm, so that the Balmer limit
+of a galaxy at redshift $z_0$ is at the same observed wavelength as the
+Lyman limit at redshift $z_0 + 3$.  This can lead to a degeneracy in redshift
+determination that results in catastrophic outliers -- that is, low redshift
+galaxies identified as high redshift, or high redshift galaxies identified as
+low redshift.  In shear studies, the former acts to dilute the shear signal,
+while the latter acts to add spurious signal at low redshift.  To prevent
+the latter effect from affecting results, we follow S10 and remove galaxies
+with $i^+ > 24$ with redshifts $z < 0.6$.  S10 provides several tests which
+show that this cut does not lead to appreciable systematic error.
+
+S10 performs a classical shear correlation function analysis to find
+constraints on $\sigma_8$ and $\Omega_M$ which are consistent with
+those derived from WMAP: for a flat $\Lambda$CDM cosmology, they
+find with 63\% confidence 
+$\sigma_8(\Omega_M / 0.3)^{0.51} = 0.79 \pm 0.09$.  S10 performs both a
+two-dimensional analysis and a three dimensional analysis: the constraints
+from each are consistent, with a slightly better figure of merit for the
+$\Omega_M$ vs. $\sigma_8$ constraint in the 3D case.  The strength of the
+3D treatment comes when the assumption of flatness is dropped: for a
+$\Lambda$CDM cosmology with varying dark energy equation of state $w$,
+they find at 90\% confidence that $w < -0.41$.  They note that future large
+lensing surveys will be able to place much more competetive constraints
+on these parameters.
+
+Here we will not try to duplicate all of these analyses: we will use the
+KL-based Bayesian Estimation formalism of \S\ref{sec:KL_bayes} with
+shear eigenbases computed for the observed field via the formalism
+of \S\ref{sec:KL_shear}.  This will allow us to constrain two-point
+information using the formalism of KL.
+
 \subsection{Intrinsic Ellipticity estimation}
 \label{sec:bootstrap}
-In the KL analysis described above, it is important to have an accurate
+In order to apply the KL analysis techniques discussed in Chapter 2,
+we require an accurate
 determination of the noise for the observed shear.  Assuming systematic
 errors are negligible, shape noise should be dominated by shot noise,
 which scales as $\mymat{\mathcal{N}}_{ii} = \hat{\sigma}_\epsilon^2 / n_i$,
