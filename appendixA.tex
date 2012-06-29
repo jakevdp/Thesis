@@ -1,16 +1,580 @@
-\chapter {The first appendix}
+\chapter{Random Fields, Correlation Functions, and Power Spectra}
+\label{app:RandomFields}
 
-text text text text text text text text text text text text text text text
-text text text text text text text text text text text text text text text
-text text text text text text text text text text text text text text text
-text text text text text text text text text text text text text text text
-text text text text text text text text text text text text text text text
-text text text text text text text text text text text text text text text
-text text text text text text text text text text text text text text text
-text text text text text text text text text text text text text text text
-text text text text text text text text text text text text text text text
-text text text text text text text text text text text text text text text
-text text text text text text text text text text text text text text text
-text text text text text text text text text text text text text text text
-text text text text text text text text text text text text text text text
-text text text text text text text text text text text text text text text
+In this appendix we discuss some of the details of the mathematics behind
+random fields, and their correlation functions and power spectra.
+In Appendix~\ref{app:sec:masspower} we
+apply this to the cosmological density field introduced in
+Chapter 1, and from this define the power spectrum normalization
+$\sigma_8$.
+Some common window functions and their Fourier transforms are listed
+in Appendix~\ref{app:sec:Wtransforms}.
+
+\section{Background on Gaussian random fields}
+\label{app:sec:background}
+Consider a field $g(\vec x)$ in $n$ dimensions. We'll enforce a 
+few restrictions on this field to make it easier to work with.
+Note that $\langle\cdot\rangle$ denotes a volume-average:
+\begin{enumerate}
+  \item vanishing: $\langle g(\vec x)\rangle=0$ 
+    for all $\vec x$.
+  \item homogeneous: $g(\vec x + \vec y)$ is statistically equivalent to
+    $g(\vec x)$ for all $\vec x$ and $\vec y$.
+  \item isotropic: $g(\mathbf{R}\vec x)$ is statistically equivalent to
+    $g(\vec x)$ for all $\vec x$ and any unitary rotation matrix $\mathbf{R}$.
+\end{enumerate}
+These conditions become very useful when we study the 
+(auto) correlation function, defined as
+\begin{equation}
+  \label{Cgg}
+  C_{gg}(\vec r) \equiv \left\langle g(\vec x) g^*(\vec x+\vec{r})\right\rangle
+\end{equation}
+which for a homogeneous and isotropic field depends only on the 
+distance $r = |\vec r|$.  It becomes useful to decompose $g$ into
+orthogonal Fourier components:\footnote{
+  Note that the fourier transform convention in eqns \ref{ft}-\ref{ift}
+  is useful in that it leads to a particularly simple form of the 
+  convolution theorem, without any gratuitous factors of $\sqrt{2\pi}$:
+  \begin{displaymath}
+    h(\vec x) = \int\dd^nx^\prime 
+    f(\vec x^\prime)g(\vec x-\vec x^\prime)
+    \ \ \ \ \ \Longleftrightarrow\ \ \ \ \ 
+    \hat h(\vec k) = \hat f(\vec k)\hat g(\vec k)
+  \end{displaymath}
+}
+\begin{eqnarray}
+  \label{ft}
+  g(\vec x) = \int \frac{\dd^nk}{(2\pi)^n} \hat{g}(\vec k)
+  e^{-i\vec k\cdot\vec x}\\
+  \label{ift}
+  \hat{g}(\vec k) = \int \dd^nx g(\vec x)e^{i\vec x\cdot\vec k}
+\end{eqnarray}
+
+From these, we can see that the n-dimensional dirac delta 
+function can be written
+\begin{equation}
+  \label{ddelta_form}
+  \delta^n_D(\vec x-\vec x^\prime) = \frac{1}{(2\pi)^n}\int \dd^nke^{-i\vec k\cdot(\vec x-\vec x^\prime)}
+\end{equation}
+such that 
+\begin{equation}
+  \label{ddelta_def}
+  \int \dd^nx f(\vec x)\delta^n_D(\vec x-\vec x^\prime) = f(\vec x^\prime)
+\end{equation}
+
+We now define the Power Spectrum of $g$ to be the Fourier transform of the 
+auto-correlation function, which, due to isotropy, depends only on the 
+magnitude of $\vec k$:
+\begin{eqnarray}
+  \label{pspec}
+  P_g(k) = \int \dd^nx e^{-i\vec x\cdot\vec k}C_{gg}(x)\nonumber\\
+  C_{gg}(x) = \frac{1}{(2\pi)^n}\int\dd^nke^{i\vec x\cdot\vec k}P_g(k)
+\end{eqnarray}
+A bit of math shows that the Power Spectrum is proportional to the 
+Fourier-space correlation function:
+\begin{equation}
+  \label{pspec_corr}
+  \hat C_{gg}(\vec k-\vec k^\prime) 
+  \equiv \left\langle\hat g(\vec k)\hat g^*(\vec k^\prime) \right\rangle 
+  =  (2\pi)^n \delta^n_D(\vec k -\vec k^\prime) P_g(|\vec k|).
+\end{equation}
+Along with isotropy and homogeneity, this result implies
+\begin{equation}
+  P_g(k) \propto \left\langle | \hat g(k)|^2 \right\rangle.
+\end{equation}
+The proportionality constant is finite only for a discrete Fourier series 
+(i.e. a finite averaging volume).
+
+\subsection{Smoothing of Gaussian Fields}
+\label{smoothing}
+When measuring a realization of gaussian field, we often make the measurement
+within a region defined by a window function $W(\vec x/R)$.
+By convention, we express window functions in terms of $\vec x/R$,
+where $R$ is a characteristic length scale of the window.
+This window may reflect a sharp boundary in space (e.g. a spherical tophat 
+function) or perhaps an observation efficiency in space (e.g. a 3D gaussian).
+In either case, our observed overdensity is given by
+\begin{equation}
+  g_W(\vec x) = \int \dd^n x^\prime 
+  W\left(\frac{\vec{x}^\prime-\vec{x}}{R}\right) g(\vec{x}^\prime)
+\end{equation}
+where $W(\vec x/R)$ is normalized such that
+\begin{equation}
+  \label{W_normalization}
+  \int \dd^nx W(\vec{x}/R) = 1.
+\end{equation}
+This can be simplified if we can define the Fourier transform pair 
+of a window function in the convention
+of equations \ref{ft} and \ref{ift} (cf. Liddle \& Lyth 2000):
+\begin{eqnarray}
+  \label{W-transform}
+  \widetilde{W}(\vec{k}R) = \int W(\vec{x}/R) e^{i\vec{k}\cdot\vec{x}}\dd^nx 
+  \nonumber\\
+  W(\vec{x}/R) = \frac{1}{(2\pi)^n}\int 
+  \widetilde{W}(\vec{k}R) e^{-i\vec{k}\cdot\vec{x}}\dd^nk 
+\end{eqnarray}
+This definition is convenient because, when combined with equation \ref{ft},
+some straightforward algebra leads to the convolution theorem:
+\begin{equation}
+  \hat g_W(\vec k) = \widetilde W(\vec k R)\hat g(\vec k)
+\end{equation}
+It is also useful to calculate the cross-correlation between two windows,
+\begin{equation}
+  \label{W_correlation}
+  \langle g_{W_1}(\vec x_1)g^*_{W_2}(\vec x_2)\rangle = 
+  \int \dd^n x 
+  W_1\left(\frac{\vec{x}-\vec{x}_1}{R}\right) 
+  \int \dd^n x^\prime 
+  W_2\left(\frac{\vec{x}^\prime-\vec{x}_2}{R}\right) 
+  \left\langle g(\vec{x})g^*(\vec{x}^\prime)  \right\rangle
+\end{equation}
+Using equations \ref{pspec} and \ref{W-transform}, we can re-express
+equation \ref{W_correlation} as a single integral over the
+wave number:
+\begin{equation}
+  \label{W_cov_simp}
+  \langle g_{W_1}(\vec x_1)g^*_{W_2}(\vec x_2)\rangle = 
+  \frac{1}{(2\pi)^n} \int \dd^nk
+  P_g(k)\widetilde{W}_1(\vec{k}R)\widetilde{W}_2(\vec{k}R)
+  e^{i\vec k\cdot(\vec x_1-\vec x_2)}
+\end{equation}
+Appendix \ref{app:sec:Wtransforms} lists a few common window functions and
+their fourier transforms.
+
+\section{Cosmological Mass Power Spectrum}
+\label{app:sec:masspower}
+In studies of the cosmological distribution of matter, we are interested
+in the comoving matter density $\rho(\vec{x})$, which defines the mass 
+density at every comoving point $\vec{x}$ in the universe.  In order
+to take advantage of the preceding formalism, we can subtract the mean
+cosmological density $\bar{\rho}(\vec{x})$, and definine a dimensionless
+density contrast $\delta(\vec{x})$, such that
+\begin{equation}
+  \delta(\vec{x}) = \frac{\rho(\vec{x}) - \bar{\rho}(\vec{x})}{\bar{\rho}(\vec{x})}.
+\end{equation}
+By the assumptions of the Cosmological Principle, for small
+deviations $\delta(\vec x)$ is an isotropic, homogeneous random field.  
+We can better understand the distribution of $\delta(\vec x)$ by looking
+at the mean square deviation
+\begin{eqnarray}
+  \label{Cdd0}
+  \left\langle|\delta(\vec x)|^2\right\rangle 
+  &=& C_{\delta\delta}(0)\nonumber\\
+  &=& \frac{1}{(2\pi)^3}\int \dd^3 kP_\delta(k)\nonumber\\
+  &=& \frac{1}{2\pi^2}\int k^2\dd k P_\delta(k)
+\end{eqnarray}
+The power spectrum of density contrast given by equation \ref{pspec}
+can be an inconvenient quantity to work with, because it has dimensions
+of volume.  We can take the lead from equation \ref{Cdd0} and define
+a dimensionless form of the power spectrum
+\begin{equation}
+  \label{P_conversion}
+ \Delta^2(k) = \frac{k^3}{2\pi^2} P_\delta(k)
+\end{equation}
+This is constructed so that equation \ref{Cdd0} can be written in a
+simple form:
+\begin{equation}
+  \left\langle|\delta(\vec x)|^2\right\rangle 
+  = \int_0^\infty \Delta^2(k)\dd(\ln k)
+\end{equation}
+This convention is due to Peacock (1999).
+For mathematical convenience, we'll continue to work with 
+the $P_\delta(k)$ convention,
+with the understanding that we can switch back and forth any time using
+equation \ref{P_conversion}. 
+
+\subsection{Power Spectrum Normalization}
+In practice, the functional form of the power spectrum is determined only
+up to a proportionality constant, such that
+\begin{equation}
+  P_\delta(k) = P_0 P^\prime_\delta(k)
+\end{equation}
+where $P^\prime_\delta(k)$ is the unnormalized form.
+For historical reasons, the normalization constant $P_0$ is commonly 
+expressed in terms of the parameter $\sigma_8$, 
+which is defined as the mean density 
+fluctuation within a sphere of radius 8 Mpc.  To compute this, we use a 
+top-hat window function:
+\begin{equation}
+\label{top-hat}
+  W_T(\vec{x}/R) = \left\{
+    \begin{array}{ll}
+      1, & |\vec x|/R \le 1 \\
+      0, & |\vec x|/R > 1
+    \end{array}
+    \right.
+\end{equation} 
+The density fluctuation within this window is found using equation \ref{W_cov_simp}:
+\begin{equation}
+  \label{powerspec-sigma-def}
+  \sigma_R^2 = \frac{1}{(2\pi)^3}\int \dd^3\vec{k} 
+  P_\delta(k) [\widetilde{W}_T(\vec{k}R)]^2
+\end{equation}
+where the window function is assumed to be shallow enough that there is no
+cosmological evolution of the signal.
+
+For the top-hat window function of equation \ref{top-hat}, with 
+$k = |\vec{k}|$,
+the fourier transform of equation \ref{top-hat} (cf. eqn. \ref{W-transform}) is
+\begin{equation}
+  \label{top-hat-f}
+  \widetilde{W}_T(kR) = \frac{3}{(kR)^3}\left[\sin(kR) - kR\cos(kR) \right].
+\end{equation}
+$\sigma_8$ can be calculated using equation \ref{powerspec-sigma-def}
+and \ref{top-hat-f} with $R=8$Mpc for a given $P_\delta(k)$. 
+The WMAP 5-year measurement gives $\sigma_8 = 0.812 \pm 0.026$ 
+\citep{Hinshaw09}.  Using this value, the correct normalization 
+can be computed for any functional form of the power spectrum.
+
+\subsection{Window functions and Measurement Covariance}
+In a 3D lensing analysis, we are searching for a signal within a series
+of windows defined as 
+\begin{equation}
+  W_{ij}(\vec{x}) = W_{ij}(\rcom,\vec{\theta}) 
+  = q_i(\rcom) \cdot F_j(\vec\theta)
+\end{equation}
+where $\rcom$ is the radial comoving distance, and $\vec{\theta}$ is the
+angular position on the sky.  To convert between angle on the sky and 
+projected comoving separation, we multiply by the transverse comoving 
+distance (eqn. 16 in Hogg 1999), given by
+\begin{equation}
+f_\kappa(\rcom) = \left\{
+\begin{array}{ll}
+  \kappa^{-1/2} \sin (\kappa^{1/2}\rcom) & (\kappa > 0) \\
+  \rcom  & (\kappa = 0)\\
+  (-\kappa)^{-1/2} \sinh [(-\kappa)^{1/2}\rcom] & (\kappa < 0)
+\end{array}\right.
+\end{equation}
+Our observed overdensity in window $W_{ij}$ is given by
+\begin{eqnarray}
+  \delta_{ij} 
+  & = & \int \dd^3x W_{ij}(\vec x)\delta(\vec x)\nonumber\\
+  & = & \int \dd\rcom \int \dd^2\theta \left[ f_\kappa(\rcom)\right]^2F_j(\vec{\theta})   q_i(\rcom) \delta\left(f_\kappa(\rcom)\vec{\theta},\rcom\right)
+\end{eqnarray}
+$F_j$ is the function describing the shape of the $j^{th}$ pixel,
+while $q_i$ is the function describing the $i^{th}$ redshift bin.
+These window functions should be normalized as in equation \ref{W_normalization},
+such that
+\begin{equation}
+  \label{q_normalization}
+  \int \dd\rcom [f_\kappa(w)]^2 q_i(\rcom) = 1
+\end{equation}
+and
+\begin{equation}
+  \int \dd^2\theta F_j(\vec{\theta}) = 1
+\end{equation}
+We are usually concerned with the covariance matrix of the signal, given by
+\begin{eqnarray}
+  \label{Sdd}
+  \left[S_{\delta\delta}\right]_{nm}
+  & = & \left\langle \delta_{i_nj_n}\delta^*_{i_mj_m}\right\rangle \nonumber\\
+  & = & \int \dd^2\theta F_{j_n}[\vec{\theta}] 
+  \int \dd^2\theta^\prime F_{j_m}[\vec{\theta}^\prime] \nonumber\\
+  & & \times
+  \int \dd\rcom \left[f_\kappa(\rcom)\right]^2 q_{i_n}[\rcom]
+  \int \dd\rcom^\prime \left[f_\kappa(\rcom^\prime)\right]^2 
+  q_{i_m}[\rcom^\prime]\nonumber\\
+  & &\times
+  \left\langle
+  \delta\left(f_\kappa(\rcom)\vec{\theta},
+  \rcom\right)
+  \delta^*\left(f_\kappa(\rcom^\prime)\vec{\theta^\prime},
+  \rcom^\prime\right)
+  \right\rangle
+\end{eqnarray}
+This can be simplified using the Limber approximation.
+
+\subsection{The Limber Approximation}%\footnote{The following logic comes from \citet{Bartelmann01}.}}
+Consider a projection of the density field along a certain radial direction
+\begin{equation}
+  g_i(\vec{\theta}) = \int \dd\rcom p_i(\rcom)\delta\left(f_\kappa(\rcom)\vec{\theta},\rcom\right).
+\end{equation}
+The cross correlation is
+\begin{eqnarray}
+  \label{Sgg}
+  S_{g_ig_j}(\vec\theta-\vec\theta^\prime) 
+  &=& \left\langle g_i(\vec\theta)g^*_j(\vec\theta^\prime)\right\rangle \nonumber\\
+  &=& \int \dd\rcom p_i(\rcom)
+  \int \dd\rcom^\prime p_j(\rcom^\prime)
+  \left\langle\delta[f_\kappa(\rcom)\vec{\theta},\rcom]
+  \delta^*[f_\kappa(\rcom^\prime)\vec{\theta}^\prime,\rcom^\prime]
+  \right\rangle
+\end{eqnarray}
+Let's express $\delta(\vec x)$ in terms of the Fourier integral, equation \ref{ft}.  This gives
+\begin{eqnarray}
+  S_{g_ig_j}(\vec\theta-\vec\theta^\prime) 
+  &=& \int \dd\rcom p_i(\rcom)
+  \int \dd\rcom^\prime p_j(\rcom^\prime)
+  \int \frac{\dd^3k}{(2\pi)^3}\int \frac{\dd^3k^\prime}{(2\pi)^3}
+  \left\langle\hat\delta(\vec k,\rcom)
+  \hat\delta^*(\vec k^\prime, \rcom^\prime)
+  \right\rangle\nonumber\\
+  &&\times
+  \exp\left[-i f_\kappa(\rcom)\vec{\theta}\cdot \vec k_\perp -i k_\parallel w\right]
+  \exp\left[i f_\kappa(\rcom^\prime)\vec{\theta}^\prime \cdot \vec k^\prime_\perp  + i k^\prime_\parallel w^\prime\right].
+\end{eqnarray}
+Here $\vec k_\perp$ is the 2-dimensional projection of $\vec k$ perpendicular to 
+the line of sight, and $k_\parallel$ is the projection of $\vec k$ along 
+the line of sight.
+The second argument of $\hat\delta(\vec k,\rcom)$ parametrizes evolution with
+time via $|c\cdot dt| = a\cdot d\rcom$.
+
+Because the power spectrum $P_\delta(k)$ decreases linearly with $k$ as 
+$k\to0$, there must be a coherence scale $L_c$ such that the
+correlation is near zero for 
+$|\rcom-\rcom^\prime| \equiv \Delta\rcom > L_c$.  
+The first part of the Limber approximation is to assume that $S_{gg}$ vanishes
+at these distances.
+Next we make the assumption that $p_i(\rcom)$ and 
+$p_j(\rcom^\prime)$ do not vary appreciably over the small range where
+$S_{g_ig_j}$ is nonvanishing, and that this range is small enough that 
+$f_\kappa(\rcom) \approx f_\kappa(\rcom^\prime)$. 
+This allows us to rewrite the above expression in a simpler way:
+\begin{eqnarray}
+  S_{g_ig_j}(\vec\theta-\vec\theta^\prime) 
+  &=& \int \dd\rcom p_i(\rcom)p_j(\rcom)
+  \int \frac{\dd^3k}{(2\pi)^3}\int \frac{\dd^3k^\prime}{(2\pi)^3} 
+  \left\langle\hat\delta(\vec k,\rcom)
+  \hat\delta^*(\vec k^\prime, \rcom)
+  \right\rangle\nonumber\\
+  &&\times
+  \exp\left[-i f_\kappa(\rcom) 
+    \left(\vec{\theta} \cdot \vec k_\perp 
+    - \vec{\theta}^\prime \cdot k^\prime_\perp \right) 
+    -i \rcom k_\parallel \right]
+  \int \dd\rcom^\prime\exp\left(i\rcom k^\prime_\parallel\right)
+\end{eqnarray}
+The integral over $\rcom^\prime$ is 
+simply $2\pi\delta_D(k^\prime_\parallel)$
+via equation \ref{ddelta_form}, and the Fourier space correlation function
+is proportional to $P_\delta(k)\delta^3_D(\vec k-\vec k^\prime)$ 
+via equation \ref{pspec_corr}:
+\begin{eqnarray}
+  S_{g_ig_j}(\vec\theta-\vec\theta^\prime) 
+  &=& \int \dd\rcom p_i(\rcom)p_j(\rcom)
+  \int \frac{\dd^3k}{(2\pi)^2}\int \dd^3k^\prime
+  \delta_D^3(\vec k-\vec k^\prime)\delta_D(k_\parallel^\prime)P_\delta(k)\nonumber\\
+  &&\times
+  \exp\left[-i f_\kappa(\rcom) 
+    \left(\vec{\theta} \cdot \vec k_\perp 
+    - \vec{\theta}^\prime \cdot k^\prime_\perp \right) 
+    -i \rcom k_\parallel \right]
+\end{eqnarray}
+Carrying out the integrals over the two delta functions we see
+\begin{eqnarray}
+  \label{Limber}
+  S_{g_ig_j}(\vec\theta_{ij}) 
+  &=& \int \dd\rcom p_i(\rcom)p_j(\rcom)
+  \int \frac{\dd^2k_\perp}{(2\pi)^2}
+  P_\delta(k_\perp,\rcom)
+  \exp\left[-i f_\kappa(\rcom) 
+    \vec \theta_{ij} \cdot \vec k_\perp 
+    \right]\\
+  \label{Limber2}
+  &=& \int \dd\rcom p_i(\rcom)p_j(\rcom)
+  \int \frac{k\dd k}{2\pi}P_\delta(k,\rcom)
+  J_0\left[f_\kappa(\rcom)\theta k\right]
+\end{eqnarray}
+where we have defined $\vec \theta_{ij} = \vec{\theta} -\vec{\theta}^\prime$, 
+and $J_0(x)$ is a Bessel function of the first kind, which comes from 
+the angular integral via
+\begin{equation}
+  \label{bessel_j}
+  J_n(x) = \frac{1}{2\pi}\int_{-\pi}^{\pi} e^{-i(n\tau-x sin\tau)}\dd\tau
+\end{equation}
+We see that all $k_\parallel$ terms have vanished, which leads to the main
+result of the Limber approximation: there is no correlation between the 
+density contrast in windows which do not overlap 
+in redshift. This is quickly seen from the leading integral in equation 
+\ref{Limber}.  If the windows $p_i(\rcom)$ and $p_j(\rcom)$ do 
+not overlap, then the expression integrates to zero.  
+
+Now that we have a simple expression for the 2-dimensional projected 
+correlation functions, we can use equation \ref{pspec} to define the 
+2-dimensional cross power spectrum of the measured covariance,
+\begin{equation} 
+  \label{cross_pspec}
+  P_{g_ig_j}(\ell) = \int \dd^2\theta e^{i\vec\theta\cdot\vec\ell}S_{g_ig_j}(\vec\theta).
+\end{equation}
+Combining equations \ref{Limber} and \ref{cross_pspec}, we have
+\begin{eqnarray}
+  \label{cross_pspec2}
+  P_{g_ig_j}(\ell) 
+  &=& \int \dd^2\theta
+  \int \dd\rcom p_i(\rcom)p_j(\rcom)
+  \int \frac{\dd^2k_\perp}{(2\pi)^2}
+  P_\delta(k_\perp,\rcom)
+  \exp\left[i\vec\theta\cdot(\vec\ell- f_\kappa(\rcom) 
+    \vec k_\perp)\right]\nonumber\\
+  &=&\int \dd\rcom p_i(\rcom)p_j(\rcom)\int \dd^2k_\perp
+  P_\delta(k_\perp,\rcom)\delta_D^2(\vec\ell- f_\kappa(\rcom)\vec k_\perp)
+  \nonumber\\
+  &=& \int \dd\rcom\frac{p_i(\rcom)p_j(\rcom)}{[f_\kappa(\rcom)]^2}P_\delta\left(\frac{\ell}{f_\kappa(\rcom)},\rcom\right).
+\end{eqnarray}
+
+\subsection{Applying the Limber Approximation}
+Examining equation \ref{Sdd}, we see that the integrals over $\rcom$ and 
+$\rcom^\prime$ appear in equation \ref{Sgg}, with 
+$p_i(\rcom)\to q_{i_n}(\rcom)[f_\kappa(\rcom)]^2$ and 
+$p_j(\rcom^\prime)\to 
+q_{i_m}(\rcom^\prime)[f_\kappa(\rcom^\prime)]^2$.
+Thus we can rewrite equation \ref{Sdd} using the Limber approximation:
+\begin{equation}
+  \label{Sdd_Limber}
+  \left[S_{\delta\delta}\right]_{nm}
+  = \int \dd^2\theta F_{j_n}[\vec{\theta}] 
+  \int \dd^2\theta^\prime F_{j_m}[\vec{\theta}^\prime] 
+  S_{nm}(\vec\theta -\vec\theta^\prime)
+\end{equation}
+Now using the procedure from section \ref{smoothing}, 
+we can write this approximation as an integral in Fourier 
+space over the cross power spectrum given by equation
+\ref{cross_pspec2}.  We'll consider the simple case where 
+each pixel has the same angular shape described by $F(\vec\theta)$,
+so that $F_{j_n}(\vec\theta) = F(\vec\theta-\vec\theta_n)$ and
+$F_{j_m}(\vec\theta) = F(\vec\theta-\vec\theta_m)$.  Defining
+$\vec\theta_{nm} = |\vec\theta_n - \vec\theta_m|$,
+\begin{eqnarray}
+  \label{Sdd_final}
+  \left[S_{\delta\delta}\right]_{nm} &=& 
+  \frac{1}{(2\pi)^2}
+  \int \dd^2\ell\, \widetilde{F}_{j_n}(\vec\ell)
+  \widetilde{F}_{j_m}(\vec\ell)P_{nm}(\ell)
+  e^{i\vec\ell\cdot\vec\theta_{nm}}\nonumber\\
+  &=&\frac{1}{2\pi}
+  \int \ell\dd\ell\, \widetilde{F}_{j_n}(\ell)
+  \widetilde{F}_{j_m}(\ell)P_{nm}(\ell)J_0\left(\ell\theta_{nm}\right)
+\end{eqnarray}
+where the second line holds if the window functions are circularly symmetric, 
+with the Bessel function given by equation \ref{bessel_j}.
+The projected power spectrum $P_{nm}(\vec\ell)$ is given by 
+equation \ref{cross_pspec2} 
+with appropriate substitution for $p_{i,j}$:
+\begin{equation}
+  P_{nm}(\ell) = \int \dd\rcom[f_\kappa(\rcom)]^2 q_{i_n}(\rcom)q_{i_m}(\rcom)P_\delta\left(\frac{\ell}{f_\kappa(\rcom)},\rcom\right).
+\end{equation}
+Note the factor of $[f_\kappa(\rcom)]^2$ in the numerator, which has 
+its root in the spherical coordinate differential 
+$d^3x \to r^2dr \cdot d\Omega$.
+
+Our main application of this formalism will involve discrete 
+non-overlapping redshift bins with uniform weighting.  That is,
+\begin{equation}
+  q_i(\rcom) = \left\{
+  \begin{array}{ll}
+    A_i, & \rcom^{(i)}_{\mathrm{min}} 
+    < \rcom < \rcom^{(i)}_{\mathrm{max}}\\
+    0, & \mathrm{otherwise}
+  \end{array}
+  \right.
+\end{equation}
+with the normalization constant computed via the condition in equation 
+\ref{q_normalization}:
+\begin{equation}
+  A_i = \left[\int_{\rcom^{(i)}_{\mathrm{min}}}^{\rcom^{(i)}_{\mathrm{max}}}
+  [f_\kappa(\rcom)]^2 \dd\rcom\right]^{-1}.
+\end{equation}
+To summarize, the correlation between two windows $n$ 
+and $m$ becomes, with $i_{n,m}$
+indexing the redshift window, and $n,m$ indexing the angular window,
+\begin{eqnarray}
+  [S_{\delta\delta}]_{nm} 
+  &=& \delta^K_{i_ni_m}\omega(|\theta_{nm}|)\nonumber\\
+  \omega(\theta)
+  &=&\frac{1}{2\pi}\int_0^\infty\ell\dd\ell\, 
+  |\widetilde{F}(\ell)|^2
+  P_{nm}(\ell)J_0(\ell\theta)\nonumber\\
+  P_{nm}(\ell) &=& 
+  \frac{1}{A^2}
+  \int_{\rcom^{(i)}_\mathrm{min}}^{\rcom^{(i)}_\mathrm{max}} 
+  \dd\rcom \left[f_\kappa(\rcom)\right]^2
+  P_\delta\left(\frac{\ell}{f_\kappa(\rcom)},\rcom\right).\nonumber\\
+  A &=& \int_{\rcom^{(i)}_\mathrm{min}}^{\rcom^{(i)}_\mathrm{max}} 
+  \dd\rcom \left[f_\kappa(\rcom)\right]^2
+\end{eqnarray} 
+where $\delta^K_{ij}$ is the Kronecker delta. This result should be 
+compared  to equations 39-41 of \citet{Simon09}.  The only difference is
+that we have correctly accounted for the normalization of the redshift
+bin.  Note that if we assume $f_\kappa(\rcom)$ is constant across
+each redshift bin, the two formulations are equivalent.
+
+For our analysis, we will use angular pixels with radius $\theta_s$, 
+so that the fourier transform of the window functionis given by equation 
+\ref{tophat2D} and the equation giving the signal covariance becomes
+\begin{equation}
+  \left[S_{\delta\delta}\right]_{nm}
+  = \frac{2}{\pi\theta_s^2} 
+  \int \dd\rcom \frac{q_{i_n}[\rcom]q_{i_m}[\rcom]}
+  {f_\kappa(\rcom)^2} 
+  \int  \frac{\dd\ell}{\ell}
+  P_\delta\left(\frac{\ell}{f_\kappa(\rcom)},\rcom\right)
+  [J_1(\theta_s\ell)]^2 J_0(\theta_{nm}\ell)
+\end{equation}
+
+\section{Window Functions and their Fourier Transforms}
+\label{app:sec:Wtransforms}
+Here we list a few common window functions and their Fourier transforms
+\subsection{Gaussian Window Functions}
+The $n$-dimenisional gaussian window function is defined as
+\begin{equation}
+  W(\vec x/R) = \frac{1}{(2\pi R^2)^{n/2}}
+  \exp\left(\frac{-|\vec x|^2}{2R^2}\right)
+\end{equation}
+The fourier transform is straightforward because the dimensions decouple
+and we're left with $n$ 1 dimensional gaussian integrals.  The resulting
+window function is
+\begin{equation}
+  \widetilde{W}(\vec k R) 
+  = \exp\left(\frac{-|\vec k|^2R^2}{2}\right)
+\end{equation}
+which itself is a gaussian.
+\subsection{Top-hat Window Functions}
+The $n$-dimensional tophat windown function is given by
+\begin{equation}
+W(\vec x/R) = A_n
+\times\left\{
+\begin{array}{ll}
+  1, & |\vec x|\le R\\
+  0, & |\vec x|>R
+\end{array}
+\right.
+\end{equation}
+with
+\begin{equation}
+  A_n = \frac{\Gamma(n/2+1)}{(R\sqrt\pi)^n}
+\end{equation}
+where $\Gamma(y)$ is the gamma function.  The normalization is simply the
+inverse of the volume of an $n$-sphere of radius $R$.   
+For $n=2$ and $n=3$, the normalizations are the familiar 
+$1/(\pi R^2)$ and $3/(4\pi R^3)$, respectively.
+For the top-hat window function, there is no
+simple expression for the fourier transform for arbitrary $n$. 
+Here we compute three special cases:
+\begin{description}
+  \item{$n=1$}:
+    \begin{eqnarray}
+      \label{tophat1D}
+      A_1 &=& (2R)^{-1}\nonumber\\
+      \widetilde W(\vec k R) &=& A_1\int_{-R}^{R}\dd r e^{ikr} \nonumber\\
+      &=&\frac{\sin(kR)}{kR}
+    \end{eqnarray}
+  \item{$n=2$}:
+    \begin{eqnarray}
+      \label{tophat2D}
+      A_2 &=& (\pi R^2)^{-1}\nonumber\\
+      \widetilde W(\vec k R) &=& A_2\int_0^R r\dd r\int_0^{2\pi} \exp[ikr\cos\phi]\dd\phi\nonumber\\
+      &=& \frac{2}{R^2}\int_0^R r J_0(kr)\dd r \nonumber\\
+      &=& \frac{2J_1(kR)}{kR}
+    \end{eqnarray}
+  \item{$n=3$}: 
+    \begin{eqnarray}
+      \label{tophat3D}
+      A_3 &=& (4\pi R^3/3)^{-1}\nonumber\\
+      \widetilde W(\vec k R) &=& A_3\int_0^Rr^2\dd r\int_0^\pi \sin(\theta)\dd\theta\int_0^{2\pi}\exp[ikr\cos\phi]\dd\phi\nonumber\\
+      &=& \frac{3}{R^3}\int_0^R r^2 J_0(kr)\dd r\nonumber\\
+      &=& _1F_2(\frac{1}{2};\ 1,\frac{5}{2};\ \frac{-k^2R^2}{4})
+    \end{eqnarray}
+\end{description}
+where, $J_n(x)$ are Bessel functions of the first kind (see eqn \ref{bessel_j})
+and the last line is a generalized hypergeometric function, 
+$_nF_m(a_0\cdots a_n;b_0\cdots b_m;x)$.  
