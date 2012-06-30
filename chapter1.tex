@@ -11,7 +11,7 @@ George Lemaitre, Howard Robertson, and Arthur Walker during the
 1920s and 1930s,
 predicts a dynamic universe, where space itself must expand or contract
 under the influence of the energy within it.  The expansion of the universe,
-first observed in the characteristic redshifts of distant galaxies
+first observed via the characteristic redshifts of distant galaxies
 \citep{hubble1929}, was thought to be slowing under the
 gravitational effect of the the matter within it.
 
@@ -52,7 +52,7 @@ microwave background \citep[CMB;][]{WMAP1}, the baryon acoustic oscillations
 campaigns, the last 15 years has seen a surge in precision cosmologial
 measurements.
 The dark energy postulated to explain supernova distances is now known
-to make up over 70\% of the energy density of the universe, and having
+to make up over 70\% of the energy density of the universe, and have
 an equation of state consistent with it being due to
 vacuum energy or a cosmological constant \citep{Kessler2009, WMAP7}.
 Future surveys in many diverse areas of astronomy are seeking to place even
@@ -60,14 +60,14 @@ tighter constraints, allowing greater insight into the nature and evolution
 of dark energy.
 
 With such a wide and diverse field as Cosmology, we can't hope to offer
-a complete introduction of the relevant theory in this document.
-For this purpose there
+a complete introduction of the relevant theory in this work.
+For a more complete discussion, there
 are several very well-written books available; much of the material
 discussed below is taken from formalism developed more fully in these works
 \citep[see, e.g.][]{peebles1993principles, peacock1999cosmological,
   ryden2003cosmology, longair2008galaxy}.
 This chapter will cover the basic physical and mathematical background of
-cosmology.  We will begin with a discussion of the
+the physical study of cosmology.  We will begin with a discussion of the
 FLRW metric (named for Friedmann, Lemaitre,
 Robertson, and Walker) which describes the geometry of space-time.
 Next we'll move on to define the Friedmann Equations, which condense
@@ -75,8 +75,8 @@ the field equations of Einstein's General Relativity to the basic pieces
 needed to describe the dynamics of a globally homogeneous and isotropic
 universe.  We will then briefly discuss the relevant theory behind
 gravitational structure formation within this model.
-This paves the way to relate theory to observations, including cluster counts
-models and Fourier power spectra.
+This paves the way to relate theory to data, using observations
+including cluster counts, correlation functions, and Fourier power spectra.
 Finally, we will develop the equations describing gravitational lensing
 in the weak limit, and show how weak lensing observations can be used
 to gain insight into the parameters of our cosmological model.
@@ -85,7 +85,8 @@ and constrains these theories.
 
 \section{FLRW Metric}
 \label{sec:FLRW}
-The physical study of cosmology is based on the assumption of symmetry:
+The physical study of cosmology in its classical form
+is based on the fundamental assumption of symmetry:
 that the universe on the largest scales is homogeneous and isotropic.
 Homogeneity is an expression of translational symmetry: the appearance of
 the universe does not depend on the location of the observer.  Isotropy
@@ -130,8 +131,9 @@ depends on the curvature, $\kappa$, which may be either $+1$, $-1$, or $0$:
 where $R$ is the radius of curvature today.  Often, the curvature
 sign $\kappa$ and radius $R$ are compactly expressed in a single curvature
 parameter $k$, such that $\kappa = k/|k|$ and $R = |k|^{-1/2}$.
-Robertson and Walker derived this from purely geometric arguments.
 
+The Robertson and Walker derived the above metric
+from purely geometric arguments.
 An interesting aspect of this metric is the scale factor $a(t)$.  A general
 homogeneous and isotropic universe is not necessarily static: it can be
 expanding or contracting with time.  The detailed nature of this expansion
@@ -151,8 +153,9 @@ metric is often referred to as the Friedmann-Robertson-Walker metric
 or the Friedmann-Lemaitre-Robertson-Walker (FLRW) metric.
 The general relativistic constraints on the scale factor $a(t)$
 are compactly expressed by the Friedmann
-equations\footnote{For a GR-based derivation of the Friedmann
-  equations, refer to \citet{peebles1993principles}}:
+equations\footnote{For a  derivation of the Friedmann
+  equations from the field equations of general relativity,
+  refer to \citet{peebles1993principles}}:
 \begin{equation}
   \label{eq:friedmann_1}
   \left(\frac{\dot{a}}{a}\right)^2
@@ -166,8 +169,8 @@ equations\footnote{For a GR-based derivation of the Friedmann
 \end{equation}
 Here the scale factor $a$ is understood to be a function of time, and the
 dots represent derivatives with respect to time.
-By convention, the scale factor at the present day is $a(t_0) = 1$.
-$\varepsilon$ and $P$ are
+By convention, the scale factor at the present day is
+chosen to be $a(t_0) = 1$.  $\varepsilon$ and $P$ are
 the energy density and pressure of the mass-energy in the universe, and
 $\Lambda$ represents the cosmological constant.
 Equations~\ref{eq:friedmann_1} and \ref{eq:friedmann_2} are the first and
@@ -180,200 +183,7 @@ can be easily derived from the first two:
 This expression is equivalent to the first law of thermodynamics
 expressed for the universe as a whole.
 
-\subsection{Equation of State}
-We can simplify these further by writing the pressure $P$ and energy
-density $\varepsilon$ in terms of an equation of state parameter
-\begin{equation}
-  \label{eq:w_EOS}
-  w \equiv P / \varepsilon.
-\end{equation}
-Using this, the solution of eqn.~\ref{eq:friedmann_3} gives
-\begin{equation}
-  \label{eq:w_constant}
-  \varepsilon = \varepsilon_0\, a^{-3(1 + w)}
-\end{equation}
-for $w$ constant in time.
-Here $\varepsilon_0 = \varepsilon(t_0)$ is the energy density today,
-and we have used the standard convention $a(t_0) = 1$.
-Given this parametrization, we can now
-separate the various contributions to the mass-energy of the universe
-and re-write eqn.~\ref{eq:friedmann_1} in terms of the equation of
-state for each:
-\begin{equation}
-  \label{eq:friedmann_1_split}
-  \left(\frac{\dot{a}}{a}\right)^2 = \frac{8\pi G}{3c^2}
-  \sum_w \varepsilon_{w, 0} \,\, a^{-3(1 + w)}
-\end{equation}
-where $\varepsilon_{w,0}$ is the energy density of each species at present.
-The various possible contributions are:
-\begin{description}
-  \item[General Quintessence:] Quintessence is defined as any sort of matter
-    or energy field
-    which can balance the gravitational attraction, leading to accelerated
-    expansion.  By Equation~\ref{eq:friedmann_2}, $\ddot{a}/a > 0$ only
-    if $w < - 1/3$.  We see that the cosmological constant is a form of
-    quintessence.
-  \item[Vacuum energy:] The vacuum energy or cosmological constant has
-    constant energy density.  So by Equation~\ref{eq:friedmann_3},
-    $P = -\varepsilon$ and $w = -1$.
-  \item[Curvature:] Though it may seem strange to think about the curvature
-    of space as having an energy density, in General Relativity the curvature
-    is in some sense a stand-in for gravitational potential energy.  Comparing
-    eqns.~\ref{eq:friedmann_1} and \ref{eq:friedmann_1_split}, the dependence
-    of the curvature term on scale factor means it has an effective equation
-    of state parameter $w = -1/3$.  This makes it clear why curvature does
-    not appear in eqn.~\ref{eq:friedmann_2}: for $w=-1/3$,
-    $\varepsilon + 3P = 0$, and the presence of curvature cannot lead to
-    a change in the expansion rate.
-  \item[Non-relativistic matter:] Non-relativistic matter (often known
-    as {\it cold matter}) has kinetic energy much less than its rest mass;
-    in other words $P \sim kT \ll \varepsilon$.  So non-relativistic matter
-    has $w \ll 1$, and we will often approximate this as simply $w=0$.
-  \item[Relativistic Matter:] Relativistic matter 
-    (known as {\it warm matter}) has energy given by
-    $E^2 = p^2c^2 + m^2 c^4$, where $p$ is the total momentum and $m$ is
-    the rest-mass.  If $pc \ll mc^2$, we have the non-relativistic
-    case above, and find $w \to 0$.  If $pc \gg mc^2$, then in analogy to
-    the radiation case discussed below, we find $w \to 1/3$.
-    For general relativistic matter, this leads to
-    $0 \le w \le 1/3$, with the exact value dependent on the energy density.
-  \item[Radiation:] Radiation has energy per particle
-    proportional to the momentum times the speed of light.  From basic
-    electrodynamics, one can show that for an ideal photon gas, each spatial
-    degree of freedom contributes equally to the energy, so that the pressure
-    is $P = dp/dt = \varepsilon / 3$.  So relativistic mass-energy has
-    $w = 1/3$.
-\end{description}
-
-\subsection{Evolving Equation of State}
-In Equation~\ref{eq:w_constant} we show the solution of
-eqn.~\ref{eq:friedmann_3} for constant $w$.  Another possibility
-(especially applicable for general quintessence models) is that
-the equation of state parameter $w$ evolves with time.
-\begin{equation}
-  \label{eq:w_general}
-  \varepsilon(a) = \varepsilon_0\, \exp\left[-3\int_1^a
-    \frac{1 + w(a^\prime)}{a^\prime}\dd a^\prime\right].
-\end{equation}
-Many parametrizations of the form of $w(a)$ have been proposed.  Perhaps
-the simplest is a model which is simply linear in the redshift $z$
-(see below), i.e.
-\begin{equation}
-  w(z) \approx w_0 + w_1 z.
-\end{equation}
-Though simple, this parametrization is encumbered by the fact that $z$ changes
-very quickly with time, especially in the early universe.  A better 
-choice is the CPL parametrization \citep{Chevallier01, Linder03a}, which is
-of the form
-\begin{equation}
-  w(z) \approx w_0 + w_a\frac{z}{1 + z},
-\end{equation}
-or equivalently
-\begin{equation}
-  w(a) \approx w_0 + w_a(1 - a)
-\end{equation}
-which is linear in the scale factor rather than the redshift.  Adopting this
-parametrization gives
-\begin{equation}
-  \label{eq:w_first_order}
-  \varepsilon(a) = \varepsilon_0\, a^{-3(1 + w_0 + w_a)}e^{-3w_a(1-a)}.
-\end{equation}
-One of the main goals of future cosmological surveys is to put meaningful
-constraints on the time-evolution of dark energy.  This will be discussed
-further in later sections.
-
-\subsection{Hubble Parameter}
-\label{sec:hubble_parameter}
-The first Friedmann equation (eqn.~\ref{eq:friedmann_1}) is commonly expressed
-in terms of dimensionless parameters via the generalization in
-eqn.~\ref{eq:friedmann_1_split}.  If we define the Hubble parameter
-\begin{equation}
-  \label{eq:hubble_parameter}
-  H \equiv \frac{\dot{a}}{a},
-\end{equation}
-and let $H_0$ be the value of the Hubble parameter today, then
-eqn.~\ref{eq:friedmann_1_split} becomes
-\begin{equation}
-  \left(\frac{H}{H_0}\right)^2 = \frac{8\pi G}{3H_0^2c^2}
-  \sum_w \varepsilon_{w, 0} \,\, a^{-3(1 + w)}.
-\end{equation}
-This motivates the definition of the critical density
-\begin{equation}
-  \label{eq:critical_density}
-  \varepsilon_c \equiv \frac{3 H^2 c^2}{8\pi G},
-\end{equation}
-where, to be explicit, both the critical density $\varepsilon_c = \rho_c c^2$
-and hubble parameter $H$ are functions of time.  With this definition,
-and defining the dimensionless density parameter
-\begin{equation}
-  \label{eq:density_parameter}
-  \Omega_w(t) \equiv \varepsilon_w(t) / \varepsilon_c(t)
-\end{equation}
-the Friedmann equation can be compactly expressed
-\begin{equation}
-  \left(\frac{H}{H_0}\right)^2
-  = \sum_w \Omega_{w, 0}\,\, a^{-3(1 + w)},
-\end{equation}
-where the subscript $0$ indicates the value at present.
-Alternatively, we can express the Friedmann equation as simply
-\begin{equation}
-  \sum_w \Omega_w(t) = 1.
-\end{equation}
-Neglecting curvature, if the sum of components $\Omega_w$ is unity, then
-we must have curvature $\Omega_\kappa = 0$.  This shows the meaning of
-the critical density (eqn.~\ref{eq:critical_density}): if the energy density
-in the universe satisfies $\epsilon > \epsilon_c$ (i.e. $\Omega > 1$), then
-$\kappa > 1$ and the universe is {\it spatially closed}.
-If $\epsilon < \epsilon_c$ (i.e. $\Omega < 1$), then $\kappa < 1$ and
-the universe is {\it spatially open}. If the energy density is
-exactly equal to the critical density, then the curvature $\kappa = 0$
-and the universe is {\it flat}.  Constraints from the Cosmic Microwave
-Background show that our universe is flat to a very high precision
-\citep{WMAP7}.  For this reason, in many of the below derivations we will
-assume for simplicity that $\Omega_\kappa = 0$ and $S_\kappa(r) = r$.
-
-For simplicity, we can limit our consideration to the principal contributors
-to the density of the universe:
-dark energy $(\Omega_\Lambda)$, matter $(\Omega_M)$, radiation $(\Omega_R)$,
-and curvature $(\Omega_\kappa)$.  Neglecting other components gives the
-familiar dimensionless form of the Friedmann Equation:
-\begin{equation}
-  \label{eq:friedmann_dimensionless}
-  \left(\frac{H}{H_0}\right)^2
-  = \Omega_{M,0}\,\,a^{-3} + \Omega_{R,0}\,\,a^{-4}
-  + \Omega_{\kappa,0}\,\,a^{-2} + \Omega_\Lambda
-\end{equation}
-
-\section{Redshift and distance measures}
-\label{sec:redshift}
-The FLRW metric of \S\ref{sec:FLRW} and the Friedmann equations of
-\S\ref{sec:friedmann} lay the basic framework for the study of cosmology.
-A large portion of
-the history of $20^{\rm th}$ century cosmology surrounds various
-attempts to understand the relative contributions of matter, radiation,
-curvature, and dark energy to the Hubble parameter, which measures
-the expansion rate of the universe.  The exact nature of these various
-contributions has far-reaching consequences,
-determining how, when, and where galaxies, clusters and other structure
-form and evolve; determining the age of the universe and the character of
-its evolution through time; determining cosmic abundances and 
-the initial conditions of stellar evolution
-and planet formation; and determining the nature of the universe's beginning,
-and the possibility of its eventual end.
-Observational measures of these consequences allow constraints of the
-properties of the various $\Omega_w(z)$.
-
-Eqn.~\ref{eq:friedmann_dimensionless} is simply a first-order differential
-equation in $a$: For various choices of the density parameters $\Omega_w$, it
-can be solved to yield a curve describing the scale factor $a$ as a function
-of time $t$.  A straightforward path to placing
-observational constraints on the densities of
-various components, then, would require simply measuring the value of $a$ at
-several times $t$ and performing a multidimensional fit to these observed
-data points.  But how can the scale factor $a$ be measured?
-Conveniently, the nature of light allows straightforward determination
-of the scale factor at the time that light was emitted.  
-
+\subsection{Time Dialation and Redshift}
 General Relativity tells us
 that light always travels along null geodesics, that is, the space time
 interval in eqn.~\ref{eq:FLRW_metric} satisfies $ds = 0$.  For a light
@@ -401,7 +211,12 @@ two expressions gives for small $\Delta t$:
   \label{eq:time_dialation}
   \Delta t_o = \Delta t_e \frac{a(t_o)}{a(t_e)}.
 \end{equation}
-If an atom emits light with a period 
+In an expanding universe, the observed time interval is longer than
+the time interval in the emitted frame.  This {\it time dialation} is
+a general feature of space-time governed by Einstein's field equations.
+
+The time dialation has an observable effect on emitted light:
+if an atom emits light with a period 
 $P_e = \Delta t_e = \lambda_e / c$, then the observed wavelength $\lambda_o$
 and the emitted wavelength $\lambda_e$ are related by
 \begin{equation}
@@ -420,21 +235,217 @@ Because we define $a(t_o) = 1$, we have
 Thus the redshift of a light source gives us a direct measurement of the
 scale factor at the time that photon was emitted.  As such, it can be
 substituted for $a$ as the dependent variable in the above equations
-with the correct change-of-variables; we will switch between these two
+with a suitable change-of-variables; we will switch between these two
 conventions depending on which is convenient.
 
-In order to constrain parameters in
-eqn.~\ref{eq:friedmann_dimensionless}, we must be able to measure
-information related to the time $t_e$ of emission.  This allows us to
-constrain $a$ as a function of $t$, or the equivalent quantity in some
-other parametrization.  To enable this, we'll introduce the concept
-of distances in Cosmology.
+\subsection{Equation of State}
+The Friedmann equations can be further simplified
+by relating the pressure $P$ and energy
+density $\varepsilon$ in terms of a linear equation of state parameter
+\begin{equation}
+  \label{eq:w_EOS}
+  w \equiv P / \varepsilon.
+\end{equation}
+Using this, the solution of eqn.~\ref{eq:friedmann_3} gives
+\begin{equation}
+  \label{eq:w_constant}
+  \varepsilon = \varepsilon_0\, a^{-3(1 + w)}
+\end{equation}
+for $w$ constant in time.
+Here $\varepsilon_0 = \varepsilon(t_0)$ is the energy density today,
+and we have used the standard convention $a(t_0) = 1$.
+Given this parametrization, we can now
+separate the various contributions to the mass-energy of the universe
+and re-write eqn.~\ref{eq:friedmann_1} in terms of the equation of
+state for each:
+\begin{equation}
+  \label{eq:friedmann_1_split}
+  \left(\frac{\dot{a}}{a}\right)^2 = \frac{8\pi G}{3c^2}
+  \sum_w \varepsilon_{w, 0} \,\, a^{-3(1 + w)}
+\end{equation}
+where $\varepsilon_{w,0}$ is the energy density of each species at present.
+The various possible contributions are:
+\begin{description}
+  \item[Vacuum energy/Cosmological Constant:]
+    The vacuum energy or cosmological constant $\Lambda$ has
+    energy density which does not change with time.
+    So by Equation~\ref{eq:friedmann_3}, $P = -\varepsilon$ and $w = -1$.
+  \item[General Quintessence:] Quintessence is defined as any sort of matter
+    or energy field
+    which can balance the gravitational attraction, leading to accelerated
+    expansion.  By Equation~\ref{eq:friedmann_2}, $\ddot{a}/a > 0$ only
+    if $w < - 1/3$.  We see that the cosmological constant is a form of
+    quintessence.
+  \item[Curvature:] Though it may seem strange to think about the curvature
+    of space as having an energy density, in General Relativity the curvature
+    is in some sense a stand-in for gravitational potential energy.  Comparing
+    eqns.~\ref{eq:friedmann_1} and \ref{eq:friedmann_1_split}, the dependence
+    of the curvature term on scale factor $k \propto a^{-2}$
+    means it has an effective equation
+    of state parameter $w = -1/3$.  This makes it clear why curvature does
+    not appear in the second Friedmann equation (eqn.~\ref{eq:friedmann_2}):
+    for $w=-1/3$, $\varepsilon + 3P = 0$, and the presence of curvature
+    cannot lead to a change in the expansion rate.
+  \item[Non-relativistic matter:] Non-relativistic matter (often known
+    as {\it cold matter}) has kinetic energy much less than its rest mass;
+    in other words $P \sim kT \ll \varepsilon$.  This corresponds to
+    $w \ll 1$, and we will often approximate this as simply $w=0$.
+  \item[Relativistic Matter:] Relativistic matter 
+    (known as {\it warm matter} or {\it hot matter}) has energy given by
+    $E^2 = p^2c^2 + m^2 c^4$, where $p$ is the total momentum and $m$ is
+    the rest-mass.  If $pc \ll mc^2$, we have the non-relativistic
+    case above, and find $w \to 0$.  If $pc \gg mc^2$, then in analogy to
+    the radiation case discussed below, we find $w \to 1/3$.
+    For general relativistic matter, this leads to
+    $0 \le w \le 1/3$, with the exact value dependent on the energy density.
+  \item[Radiation:] Radiation has energy per particle
+    proportional to the momentum times the speed of light.  From basic
+    electrodynamics, one can show that for an ideal photon gas, each spatial
+    degree of freedom contributes equally to the energy, so that the pressure
+    is $P = dp/dt = \varepsilon / 3$.  So relativistic mass-energy has
+    $w = 1/3$.
+\end{description}
+
+\subsection{Evolving Equation of State}
+In Equation~\ref{eq:w_constant} we show the solution of
+eqn.~\ref{eq:friedmann_3} for constant $w$.  Another possibility
+(especially applicable for general quintessence models) is that
+the equation of state parameter $w$ evolves with time.
+\begin{equation}
+  \label{eq:w_general}
+  \varepsilon(a) = \varepsilon_0\, \exp\left[-3\int_1^a
+    \frac{1 + w(a^\prime)}{a^\prime}\dd a^\prime\right].
+\end{equation}
+Many parametrizations of the form of $w(a)$ have been proposed.  Perhaps
+the simplest is a model which is simply linear in the redshift $z$, i.e.
+\begin{equation}
+  w(z) \approx w_0 + w_1 z.
+\end{equation}
+Though simple, this parametrization is encumbered by the fact that $z$ changes
+very quickly with time, especially in the early universe.  A better 
+choice is the CPL parametrization \citep{Chevallier01, Linder03a}, which is
+of the form
+\begin{equation}
+  w(z) \approx w_0 + w_a\frac{z}{1 + z},
+\end{equation}
+or equivalently
+\begin{equation}
+  w(a) \approx w_0 + w_a(1 - a)
+\end{equation}
+which is linear in the scale factor rather than the redshift.  Adopting this
+parametrization gives
+\begin{equation}
+  \label{eq:w_first_order}
+  \varepsilon(a) = \varepsilon_0\, a^{-3(1 + w_0 + w_a)}e^{-3w_a(1-a)}.
+\end{equation}
+One of the main goals of future cosmological surveys is to put meaningful
+constraints on the time-evolution of dark energy, often by placing constraints
+on $w_1$ or $w_a$.  This will be discussed further in later sections.
+
+\subsection{Hubble Parameter}
+\label{sec:hubble_parameter}
+The first Friedmann equation (eqn.~\ref{eq:friedmann_1}) is commonly expressed
+in terms of dimensionless parameters via the generalization in
+eqn.~\ref{eq:friedmann_1_split}.  If we define the Hubble parameter
+\begin{equation}
+  \label{eq:hubble_parameter}
+  H \equiv \frac{\dot{a}}{a},
+\end{equation}
+and let $H_0$ be the value of the Hubble parameter today, then
+eqn.~\ref{eq:friedmann_1_split} becomes
+\begin{equation}
+  \left(\frac{H}{H_0}\right)^2 = \frac{8\pi G}{3H_0^2c^2}
+  \sum_w \varepsilon_{w, 0} \,\, a^{-3(1 + w)}.
+\end{equation}
+The constant in front of the sum has dimensions of inverse energy density:
+this motivates the definition of the critical density
+\begin{equation}
+  \label{eq:critical_density}
+  \varepsilon_c \equiv \frac{\rho_c}{c^2} \equiv \frac{3 H^2 c^2}{8\pi G},
+\end{equation}
+where, to be explicit, both the critical densities $\varepsilon_c$,
+$\rho_c$,
+and Hubble parameter $H$ are functions of time.
+With this definition, and defining the dimensionless density parameter
+\begin{equation}
+  \label{eq:density_parameter}
+  \Omega_w(t) \equiv \varepsilon_w(t) / \varepsilon_c(t)
+\end{equation}
+the Friedmann equation can be compactly expressed
+\begin{equation}
+  \left(\frac{H}{H_0}\right)^2
+  = \sum_w \Omega_{w, 0}\,\, a^{-3(1 + w)},
+\end{equation}
+where the subscript $0$ indicates the value at present.
+Alternatively, we can express the Friedmann equation as simply
+\begin{equation}
+  \sum_w \Omega_w(t) = 1.
+\end{equation}
+Neglecting curvature, if the sum of components $\Omega_w$ is unity, then
+we must have curvature $\Omega_\kappa = 0$.  This shows the meaning of
+the critical density (eqn.~\ref{eq:critical_density}): if the energy density
+in the universe satisfies $\epsilon > \epsilon_c$ (i.e. $\Omega > 1$), then
+$\kappa = +1$ and the universe is {\it spatially closed}.
+If $\epsilon < \epsilon_c$ (i.e. $\Omega < 1$), then $\kappa = -1$ and
+the universe is {\it spatially open}. If the energy density is
+exactly equal to the critical density, then the curvature $\kappa = 0$
+and the universe is {\it flat}.  Constraints from the Cosmic Microwave
+Background show that our universe is flat to a very high precision
+\citep{WMAP7}.  For this reason, in many of the below derivations we will
+assume for simplicity that $\Omega_\kappa = 0$ and $S_\kappa(r) = r$.
+
+For simplicity, we can limit our consideration to the principal contributors
+to the density of the universe:
+dark energy $(\Omega_\Lambda)$, matter $(\Omega_M)$, radiation $(\Omega_R)$,
+and curvature $(\Omega_\kappa)$.  Neglecting other components gives the
+familiar dimensionless form of the Friedmann Equation:
+\begin{equation}
+  \label{eq:friedmann_dimensionless}
+  \left(\frac{H}{H_0}\right)^2
+  = \Omega_{M,0}\,\,a^{-3} + \Omega_{R,0}\,\,a^{-4}
+  + \Omega_{\kappa,0}\,\,a^{-2} + \Omega_\Lambda
+\end{equation}
+
+\section{Cosmological Distance Measures}
+\label{sec:distances}
+The FLRW metric of \S\ref{sec:FLRW} and the Friedmann equations of
+\S\ref{sec:friedmann} lay the basic framework for the study of cosmology.
+A large portion of
+the history of $20^{\rm th}$ century cosmology surrounds various
+attempts to understand the relative contributions of matter, radiation,
+curvature, and dark energy to the Hubble parameter, which measures
+the expansion rate of the universe.  The exact nature of these various
+contributions has far-reaching consequences,
+determining how, when, and where galaxies, clusters and other structure
+form and evolve; determining the age of the universe and the character of
+its evolution through time; determining cosmic abundances and 
+the initial conditions of stellar evolution
+and planet formation; and determining the nature of the universe's beginning,
+and the possibility of its eventual end.
+Observational measures of these consequences allow constraints of the
+properties of the various $\Omega_w(z)$.
+
+Eqn.~\ref{eq:friedmann_dimensionless} is simply a first-order differential
+equation in $a$: For various choices of the density parameters $\Omega_w$, it
+can be solved to yield a curve describing the scale factor $a$ as a function
+of time $t$.  A straightforward route to placing
+observational constraints on the densities of
+various components, then, would require simply measuring the value of $a$ at
+several times $t$ and performing a multidimensional fit to these observed
+data points.
+
+As discussed above in \S\ref{sec:redshift}, the redshift of
+light offers a direct measurement of the scale factor at a given time.
+In order to use eqn.~\ref{eq:friedmann_dimensionless} to gain information
+about the cosmological densities $\Omega_w$, then, we must be able to
+observe some property related to the time $t_e$ of emission of these photons.
+To enable this, we'll introduce the concept of distances in Cosmology.
 
 Distance measures in cosmology are a potentially confusing subject.  An
 excellent resource describing these can be found in \citet{hogg1999distance}.
-We'll briefly define four relevant distance measures: the comoving distance,
-the proper distance, the angular diameter distance, and the luminosity
-distance.
+Here we'll briefly define four relevant distance measures: the comoving
+distance, the proper distance, the angular diameter distance, and the
+luminosity distance.
 
 \begin{description}
   \item[Comoving Distance:] The comoving distance is the distance $r$ which
@@ -446,8 +457,8 @@ distance.
       \label{eq:comoving_distance}
       r(z) = c\,\int_0^z \frac{dz^\prime}{H(z^\prime)}.
     \end{equation}
-  \item[Proper Distance:] The proper distance is the simultaneous separation
-    $d_p(z)$ between two objects.  From the FLRW metric with time interval
+  \item[Proper Distance:] The proper distance $d_p(z)$ is the simultaneous
+    separation between two objects.  From the FLRW metric with time interval
     $dt=0$, one can show that the proper distance is given by
     \begin{equation}
       \label{eq:proper_distance}
@@ -463,9 +474,9 @@ distance.
       d_A(z) = \frac{S_\kappa(r)}{1 + z}.
     \end{equation}
   \item[Luminosity Distance:] The luminosity distance $d_L(z)$ relates the
-    emitted flux to the observed flux.  Taking into account the angular
-    dilution of the flux, as well as the redshifted energy of each photon
-    and time-delay of photon arrival leads to
+    emitted flux of a source to the observed flux.  Taking into account
+    the angular dilution of the flux, as well as the redshifted energy of
+    each photon and time-delay of photon arrival leads to
     \begin{eqnarray}
       \label{eq:luminosity_distance}
       d_L(z) &=& (1 + z)^2\,d_A(z) \nonumber\\
@@ -480,7 +491,7 @@ parameters $\Omega_w$ which fit the data.
 
 \section{Standard Candles: Cosmology via Luminosity Distance}
 \label{sec:std_candles}
-``Standard candles'' have been one of the primary methods for measuring
+{\it Standard candles} have been one of the primary methods for measuring
 cosmological parameters.  The earliest measure, from Edwin Hubble,
 used Cepheid-type variable stars which have an absolute magnitude correlated
 with their pulsation period \citep{hubble1929}.
@@ -495,16 +506,15 @@ a particular solution of
 Einstein's equations which is a special case of the FLRW metric and
 Friedmann equations (i.e., that with $\Omega_M = 0$, $\Omega_\kappa = 0$,
 and $\Omega_\Lambda = 1$).}
-Using our formalism above, we can show that for
-nearby objects (such that $H(z) \approx H_0$),
-the change in proper distance is approximated by
+Using our formalism above, we can show that the rate of change of the
+proper distance to any object is
 \begin{eqnarray}
   \frac{d}{dt}d_p(t) &=& H(t)\,\, d_p(t) \nonumber\\
-                     &\approx& H_0\,\, d_L(t),
+                     &\approx& H_0\,\, d_L(t) \left[1 + \mathcal{O}(z)\right],
 \end{eqnarray}
-where the second line holds up to corrections of order $z$.  Because
-Hubble used a sample with $z <\sim 0.005$, the linear fit is well within
-observed errors.
+where in the second line we have separated corrections of order $z$.  Because
+Hubble used a sample with $z <\sim 0.005$, the zeroth-order
+linear fit is well within observed errors.
 Thus Hubble's observations can be seen as a first attempt at constraining
 cosmological parameters in Equation~\ref{eq:friedmann_dimensionless} through
 the simultaneous measurement of redshift and luminosity distance.
@@ -514,14 +524,15 @@ confirm and improve upon his discovery and use it to derive tighter
 constraints on the slope $H_0$ of the Hubble relation.  A large majority
 of these have
 been based on standard or standardizable candles.  These standardizable
-candles are based on the period-luminosity relationship of Cepheid
+candles have been based on several empirical relations, including
+the period-luminosity relationship of Cepheid
 variables \citep{Leavitt1912}; on the Tully-Fisher relationship between
 brightness and rotation speed of spiral galaxies \citep{Tully77}; on
 the Faber-Jackson/Fundamental Plane relationship between brightness,
 velocity, and surface brightness for elliptical galaxies
 \citep{Faber76, Djorgovski87}; and on the relationship between luminosity
 and decay timescale for type Ia supernovae \citep{Philips93}.  Due to
-their extreme intrinsic brightness and minimal intrinsic scatter in
+their extreme intrinsic brightness and minimal scatter in
 calibrated luminosity, type Ia supernovae have become a very important
 tool for determining cosmological parameters, but they cannot be used
 alone: independent measures are required to calibrate the distance
@@ -611,7 +622,7 @@ coordinates \citep[for derivation see section 11.2 of][]{longair2008galaxy}.
 We can gain insight by expressing this in terms of
 wave-like solutions of the denstity contrast
 $\delta_k(\myvec{r}, t) \propto \exp[i(\myvec{k}\cdot\myvec{r} - \omega t)]$,
-where $\myvec{k}$ is the vector of spatial wave-numbers, and $\myvec{\omega}$
+where $\myvec{k}$ is the vector of spatial wave-numbers, and $\omega$
 is the oscillation frequency.  In terms of these Fourier modes,
 eqn.~\ref{eq:delta_evolution} becomes
 \begin{equation}
