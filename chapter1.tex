@@ -633,13 +633,13 @@ This differential equation describes an exponentially growing (or decaying)
 density fluctuation, with a ``drag'' term governed by the Hubble parameter
 $H(z)$.  The rate of growth of perturbations $\delta_k$ depends
 on the balance between the gravitational force through $4\pi G\rho_b$ and the
-pressure through $k^2c_s^2$.  The scale where these forces balance
-is called the Jeans length:
+pressure through $k^2c_s^2$.  The scale $\lambda_J = 2\pi/k_J$
+where these forces balance is called the Jeans length:
 \begin{equation}
   \label{eq:jeans_length}
   \lambda_J \equiv c_s \sqrt{\frac{\pi}{G\rho_b}}.
 \end{equation}
-This is the approximate scale above which pressure cannot halt gravitational
+This is the scale above which pressure cannot halt gravitational
 collapse.  The length is directly proportional to the sound speed
 $c_s = \sqrt{\partial P/\partial \rho}$ and so depends on the equation of
 state of the total energy in the universe,
@@ -656,7 +656,7 @@ In particular, we can consider two relevant regimes: radiation dominance
 and matter dominance.  In the regime where radiation dominates the energy
 density, the equation of state $w=1/3$ leads to $c_s^2 = c^2/3$.  In a flat
 universe $\rho_b$ is the critical density (eqn.~\ref{eq:critical_density})
-and the Jeans length can be expressed
+and the Jeans length for a radiation dominated universe can be expressed
 \begin{equation}
   \label{eq:jeans_radiation}
   \lambda_J^{(R)} = \frac{\pi c \sqrt{8}}{3 H}.
@@ -723,7 +723,9 @@ Friedmann equation gives $H(t) = 2 / (3t)$, leading to solutions
   D(t) = A_1 t^{2/3} + A_2 t^{-1}.
 \end{equation}
 The first term quickly dominates the second, and structure grows as
-$\delta \propto t^{2/3} \propto a$.
+$\delta \propto t^{2/3} \propto a$, where the last proportionality comes
+from solving eqn.~\ref{eq:friedmann_dimensionless} for a matter dominated
+universe.
 
 In general, the growth factor for a flat universe is
 \begin{equation}
@@ -795,11 +797,12 @@ be suppressed by radiation pressure.  At $a > a_{rm}$, the Jeans length
 shrinks by a factor of about $10^5$, and modes larger than $\lambda_J^{M}$
 resume growth with $\delta \propto a$.
 
-\comment{add a picture of this here?}
+%\comment{add a picture of this here?}
 
 Thus, density modes with $k < k_{rm}$ are suppressed by a factor of
 $(a_k / a_{rm})^2 \propto k^{-2}$.  This motivates use of the power
-spectrum of density fluctuations:
+spectrum of density fluctuations (for details see
+Appendix~\ref{app:RandomFields}):
 \begin{equation}
   \label{eq:power_spectrum}
   P_k \equiv \langle|\delta_k|^2\rangle,
@@ -824,7 +827,7 @@ primordial fluctuations, and is dependent on the cosmological model.
 This normalization is typically expressed in terms of the parameter
 $\sigma_8$, which measures the magnitude of average fluctuations within
 a sphere of radius 8 Mpc.  For a more thorough discussion of power spectra
-and normalization, see Appendix~\ref{app:RandomFields}.
+and the $\sigma_8$ normalization, see Appendix~\ref{app:RandomFields}.
 
 \subsection{Putting it all together}
 The sum of the above discussion paints a general picture of the growth of
@@ -840,7 +843,8 @@ observable consequences:
     $D(z)$ (eqn.~\ref{eq:linear_growth}) and its nonlinear extentions,
     which also depend on the relative cosmic densities as a function of $z$.
   \item The power spectrum of density fluctuations (eq.~\ref{eq:power_spectrum})
-    displays a length scale which is closely related to the horizon distance
+    has a turn-off at
+    a length scale which is closely related to the horizon distance
     at the epoch of radiation-matter equality.  This scale acts as a standard
     ruler, such that the angular diameter distance can be estimated at a
     particular value of $z$, leading to cosmological constraints through the
@@ -860,32 +864,57 @@ discuss the behavior of perturbations of order $\delta$, while ignoring
 $\delta^2$).  This is sufficient for small $\delta$, but not for when
 $\delta$ is much larger than 1.  At small scales, structure is well beyond
 the regime where this approximation holds: for example, $\delta$ for our
-galaxy is approximately $10^5$!  So nonlinear corrections are essential when
-deriving constraints from clustering.  Even moderate-sized galaxy clusters
+galaxy is approximately $10^5$!  Even moderate-sized galaxy clusters
 (i.e. a hypothetical cluster 2Mpc across, containing 50 Milky-way
-sized galaxies) has $\delta$ of order $10^2-10^3$.
+sized galaxies) has $\delta$ of order $10^2-10^3$.  Clearly, nonlinear
+effects must be taken into account when measuring clustering.  These
+effects can be estimated several ways; one of the more successful is the
+halo model of \citet{Smith03}, which is calibrated using semi-analytic
+results from N-body simulations.  Nonlinear effects lead to a significant
+boosting of power on small scales.
 
-Secondly, the structure we are referring to here is that made up by the bulk
+A second caveat is that
+the structure we are referring to here is that made up by the bulk
 of the matter in the universe: collisionless dark matter.  Dark matter,
 being non-luminous, cannot be obeserved directly through emitted light.
 The power spectrum of luminous matter can be theoretically mapped to the
-underlying mass power spectrum, but this mapping introduces systematic
-errors which can be difficult to correct for.
+underlying mass power spectrum, but this mapping requires uncertain
+corrections which introduces systematic errors which are difficult to
+calibrate.
 
+With careful accounting for the above two caveats, observations of the spatial
+distribution of luminous matter has led to interesting cosmological results.
+One of the most important surveys in this regard has been the Sloan Digital
+Sky Survey (SDSS), which measured spectra of nearly a million sources across
+over 8000 square degrees, leading to accurate photometric redshifts of
+hundreds of thousands of galaxies across over a third of the sky.
+Measurements of the angular power of these galaxies have been successfully
+used to constrain cosmology both from the nonlinear power spectrum
+\citep{Tegmark06} and the Baryon Acoustic Oscillation (BAO) signal
+\citep{Eisenstein05}.
+
+The BAO signal is another cosmological constraint based on the idea of a
+standard ruler.  In the above discussion, we mention the role of pressure
+in suppressing the growth of structure before radiation and matter are
+decoupled.  This suppression by pressure leads to acoustic oscillations
+in the plasma of the radiation and baryons.  When the radiation and matter
+decouples, these oscillations freeze-out and form the seeds of baryonic
+structure growth.  The remnants of this freeze-out can be observed in
+baryonic structure today, and the characteristic length scale has been
+used to place tight constraints on cosmological parameters
+\citep{Eisenstein05}.
+
+%\comment{ Should we also briefly mention WMAP anisotropies and the BAO signal?
+%  They're essentially very accurate standard rulers at different epochs.
+%  But I don't want to digress too much...}
+
+\section{Gravitational Lensing}
+\label{sec:gravitational_lensing}
 In order to circumvent the astrophysical bias
 involved with mapping luminous matter to
 the underlying dark matter, it would be preferable to observe the dark
 matter directly.  This is where weak gravitational lensing can be a
 useful tool.
-
-\comment{ Mention measurements of LRG power spectra \& cosmic parameter estimates.}
-
-\comment{ Should we also briefly mention WMAP anisotropies and the BAO signal?
-  They're essentially very accurate standard rulers at different epochs.
-  But I don't want to digress too much...}
-
-\section{Gravitational Lensing}
-\label{sec:gravitational_lensing}
 Einstein's theory of General Relativity predicts that photons will be deflected
 in the presence of a gravitational field.  Under certain circumstances, this
 deflection can be detected and used to learn about the nature of the
