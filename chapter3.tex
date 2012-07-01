@@ -3,7 +3,7 @@
 The material in this chapter is adapted from \citet{Vanderplas2011}.
 In it, we present a new method for constructing three-dimensional
 mass maps from gravitational lensing shear data.  We solve the lensing
-inversion problem using truncation of singular values 
+inversion problem using truncation of singular values
 (within the context of generalized
 least squares estimation) without a priori assumptions about the
 statistical nature of the signal.   This singular value framework 
@@ -81,8 +81,8 @@ and radial Wiener filters.
 For tomographic weak lensing, we are concerned with three quantities:  the 
 complex-valued shear $\gamma(\vec\theta,z)$, the real-valued convergence
 $\kappa(\vec\theta,z)$, and the dimensionless density parameter 
-$\delta(\vec\theta,z)$.  
-The relationship between $\gamma$ and $\kappa$ is given
+$\delta(\vec\theta,z)$.  As discussed in \S\ref{sec:weak_lensing_intro},
+the relationship between $\gamma$ and $\kappa$ is given
 by a convolution over all angles $\vec\theta$, and the density $\delta$ is
 related to $\kappa$ by a line-of-sight integral over the lensing efficiency
 function, $W(z,z_s)$.  The key observation is that in the weak lensing regime,
@@ -93,7 +93,11 @@ which can in principle be solved using standard matrix methods.
 \subsection{Linear Mapping}
 \label{LinearMapping}
 
-To achieve this, we create a common pixel binning of 
+Details of the weak lensing formalism are covered in
+\S\ref{sec:lens_mapping_intro}.  Here we'll briefly review the
+most relevant pieces.
+To compute 3D mass maps with weak lensing, we begin by
+creating a common pixel binning of the observed field of 
 $N_x$ by $N_y$ equally sized square pixels
 of angular width $\Delta\theta_x = \Delta\theta_y$.  
 Within each of the $N_x N_y \equiv N_{xy}$ individual
@@ -163,13 +167,14 @@ in terms of the components of the SVD:
   \mymat{\mathcal{N}_{\delta\delta}} = 
   \mymat{V}\mymat{\Sigma}^{-2}\mymat{V}^\dagger.
 \end{equation}
+This makes clear the connection with KL, as discussed in Chapter 2.
 The columns of the matrix $\mymat{V}$ are eigenvectors of
 $\mymat{\mathcal{N}_{\delta\delta}}$, with eigenvalues $\sigma_i^{-2}$.
 When many small singular values are present, the noise will dominate
 the reconstruction, and it is necessary to 
 use a more sophisticated estimator to recover the signal.
 
-\subsection{SVD Filtering}
+\subsection{KL Filtering}
 \label{sing_val_formalism}
 One strategy that can be used to reduce this noise is to add a penalty function
 to the $\chi^2$ that will suppress the large spikes in signal.  This
@@ -205,9 +210,10 @@ eliminates high-noise orthogonal components in $\myvec{\delta}$
 (cf.\ equation~\ref{Ndd_decomp}), leading to an estimator which is much
 more robust to noise in $\myvec{\gamma}$.
 
-SVDs are often used in the context of Principal Component Analysis, 
+SVDs are often used in the context of KL or Principal Component Analysis, 
 where the square of the singular value is equal to the variance described 
-by the corresponding principal component.  The variance can be
+by the corresponding principal component (see
+\S\ref{sec:KL_practice}).  The variance can be
 thought of, roughly, as a measure of the information contributed by the
 vector to the matrix in question.  It will be useful for
 us to think about SVD truncation in this way.  To that end, 

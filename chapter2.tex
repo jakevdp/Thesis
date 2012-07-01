@@ -17,7 +17,8 @@ in a broad range of astronomical applications, from, e.g.~studies of
 correlations in observed properties of galaxy photometry \citep{Efstathiou84}
 and galaxy and quasar spectra \citep{Connolly95,Connolly99,Yip04a,Yip04b},
 to  analysis of the spatial distribution of galaxies 
-\citep{Vogeley96, Matsubara00, Pope04}, to characterization of the 
+\citep{Vogeley96, Matsubara00, Szalay03, Pope04, Tegmark06},
+to characterization of the 
 expected errors in weak lensing surveys \citep{Kilbinger06, Munshi06}.
 In this chapter, we will develop the formalism of KL which will form
 the basis of the applications in the subsequent chapters.
@@ -41,7 +42,7 @@ Single elements of a given
 vector or matrix are given with subscripts: $x_i$ is the $i^{\rm th}$
 element of the vector $\myvec{x}$, and $X_{ij}$ is the element in the
 $i^{\rm th}$ row and $j^{\rm th}$ column of the matrix $\mymat{X}$.
-The column vector making up the $j^{\rm th}$ row of $\mymat{X}$ is
+The vector making up the $j^{\rm th}$ column of $\mymat{X}$ is
 indicated by $\myvec{x}^{(j)}$.  Note then, that by this convention,
 the $(i, j)$ component of matrix $\mymat{X}$ can be equivalently expressed
 $X_{ij}$ or $x_i^{(j)}$.
@@ -65,7 +66,7 @@ Using these rules, we can define the magnitude of a vector
 KL analysis is simply a basis function decomposition, where the basis
 functions are derived based on the variance and covariance properties
 of a class of functions.  We'll start by describing what is perhaps the
-best-known basis function decomposition, the Fourier Series.
+best-known basis function decomposition, the Fourier series.
 We start here because it's a familiar concept which generalizes well to
 the fundamental ideas of KL analysis.
 
@@ -231,7 +232,7 @@ random process is given by
 For simplicity, we'll assume that the random process $F_t$ is {\it
 centered}; that is $E[F_t] = 0$.  A general random process can be
 centered by subtracting the expectation value for each $t$.
-A random process like $F_t$ can be characterized
+A centered random process $F_t$ can be characterized
 by its covariance function, which is defined as
 \begin{eqnarray}
   \label{eq:corrfunc_def}
@@ -312,7 +313,8 @@ basis for the space of functions represented by the random process $F_t$.
 In general, the eigenfunctions
 also satisfy the completeness relation (see eqn.~\ref{eq:completeness}).
 The proof of the completeness of eigenfunctions for a symmetric kernel
-$\mathcal{C}_F(t, t^\prime)$ can be found in, e.g.~\citet{Courant1989}.
+$\mathcal{C}_F(t, t^\prime)$ is rather involved, and
+can be found in, e.g.~\citet{Courant1989}.
 
 Let's now consider the expansion of the random process $F_t$ onto the
 eigenvectors $e_k(t)$.  Analogously to the Fourier case discussed
@@ -458,7 +460,7 @@ Because of this, throughout this work we will follow this convention when
 ordering the eigenvalues in and KL decomposition.
 
 \subsection{KL in the presence of noise}
-\label{sec:whitening}
+\label{sec:whitening_chp2}
 In practice, the observed random field $F_t$ is composed of the sum of
 a signal $S_t$ and noise $N_t$.  We'll continue to assume that both of these
 are centered.  The covariance matrix then becomes
@@ -503,6 +505,7 @@ from the whitened covariance $\mathcal{C}_F^{(W)}(k, k^\prime)$ will have
 eigenvalues which represent the signal-to-noise in each mode.
 
 \subsection{\KL: theory to practice}
+\label{sec:KL_practice}
 The abstract formalism presented above is interesting in itself, but one
 might wonder what practical advantages can be gained from this discussion.
 In practice, we don't deal with an abstract stochastic process $F_t$, but
@@ -518,7 +521,7 @@ $f^{(i)}(\lambda)$ over some defined domain $\lambda \in [a, b]$.
 In practice, we measure these spectra at a finite set of wavelengths
 $\myvec{\lambda}^T = [\lambda_1, \lambda_2 \cdots \lambda_M]$ so that
 our observations $\myvec{f}^{(i)}$ become $M$-dimensional vectors.  For
-convenience, we'll store these spectra in a $M \times N$ matrix
+convenience, we'll store these spectra in a $N \times M$ matrix
 $\mymat{F} = [\myvec{f}^{(1)}, \myvec{f}^{(2)} \cdots \myvec{f}^{(N)}]^T$,
 where each row of the matrix represents one spectrum.
 These series of spectra $\mymat{F}$ 
@@ -583,7 +586,7 @@ according to the rule in \S\ref{sec:partial_recons} takes care of
 this uncertainty.
 
 The columns of $\mymat{V}$ are the {\it eigenvectors}, and are the discrete
-representation of the eigenfunctions $e^{(i)}(\lambda)$.  These eigenfunctions
+representation of the eigenfunctions $e^{(i)}(\lambda)$.  These eigenvectors
 satisfy all the properties of the KL bases discussed above: they diagonalize
 the sample correlation matrix, they provide the best possible low-rank
 linear approximation to any spectrum from the sample, and in the presence of
@@ -609,8 +612,9 @@ Along with discrete data samples, another challenge when applying KL to
 real data is the presence of missing data: given a KL basis, how can
 one derive the projected coefficients when data are missing?
 Note that in this section we'll assume that the KL basis has been
-obtained independently.  For a discussion of how to approximate the
-correlation matrix from data with missing values, refer to \citet{Yip04a}.
+obtained independently.  It is also possible to derive a KL eigenbasis
+from incomplete data using an iterative approach:
+see, e.g.~\citet{Connolly99, Yip04a}.
 
 To begin, we'll assume that we have
 an observed object represented by the $K$-dimensional vector 
@@ -690,8 +694,8 @@ Setting the derivative to zero and combining terms gives
 If there are no areas of missing data, then $\mymat{W} = \mymat{I}$ and we
 simply recover $a_i = \myvec{v_i}^T\myvec{x}$, our standard expression
 for finding the KL coefficients with no missing data.
-Because the inner-product of
-$\myvec{v^{(i)}}$ and $\myvec{v^{(j)}}$ is modulated by $\mymat{W}$, however,
+In the general case, however, because the inner-product of
+$\myvec{v^{(i)}}$ and $\myvec{v^{(j)}}$ is modulated by $\mymat{W}$,
 there is no delta function to collapse the sum.
 
 We can simplify this notation by defining the correlation matrix of the
@@ -720,7 +724,7 @@ If some of the diagonal entries in $\mymat{W}$ are zero, then the
 correlation matrix for the full set of $K$ eigenvectors is rank-deficient,
 and cannot be inverted as required for eq.~\ref{eq:a_truncated}.  For this
 reason, it is essential to use the truncated eigenvectors $\mymat{V}_{(N)}$,
-with $N \le rank(\mymat{W})$, the rank of the matrix $\mymat{W}$.  For the
+with $N \le {\rm rank}(\mymat{W})$, the rank of the matrix $\mymat{W}$.  For the
 case here where $\mymat{W}$ is a diagonal matrix consisting of zeros and
 ones, the rank is equivalent to the trace, or the sum of nonzero diagonal
 terms.
@@ -740,8 +744,8 @@ associated with the observed vector $\myvec{x}$.  In unconstrained regions,
 the noise is infinite and the inverse is zero.  This leads to very similar
 results to those expressed here (in this case, $\mymat{W}^2$ is replaced
 by $\mymat{W}^T\mymat{W}$).  This is equivalent to the whitening operation
-discussed in \S\ref{sec:whitening}.  We will not use this formalism here, so we
-leave it only as a suggested extension.
+discussed in \S\ref{sec:whitening_chp2}. We will not use this formalism
+here, so we leave it only as a suggested extension.
 
 \section{\KL\ Analysis and Bayesian Inference}
 \label{sec:KL_bayes}
@@ -750,7 +754,7 @@ very useful within Bayesian parameter estimation.
 Given observations $D$ and prior information $I$, Bayes' theorem specifies the
 posterior probability of a model described by the parameters $\{\theta_i\}$:
 \begin{equation}
-  \label{eq:bayes}
+  \label{eq:bayes_chp2}
   P(\{\theta_i\}|DI) = P(\{\theta_i\}|I) \frac{P(D|\{\theta_i\}I)}{P(D|I)}
 \end{equation}
 The term on the left hand side
@@ -780,7 +784,7 @@ These eigenvectors can be used to quickly compute the KL coefficients of
 the observed data,
 \begin{equation}
   \myvec{a}_{\{\theta\}} = \mymat{V}^\dagger_{\{\theta\}}
-  \mymat{\mathcal{N}}^{-1/2}\myvec{d}
+  \mymat{\mathcal{N}}^{-1/2}\myvec{d}.
 \end{equation}
 For a given model $\{\theta_i\}$, we can predict the expected
 distribution of coefficients $\myvec{a}_{\{\theta_i\}}$:
@@ -805,7 +809,7 @@ is given by the quadratic form
 \end{equation}
 The likelihood is then given by
 \begin{equation}
-  \label{eq:likelihood}
+  \label{eq:likelihood_chp2}
   P(D|\{\theta\}I) =
   \mathcal{L}(\myvec{a}|\{\theta_i\}) = 
   (2\pi)^{n/2} |\det(X_{\{\theta_i\}})|^{-1/2}
@@ -813,8 +817,8 @@ The likelihood is then given by
 \end{equation}
 where $n$ is the number of degrees of freedom: that is, the number
 of eigenmodes included in the analysis.  The likelihood given by
-Equation~\ref{eq:likelihood} enters into Equation~\ref{eq:bayes} when
-computing the posterior probability.  This sort of approach will be
+Equation~\ref{eq:likelihood_chp2} enters into Equation~\ref{eq:bayes_chp2}
+when computing the posterior probability.  This sort of approach will be
 applied to observed shear in Chapter 5.
 
 \section{\KL\ Analysis of Shear}
@@ -822,7 +826,9 @@ applied to observed shear in Chapter 5.
 In the case of shear observations, the observed vector $\myvec{\gamma}$
 consists of the $N$ ellipticity observations within the series of window
 functions $A_i(\myvec{\theta}, z)$, with $i = 1...N$.  In general, these
-window functions can overlap.  The expected correlation matrix of the
+window functions can overlap, though in most cases this would lead to
+correlated noise which makes the analysis more difficult.
+The expected correlation matrix of the
 observed shear $\myvec{\gamma}$ is given by
 \begin{equation}
   [\mymat{\mathcal{C}_\gamma}]_{ij}
@@ -833,7 +839,7 @@ observed shear $\myvec{\gamma}$ is given by
 where the matrix $\mymat{\mathcal{N}}_{ij}$ is the noise covariance between
 bins.  The shear correlation function $\xi_+$ can be computed from the
 theoretical 3D mass power spectrum, using the results from the previous
-chapter (eqs.~\ref{eq:xi_plus}-\ref{eq:lensing_weight}).
+chapter (eqs.~\ref{eq:xi_plus}-\ref{eq:lens_weight}).
 
 The noise matrix $\mymat{\mathcal{N}}$ can be estimated from the measurement
 process: in the simplest case where noise is due to shot-noise only and
@@ -843,3 +849,16 @@ where $\sigma_i = \sigma_{int} / \sqrt{N_i}$ is the shot noise, given
 the intrinsic ellipticity $\sigma_{int}$ and the number of galaxies $N_i$
 in the bin described by $A_i$.
 
+Once the theoretical correlation matrix is computed, the KL basis can be
+determined using linear algebraic methods, and the basis functions can
+be employed in any of the variety of ways suggested above.  In this work,
+we will explore three applications of this procedure.  In Chapter 3, we
+will use the properties of the theoretical covariance as a basis for
+a filter for constructing 3D mass maps from weak lensing shear observations.
+In Chapter 4, the KL modes will be used to correct for masking in a realistic
+shear map, and the resulting maps will be analyzed using shear peak statistics.
+In Chapter 5, the KL modes will be used for cosmological parameter estimation
+using shear catalogs from the COSMOS weak lensing survey.  In all three cases,
+the ability to theoretically compute the covariance matrix of the observations
+leads to an analysis optimally tuned to the noise properties of the observed
+signal.

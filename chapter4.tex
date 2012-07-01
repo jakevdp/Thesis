@@ -3,7 +3,9 @@
 This chapter will cover the results from \citep{Vanderplas2012}. In it,
 we explore the utility of Karhunen Lo\`{e}ve (KL) analysis in 
 solving practical problems in the analysis of gravitational
-shear surveys.  Shear catalogs from large-field weak lensing
+shear surveys, with a specific application to cosmological constraints
+from shear peak statistics.
+Shear catalogs from large-field weak lensing
 surveys will be subject to many systematic limitations, notably
 incomplete coverage and pixel-level masking due to foreground sources.  
 We develop a method to use two dimensional KL eigenmodes of 
@@ -99,13 +101,16 @@ the statistics of shear peaks.
 
 \section{Karhunen-Lo\`{e}ve Analysis of Shear}
 \label{KL_Intro}
-KL analysis is a commonly used statistical tool
+As discussed in Chapter 2, KL analysis is a commonly used statistical tool
 in a broad range of astronomical applications, from, e.g.~studies of 
 galaxy and quasar spectra \citep{Connolly95,Connolly99,Yip04a,Yip04b}, to 
 analysis of the spatial distribution of galaxies 
 \citep{Vogeley96,Matsubara00,Pope04}, to characterization of the 
-expected errors in weak lensing surveys \citep{Kilbinger06, Munshi06}.    
-Any set of $N$-dimensional data can be represented as a sum of 
+expected errors in weak lensing surveys \citep{Kilbinger06, Munshi06}.
+A full description of KL analysis is presented in chapter 2; here we
+will briefly review the points relevant to this chapter.
+
+In general, any set of $N$-dimensional data can be represented as a sum of 
 $N$ orthogonal basis functions: this amounts to a rotation and scaling of 
 the $N$-dimensional coordinate axis spanning the space in which the data live.
 KL analysis seeks a set of orthonormal basis functions which can optimally
@@ -131,10 +136,14 @@ $\gamma_i = \gamma(\myvec{x}_i)$.
 
 \subsection{KL Formalism}
 \label{KL_Formalism}
-KL analysis provides a framework such that our measurements $\myvec\gamma$ 
+As discussed in Chapter 2, KL analysis provides an optimal framework
+such that our measurements $\myvec\gamma$ 
 can be expanded in a set of $N$ orthonormal basis functions 
 $\left\{ \myvec{\Psi}_j(\myvec{x}_i),\ j=1,N\right\}$, via a vector of
-coefficients $\myvec{a}$.  In matrix form, the relation can be written
+coefficients $\myvec{a}$.  Here we will briefly outline the KL formalism
+as it applies to shear measurements; for a more complete discussion,
+refer to Chapter 2.
+In matrix form, the KL projection of the observed shear can be written
 \begin{equation}
   \myvec\gamma = \myvec\Psi\myvec{a}
 \end{equation}
@@ -306,7 +315,7 @@ theoretical correlation matrix $\myvec\xi$ for a given field,
 we compute the KL basis directly using an eigenvalue decomposition.
 
 \subsection{Which Shear Correlation?}
-\label{WhichCorrelation}
+\label{sec:WhichCorrelation}
 Above we note that the correlation matrix of the measured shear 
 can be expressed
 in terms of the ``+'' correlation function, $\xi_+(\theta)$.  This is not
@@ -358,9 +367,10 @@ tracer of the underlying shear field, and some regions of the field may
 contain no shear information.  This sparsity of data poses a problem,
 because the KL modes are no longer orthogonal over the incomplete field.
 \citet{Connolly99} demonstrated how this missing-information problem can be 
-addressed for KL decompositions of galaxy
-spectra. We will summarize their results here.  First we define the weight 
-function $w(\myvec{x}_i)$.
+addressed for KL decompositions of galaxy spectra. 
+This application is discussed in more detail in Chapter 2; here we will
+briefly summarize the results using the notation of shear studies.
+First we define the weight function $w(\myvec{x}_i)$.
 The weight function can be defined in one of two ways: 
 a binary weighting convention where
 $w(\myvec{x}_i)=0$ in masked pixels and $1$ elsewhere, or a continuous 
@@ -705,26 +715,26 @@ chosen; see the discussion in Appendix~\ref{Choosing_Params}.
 It is interesting to explore the limits of this interpolation algorithm.
 Figure \ref{fig_reconstruction_2} shows the KL reconstruction with
 increasing masked fractions, using a noise level typical of space-based
-lensing surveys $(n_{gal}=100{\rm arcmin}^{-2})$  Though the quality of
+lensing surveys $(n_{gal}=100\ {\rm arcmin}^{-2})$  Though the quality of
 the reconstruction understandably degrades, the lower panels show that
 large features can be recovered even with up to 50\% of the pixels masked.
 
-%In Figure~\ref{fig_kappa_reconstruction} we provide a comparison of the
-%convergence maps generated from the noiseless shear (upper panels) and
-%the KL-reconstructed noisy shear with 20\% of pixels masked (lower panels).  
-%The convergence maps are smoothed by a gaussian filter to 
-%ease comparison with the quantitative
-%results of Sections~\ref{Shear_Peaks}-\ref{Discussion}, where we explore
-%the distribution of peaks through an aperture mass filter.  The aperture
-%mass filter amounts to a particular smoothing function over the 
-%convergence field (see Section~\ref{Aperture_Mass}, below).
-%Comparison of the upper and lower panels of 
-%Figure~\ref{fig_kappa_reconstruction} give a qualitative indication of
-%the performance of KL: high-convergence regions are recovered remarkably
-%well, while convergence peaks of lower magnitude are obscured by the 
-%background noise: as we show in the following sections, 
-%this obscuration is largely the result of shape noise 
-%in the simulated shear measurements.
+In Figure~\ref{fig_kappa_reconstruction} we provide a comparison of the
+convergence maps generated from the noiseless shear (upper panels) and
+the KL-reconstructed noisy shear with 20\% of pixels masked (lower panels).  
+The convergence maps are smoothed by a gaussian filter to 
+ease comparison with the quantitative
+results of Sections~\ref{Shear_Peaks}-\ref{Discussion}, where we explore
+the distribution of peaks through an aperture mass filter.  The aperture
+mass filter amounts to a particular smoothing function over the 
+convergence field (see Section~\ref{Aperture_Mass}, below).
+Comparison of the upper and lower panels of 
+Figure~\ref{fig_kappa_reconstruction} give a qualitative indication of
+the performance of KL: high-convergence regions are recovered remarkably
+well, while convergence peaks of lower magnitude are obscured by the 
+background noise: as we show in the following sections, 
+this obscuration is largely the result of shape noise 
+in the simulated shear measurements.
 
 For a quantitative analysis of the effectiveness of the KL interpolation 
 in convergence mapping, and the potential biases it introduces, 
@@ -761,7 +771,7 @@ While it was long thought that weak gravitational lensing studies would lead
 to robust, purely mass-selected cluster surveys, it has since become 
 clear that shape noise and projection effects limit the usefulness 
 of weak lensing in determining the 3D cluster mass function 
-\citep{Hamana04,Hennawi05,Mandelbaum10,Vanderplas11}.  
+\citep{Hamana04,Hennawi05,Mandelbaum10,Vanderplas2011}.  
 The shear observed in weak lensing is non-locally related to the convergence,
 a measure of \textit{projected} mass along the line of sight.  
 The difficulty in deconvolving the correlated and uncorrelated projections
@@ -1092,7 +1102,7 @@ KL peaks more closely approaches the number of peaks in the noiseless case.
 To first order, weak lensing shear is expected to consist primarily of
 curl-free, E-mode signal.  Because of this, the presence of B-modes can
 indicate a systematic effect.  It is not obvious that filtration by KL
-will maintain this property: as noted in Section~\ref{WhichCorrelation},
+will maintain this property: as noted in Section~\ref{sec:WhichCorrelation},
 KL modes individually are agnostic to E-mode and B-mode information.  
 E\&B information is only recovered within a 
 complex-valued linear combination of the set KL modes.

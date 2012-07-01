@@ -184,6 +184,7 @@ This expression is equivalent to the first law of thermodynamics
 expressed for the universe as a whole.
 
 \subsection{Time Dialation and Redshift}
+\label{sec:redshift}
 General Relativity tells us
 that light always travels along null geodesics, that is, the space time
 interval in eqn.~\ref{eq:FLRW_metric} satisfies $ds = 0$.  For a light
@@ -603,7 +604,6 @@ the Euler equation, which specifies conservation of momentum,
 \end{equation}
 and the Poisson equation, which describes gravity in the Newtonian limit
 \begin{equation}
-  \label{eq:poisson}
   \nabla_{\myvec{x}}^2\Phi = 4\pi G\rho.
 \end{equation}
 Transforming to comoving coordinates $\myvec{r} = \myvec{x}/a(t)$,
@@ -1075,6 +1075,7 @@ Solving this two-dimensional differential equation gives the effective potential
 \end{equation}
 
 \section{Weak Gravitational Lensing}
+\label{sec:weak_lensing_intro}
 
 The local properties of the mapping in (\ref{eq:mapping}) are contained in its Jacobian matrix, given by
 \begin{equation}
@@ -1136,9 +1137,9 @@ Unfortunately, the intrinsic shape and size of a galaxy cannot be known
 of the {\it distribution} of shapes and sizes of sources can lead to
 useful estimates of the shear and/or convergence across the sky.
 
-\comment{add some references: measuring gamma \& kappa from galaxy shapes
-  and sizes, from number counts,
-  galaxy-galaxy lensing, quasar variability-luminosity relationship, etc.}
+%\comment{add some references: measuring gamma \& kappa from galaxy shapes
+%  and sizes, from number counts,
+%  galaxy-galaxy lensing, quasar variability-luminosity relationship, etc.}
 
 In the most common approach to weak lensing,
 the ellipticities of source galaxies are measured, 
@@ -1170,7 +1171,7 @@ fundamental physical principles; this work will focus on three areas:
     statistics of observed lensing peaks to 
     that predicted by theory, it is possible to
     constrain cosmological parameters using the peaks alone.  This is
-    the subject of Chapter 4.
+    one of the subjects reviewed and explored in Chapter 4.
   \item[Power spectrum:] The power spectrum of the shear is closely related
     to the power spectrum of the matter distribution which generates it.
     By measuring two point information of observed shear, it is possible
@@ -1182,8 +1183,10 @@ To enable these three analyses, we will develop a bit further the basic
 principles of weak lensing mappings and power spectra.
 
 \subsection{Mapping with Weak Lensing}
-The typical weak lensing mapping problem can be computed using the following
-steps:
+\label{sec:lens_mapping_intro}
+The tomographic approach to the 3D lensing mapping problem can be
+computed using the following steps \citep[see, e.g.][]{Hu02, Simon09,
+  Vanderplas2011}:
 \begin{enumerate}
   \item From the measured ellipticities and redshifts of photometrically
     observed galaxies, obtain noisy estimates of the shear
@@ -1211,7 +1214,8 @@ approximating the sum as an integral, we find
 \end{equation}
 The notation has been changed here to make clear that the distances in 
 question are in fact angular diameter distance, the relevant distance 
-in the context of lensing calculations.  Recall that angular diameter 
+in the context of lensing calculations (See \S\ref{sec:distances}).
+Recall that angular diameter 
 distance $D^{(A)}$ is related to the comoving distance $D$ by
 \begin{equation}
   D^{(A)}(z) = a S_\kappa (D)
@@ -1304,7 +1308,7 @@ be related to the mass power spectra discussed in \S\ref{sec:growth}.
 %\end{equation}
 %where
 
-\subsection{E and B modes}
+\subsubsection{E and B modes}
 \label{sec:EBmode}
 In this section, we will outline the basic results of \citet{Schneider02b}.
 We will start by defining the E/B decomposition of the shear field $\gamma$.
@@ -1338,8 +1342,8 @@ zero:
   \label{eq:curl-free}
   \myvec{\nabla} \times \myvec{u} = 0.
 \end{equation}
-If, however, other effects are involved (e.g.~shot noise, second-order effects,
-intrinsic alignments, systematic errors, etc.)
+If, however, other effects are involved (e.g.~shot noise, second-order
+lensing effects, intrinsic alignments, systematic errors, etc.)
 then $\myvec{u}$ will not be a pure gradient field and will have
 a nonzero curl.
 With this in mind, we will use an analogy from electrodynamics and decompose
@@ -1386,7 +1390,8 @@ the power spectra \citep[e.g.][]{Schneider02b}
   \hat{\kappa}^\ast_{E,B}(\myvec{\ell}^\prime)\rangle
   =(2\pi)^2\delta_D(\myvec{\ell} - \myvec{\ell}^\prime)P_{E,B}(\ell).
 \end{eqnarray}
-Taking the Fourier transform of eqn.~\ref{eq:gamma-kappa-EB} gives
+By the convolution theorem, the
+Fourier transform of eqn.~\ref{eq:gamma-kappa-EB} gives
 \begin{equation}
   \hat{\gamma}_{E,B}(\myvec{\ell})
   =\left(\frac{\ell_1^2 - \ell_2^2 + 2i\ell_1\ell_2}{|\myvec{\ell}|^2}\right)
@@ -1414,21 +1419,20 @@ The ``+'' distinguishes this correlation measure from two other shear
 correlations which can be defined, $\xi_-$ and $\xi_\times$
 \citep[see][for details]{Schneider02}.
 We will limit the discussion here to $\xi_+$, because this is the relevant
-measure for our purposes.
+measure for our purposes (See discussion in \S\ref{sec:WhichCorrelation}).
 
 The E-mode angular shear power spectrum $P_E(\ell)$ can be expressed as a
 weighted line-of-sight integral over the matter power 
 spectrum via eqn.~\ref{eq:kappa-delta}.  Taking into account the redshift
 distribution of galaxies gives \citep[see][]{Takada04}
 \begin{equation}
-  \label{eq:P_gamma}
   P_E(\ell) = \int_0^{r_s}dr W^2(r)r^{-2}
   P_\delta\left(k=\frac{\ell}{r};z(r)\right)
 \end{equation}
 Here $r$ is the comoving distance, $r_s$ is the distance to the
 source, and $W(r)$ is the lensing weight function,
 \begin{equation}
-  \label{eq:lensing_weight}
+  \label{eq:lens_weight}
   W(r) = \frac{3\Omega_{m,0}H_0^2}{2a(r)}\frac{r}{\bar{n}_g}
   \int_{z(r)}^{z(r_s)}dz\ n(z) \frac{r(z)-r}{r(z)}
 \end{equation}
@@ -1438,11 +1442,15 @@ This allows us to predict an analytic relation between the 3D mass
 fluctuation power spectrum $P_\delta(k, z)$ and the correlation function
 of the shear signal $\xi_+(\ell, z)$.
 The nonlinear mass fluctuation power spectrum $P_\delta(k, z)$ can be
-predicted semianalytically (e.g. \citet{Smith03}) and changes based on
-the cosmological model.  The shear correlation function $\xi_+(\myvec{\ell})$
+predicted semianalytically (e.g. \citet{Smith03}) and has a form dependent on
+the assumed cosmological model.
+The shear correlation function $\xi_+(\myvec{\ell})$
 can be computed from observed data.  The important point is that this
-relation measures the mass density field directly: it requires no assumptions
+relation provides a direct (if noisy) measure of the distribution of mass:
+it requires no assumptions
 about the mass to light ratio or how the non-baryonic matter distribution
-relates to that of luminous matter.
-This offers a powerful technique for constraining cosmological parameters
-in the Universe.
+relates to that of luminous matter. The observations can be related directly
+to theoretical expectations for the nonlinear power spectrum.
+For this reason, weak lensing studies provide a powerful
+probe for constraining the cosmological parameters which describe
+the Universe.

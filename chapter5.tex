@@ -1,17 +1,27 @@
 \chapter{Application to COSMOS lensing data}
 
 This chapter will cover the application of KL parameter estimation to the 
-COSMOS lensing data.
+COSMOS lensing data.  We construct the shear KL basis based on the COSMOS
+survey geometry, and use the Bayesian inference framework developed in
+\S\ref{sec:KL_bayes} to perform a simple parameter estimation using
+the KL spectra in place of the Fourier spectra.  From this, we obtain
+parameter constraints on $\Omega_M$ and $\sigma_8$ which are similar to
+those from conventional angular correlation analyses, with a framework that
+is free from the systematic errors associated with incomplete sky coverage
+and irregular survey geometry.
 
+This chapter is an incomplete exploration of this problem; the results are
+limited to a two dimensional analysis of only two cosmological parameters.
+KL can naturally be extended to 3D tomographic approaches with any number of
+parameters; this will be the subject of future work.
 
 \section{Introduction}
 \label{sec:introduction}
 
-In this chapter we explore a new technique for the evaluation of cosmological
+In this chapter we explore the evaluation of cosmological
 likelihoods using Karhunen-Lo\'{e}ve (KL) analysis of shear fields.  
 We first explored the use of KL analysis in shear surveys in a previous work
-\citep[Chapter 4;][]{Vanderplas2012},
-in which we focused on the ability of
+\citep[Chapter 4;][]{Vanderplas2012}, in which we focused on the ability of
 KL modes to help fill-in missing information within the context of weak
 lensing convergence mapping and studies of the peak statistics of the
 resulting mass maps.
@@ -28,7 +38,7 @@ statistics.
 In \S\ref{sec:kl_intro} we review KL analysis and its application to 
 shear surveys.
 In \S\ref{sec:data} we describe the COSMOS shear data used in this analysis.
-In \S\ref{sec:discussion} we discuss the results.
+In \S\ref{sec:results} we discuss the results.
 We conclude in \S\ref{sec:conclusion}.
 
 \section{Two-point Statistics in Weak Lensing}
@@ -324,7 +334,6 @@ weighted by the zeroth-order Bessel function
 The angular shear power spectrum $P_\gamma(\ell)$ can be expressed as a
 weighted line-of-sight integral over the matter power
 \begin{equation}
-  \label{eq:P_gamma}
   P_\gamma(\ell) = \int_0^{\chi_s}d\chi W^2(\chi)\chi^{-2}
   P_\delta\left(k=\frac{\ell}{\chi};z(\chi)\right)
 \end{equation}
