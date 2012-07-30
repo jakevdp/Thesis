@@ -12,6 +12,7 @@
 *.cfg
 thesis.pdf
 thesis.toc
+thesis.lot
 thesis/uwthesis.pdf
 shear_KL/paper/shear_KL.pdf
 Lens3D/writeup/Lens3D.pdf
