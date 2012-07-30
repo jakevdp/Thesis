@@ -49,9 +49,9 @@ draw_line([0.05, 0.65], [1.76 + frac * 0.04, 0.65 - frac * 0.3],
 
 pl.annotate(' ', [0.05, 0.95], [1.76, 0.95], arrowprops=dict(arrowstyle='<->'))
 
-pl.text(0.5, 0.65, r'$\rm D_{L}$', fontsize=14)
-pl.text(1.2, 0.65, r'$\rm D_{LS}$', fontsize=14)
-pl.text(1.0, 0.95, r'$\rm D_{S}$', fontsize=14)
+pl.text(0.5, 0.67, r'$\rm D_{L}$', fontsize=14)
+pl.text(1.2, 0.67, r'$\rm D_{LS}$', fontsize=14)
+pl.text(1.0, 0.97, r'$\rm D_{S}$', fontsize=14)
 
 pl.annotate(' ', (1.2, 0.24),  (1.22, 0.41),
             arrowprops=dict(arrowstyle="<->",
@@ -75,4 +75,5 @@ pl.xlim(0, 2)
 pl.ylim(0.05, 1.05)
 
 pl.savefig('lensing_geometry.eps')
+pl.savefig('lensing_geometry.pdf')
 pl.show()

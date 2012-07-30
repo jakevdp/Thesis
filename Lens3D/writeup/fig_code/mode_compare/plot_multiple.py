@@ -104,8 +104,8 @@ pylab.text(100,0.054,'zoom on',
 pylab.text(100,0.051,r'$\alpha=0.001$',
            fontdict=dict(color='g',fontsize=fontsize))
 
-
 pylab.savefig('../mode_compare.eps')
+pylab.savefig('../mode_compare.pdf')
 pylab.show()
 
     
