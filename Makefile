@@ -1,15 +1,10 @@
-all : thesis.dvi
+all : thesis.pdf
 
-pdf : thesis.pdf
-
-thesis.pdf : thesis.dvi
-	dvipdf thesis.dvi
-
-thesis.dvi : thesis.tex thesis.bib *.tex
-	latex thesis
+thesis.pdf : thesis.tex thesis.bib *.tex
+	pdflatex thesis
 	bibtex thesis
-	latex thesis
-	latex thesis
+	pdflatex thesis
+	pdflatex thesis
 clean :
 	rm *.aux
 	rm *.bbl
