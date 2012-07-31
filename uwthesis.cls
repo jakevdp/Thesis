@@ -808,7 +808,7 @@
 %
 %   Vita
 %
-\def\textofVita#1{\gdef\@textofVita{#1}}  \textofVita{Vita}
+\def\textofVita#1{\gdef\@textofVita{#1}}  \textofVita{Curriculum Vitae}
 \long\def\vita#1{\chapter*{\@textofVita\@mkboth{}{}}
    #1\par
    \vfill
