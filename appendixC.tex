@@ -1,0 +1,48 @@
+\chapter{Choice of KL Parameters}
+\label{Choosing_Params}
+The KL analysis outlined in Section~\ref{KL_Intro}
+has only two free parameters: the number of
+modes $n$ and the Wiener filtering level $\alpha$.  Each of these parameters
+involves a trade-off: using more modes increases the amount of information
+used in the reconstruction, but at the expense of a decreased signal-to-noise
+ratio.  Decreasing the value of $\alpha$ to $0$ reduces the smoothing effect 
+of the prior, but can lead to a nearly singular convolution matrix 
+$\mymat{M}_{(n,\alpha)}$, 
+which results in unrealistically large shear values in the poorly-constrained 
+areas areas of the map (i.e.~masked regions).
+
+To inform our choice of the number of modes $n$, we recall the trend of 
+spatial scale with mode number seen in Figure~\ref{fig_bandpower}.  Our 
+purpose in using KL is to allow interpolation in masked regions.  To this 
+end, the angular scale of the mask should inform the choice of angular
+scale of the largest mode used.  An eigenmode which probes scales much smaller
+than the size of a masked region will not contribute meaningful information to
+the reconstruction within that masked region.  Considering the pixels within
+our mask, we find that 99.5\% of masked pixels are within 2 pixels of a
+shear measurement.  This corresponds to an angular scale of $\ell=6140$.
+Consulting Figure~\ref{fig_bandpower}, we see that modes larger than
+about $n=900$ out of 4096 will probe length scales significantly 
+smaller than the mask scale.  
+Thus, we choose $n=900$ as an appropriate cutoff for our reconstructions.
+
+To inform our choice of the Wiener filtering level $\alpha$, we examine the
+agreement between histograms of \Map peaks for a noise-only DES field
+with and without masking (see Section~\ref{Shear_Peaks}).  
+We find that for large (small) values of $\alpha$, the number
+of high-\Map peaks is underestimated (overestimated) in the masked 
+case as compared to the unmasked case.  
+Empirically, we find that the two agree at $\alpha = 0.15$; 
+we choose this value for our analysis.  Note that this 
+tuning is done on noise-only reconstructions, 
+which can be generated for observed data by assuming that
+shape noise dominates: 
+\begin{equation}
+  [\Noise_\gamma]_{ij} = \frac{\sigma_\epsilon}{n_i^2}\delta_{ij}.
+\end{equation}
+The $\alpha$-tuning can thus be performed on artificial noise realizations 
+which match the observed survey characteristics.
+
+We make no claim that $(n,\alpha) = (900,0.15)$ is the optimal
+choice of free parameters for KL: determining this would involve a more
+in-depth analysis.  They are simply well-motivated choices which we use to
+make a case for further study.

@@ -1,0 +1,163 @@
+\chapter{Efficient Implementation of the SVD Estimator}
+\label{appB}
+As noted in Section~\ref{sing_val_formalism}, taking the SVD of the 
+transformation matrix $\widetilde{M}_{\gamma\delta} \equiv 
+\mathcal{N}_{\gamma\gamma}^{-1/2}M_{\gamma\delta}$
+is not trivial for large fields.  This appendix will first give a rough
+outline of the form of $M_{\gamma\delta}$, then describe our tensor 
+decomposition method which enables quick calculation of the singular
+value decomposition.  For a more thorough review of the lensing results, 
+see e.g.~\citet{Bartelmann01}.
+
+Our goal is to speed the computation of the SVD by writing \
+$\widetilde{M}_{\gamma\delta}$
+as a tensor product $\mymat{A} \otimes \mymat{B}$.  Here ``$\otimes$''
+is the Kronecker product, defined such that, if $\mymat{A}$ is a matrix
+of size $n \times m$, $B$ is a matrix of arbitrary size,
+\begin{equation}
+  \mymat{A}\otimes\mymat{B} \equiv \left(
+  \begin{array}{cccc}
+    A_{11}B & A_{12}B & \cdots & A_{1m}B \\
+    A_{21}B & A_{22}B & \cdots & A_{2m}B \\
+    \vdots  & \vdots & \ddots & \vdots  \\
+    A_{n1}B & A_{n2}B & \cdots & A_{nm}B 
+  \end{array}\right)
+\end{equation}
+In this case, the singular value decomposition
+$A\otimes B = U_{AB}\Sigma_{AB}V^\dagger_{AB}$
+satisfies
+\begin{eqnarray}
+  \label{AB_SVD}
+  U_{AB} &=& U_A\otimes U_B \nonumber\\
+  \Sigma_{AB} &=& \Sigma_A \otimes \Sigma_B\nonumber\\
+  V_{AB} &=& V_A \otimes V_B
+\end{eqnarray}
+where $U_A\Sigma_AV^\dagger_A$ is the SVD of $A$, 
+and   $U_B\Sigma_BV^\dagger_B$ is the SVD of $B$.
+Decomposing $\widetilde{M}_{\gamma\delta}$ in this way can 
+greatly speed the SVD computation.
+
+\subsection{Angular and Line-of-Sight Transformations}
+The transformation from shear to density, encoded in $M_{\gamma\delta}$,
+consists of two steps: an angular integral relating shear $\gamma$ to
+convergence $\kappa$, and a line-of-sight integral relating the convergence
+$\kappa$ to the density contrast $\delta$.
+
+The relationship between $\gamma$ and $\kappa$ is a convolution over
+all angular scales,
+\begin{equation}
+  \label{gamma_integral}
+  \gamma(\myvec\theta,z_s) \equiv \gamma_1 + i\gamma_2 = \int \dd^2\theta^\prime
+  \ \mathcal{D}(\myvec\theta^\prime-\myvec\theta)\kappa(\myvec\theta^\prime,z_s),
+\end{equation}
+where $\mathcal{D}(\myvec\theta)$ 
+is the Kaiser-Squires kernel \citep{Kaiser93}.  
+This has a particularly simple form in Fourier space:
+\begin{equation}
+  \label{gamma_fourier}
+  \hat\gamma(\myvec\ell,z_s) 
+  = \frac{\ell_1 + i\ell_2}{\ell_1 - i\ell_2}\hat\kappa(\myvec\ell,z_s).
+\end{equation}
+where $\hat\gamma$ and $\hat\kappa$ are the Fourier transforms of $\gamma$
+and $\kappa$ and $\myvec{\ell}\equiv(\ell_1,\ell_2)$ is the angular wavenumber.
+
+The relationship between $\kappa$ and $\delta$ is an integral along each
+line of sight:
+\begin{equation}
+  \label{kappa_integral}
+  \kappa(\myvec\theta,z_s) = 
+  \int_0^{z_s}\dd z\ W(z,z_s)\delta(\myvec\theta,z)
+\end{equation}
+where $W(z,z_s)$ is the lensing efficiency function at redshift $z$ 
+for a source located at redshift $z_s$ 
+(refer to STH09 for the form of this function).
+
+Upon discretization of the quantities $\gamma$, $\kappa$, and $\delta$
+(described in Section~\ref{LinearMapping}), 
+the integrals in Equations~\ref{gamma_integral}-\ref{kappa_integral} 
+become matrix operations.  The relationship between the data vectors
+$\myvec{\gamma}$ and $\myvec{\kappa}$ can be written
+\begin{equation}
+  \label{P_gk}
+  \myvec\gamma = [\mymat{P}_{\gamma\kappa} \otimes \mathbf{1}_s]\myvec\kappa 
+  + \myvec{n}_\gamma
+\end{equation}
+where $\mathbf{1}_s$ is the $N_s \times N_s$ identity matrix and 
+$\mymat{P}_{\gamma\kappa}$ is the matrix representing the linear 
+transformation in Equations~\ref{gamma_integral}-\ref{gamma_fourier}.  
+The quantity $[\mymat{P}_{\gamma\kappa} \otimes \mathbf{1}_s]$ 
+simply denotes that $\mymat{P}_{\gamma\kappa}$ operates on each of the $N_s$ 
+source-planes represented within the vector $\myvec\kappa$.
+Similarly, the relationship between the vectors $\myvec{\kappa}$ and
+$\myvec{\delta}$ can be written
+\begin{equation}
+  \label{Q_kd}
+  \myvec\kappa = [\mathbf{1}_{xy} \otimes \mymat{Q}_{\kappa\delta}]\myvec\delta
+\end{equation}
+where $\mathbf{1}_{xy}$ is the $N_{xy} \times N_{xy}$ 
+identity matrix, and the tensor product signifies that the operator 
+$Q_{\kappa\delta}$ operates on each of the $N_{xy}$ lines-of-sight in
+$\myvec\delta$.  $Q_{\kappa\delta}$ is the $N_s \times N_l$ matrix which
+represents the discretized version of equation \ref{kappa_integral}.
+Combining these representations allows us to decompose the matrix 
+$\mymat{M}_{\gamma\delta}$ in Equation~\ref{M_gd} into a tensor product:
+\begin{equation}
+  \mymat{M}_{\gamma\delta} = 
+  \mymat{P}_{\gamma\kappa} \otimes \mymat{Q}_{\kappa\delta}.
+\end{equation}
+
+\subsection{Tensor Decomposition of the Transformation}
+We now make an approximation that the noise covariance 
+$\mymat{\mathcal{N}}_{\gamma\gamma}$ can be written as a
+tensor product between its angular part $\mymat{\mathcal{N}_P}$ 
+and its line of sight part $\mymat{\mathcal{N}_Q}$:
+\begin{equation}
+  \label{noise_decomp}
+  \mymat{\mathcal{N}}_{\gamma\gamma} 
+  = \mymat{\mathcal{N}_P} \otimes \mymat{\mathcal{N}_Q}.
+\end{equation}
+Because shear measurement error comes primarily from shot noise, this 
+approximation is equivalent to the statement that source galaxies are drawn 
+from a single redshift distribution, with a different normalization along 
+each line-of-sight.  For realistic data, this approximation will break down
+as the size of the pixels becomes very small.  We will assume here for 
+simplicity that the noise covariance is diagonal, but the following results
+can be generalized for non-diagonal noise.  
+Using this noise covariance approximation, we can compute the 
+SVDs of the components of $\widetilde{M}_{\gamma\delta}$:
+\begin{eqnarray}
+  \mymat{U}_P\mymat{\Sigma}_P\mymat{V}_P^\dagger = \mathcal{N}_P^{-1/2} \mymat{P}_{\gamma\kappa}\nonumber\\
+  \mymat{U}_Q\mymat{\Sigma}_Q\mymat{V}_Q^\dagger = \mathcal{N}_Q^{-1/2} \mymat{Q}_{\kappa\delta}
+\end{eqnarray}
+
+In practice the SVD of the matrix $\mymat{P}_{\gamma\kappa}$ 
+need not be computed explicitly.  
+$\mymat{P}_{\gamma\kappa}$ encodes the discrete linear operation expressed
+by Equations~\ref{gamma_integral}-\ref{gamma_fourier}: 
+as pointed out by STH09, in the large-field limit $P_{\gamma\kappa}$ 
+can be equivalently computed in either real or Fourier space.
+Thus to operate with $P_{\gamma\kappa}$ on a shear vector, 
+we first take the 2D Fast Fourier Transform (FFT) of each
+source-plane, multiply by the kernel $(\ell_1+i\ell_2)/(\ell_1-i\ell_2)$,
+then take the inverse FFT of the result.  This is orders-of-magnitude
+faster than a discrete implementation of the real-space convolution.
+Furthermore, the conjugate transpose of this operation can be computed
+by transforming $\ell \to -\ell^*$, so that
+\begin{equation}
+  \mymat{P}_{\gamma\kappa}^\dagger\mymat{P}_{\gamma\kappa} = \mymat{I}
+\end{equation}
+and we see that $P_{\gamma\kappa}$ is unitary in the wide-field limit.  This
+fact, along with the tensor product properties of the SVD, allows us to
+write $\widetilde{M}_{\gamma\delta} = U\Sigma V^\dagger$ where
+\begin{eqnarray}
+  U &\approx& \mathbf{1}_{xy} \otimes U_Q \nonumber\\
+  \Sigma &\approx& \mathcal{N}_P^{-1/2} \otimes \Sigma_Q \nonumber\\
+  V^\dagger &\approx& P_{\gamma\kappa} \otimes  V_Q^\dagger
+\end{eqnarray}
+The only explicit SVD we need to calculate is that of 
+$\mathcal{N}_Q^{-1/2}\mymat{Q}_{\kappa\delta}$,
+which is trivial in cases of interest.  
+The two approximations we have made are the
+applicability of the Fourier-space form of the $\gamma\to\kappa$ mapping
+(Eqn.~\ref{gamma_fourier}), and the tensor
+decomposition of the noise covariance (Eqn.~\ref{noise_decomp}).
