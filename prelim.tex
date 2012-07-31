@@ -14,7 +14,8 @@
 \titlepage
 
 \setcounter{page}{-1}
-\abstract{%
+
+\abstract{
 In the past decade, weak gravitational lensing has become an important tool
 in the study of the universe at the largest scale, giving insights into the
 distribution of dark matter, the expansion of the universe, and the nature
@@ -22,12 +23,46 @@ of dark energy. This thesis research explores several applications
 of Karhunen-Lo\`{e}ve (KL) analysis to speed and improve the comparison of
 weak lensing shear catalogs to theory in order to constrain cosmological 
 parameters in current and future lensing
-surveys.% This work addresses three related aspects of weak lensing analysis:
+surveys. This work addresses three related aspects of weak lensing analysis:
+
+\begin{description}
+   \item[Three-dimensional Tomographic Mapping:]
+        \citep[Based on work published in][]{Vanderplas2011}
+        We explore a new fast approach to three-dimensional mass mapping in
+        weak lensing surveys.  The KL approach uses a KL-based filtering of
+        the shear signal to reconstruct mass structures on the line-of-sight,
+        and provides a unified framework to evaluate the efficacy of linear
+        reconstruction techniques.
+   \item[Shear Peak Statistics with Incomplete Data]
+        \citep[Based on work published in][]{Vanderplas2012}
+        We explore the use of KL eigenmodes for interpolation across masked     
+        regions in observed shear maps.  Mass mapping is an inherently
+        nonlocal calculation, meaning gaps in the data can have a significant
+        effect on the properties of the derived mass map.  Our KL mapping
+        procedure leads to improvements in the recovery of detailed statistics
+        of peaks in the mass map, which holds promise of improved cosmological
+        constraints based on such studies.
+   \item[Two-point parameter estimation with KL modes]
+        The power spectrum of the observed shear can yield powerful cosmological
+        constraints.  Incomplete survey sky coverage, however, can lead to
+        mixing of power between Fourier modes, and obfuscate the cosmologically
+        sensitive signal.  We show that KL can be used to derive an alternate
+        orthonormal basis for the problem which avoids mode-mixing and allows
+        a convenient formalism for cosmological likelihood computations.
+\end{description}
+
+
+
+
+
+
+
+
+
 
 %\begin{enumerate}
-
 %\item {\bf Three-dimensional tomographic mapping.}
-%(based on work published in Vanderplas et al. 2011). We develop a fast,
+%(based on work published in \citet{Vanderplas2011}). We develop a fast,
 %KL-based approach to the three-dimensional reconstruction of matter
 %maps from shear surveys. This KL approach solves the lensing inversion 
 %problem using truncation of eigenvalues within the context of generalized 
@@ -36,8 +71,8 @@ surveys.% This work addresses three related aspects of weak lensing analysis:
 %It also allows a quantitative
 %comparison between different filtering methods: we evaluate our 
 %method beside the previously
-%explored Wiener-filter approaches. Our method yields near-optimal 
-%angular resolution
+%explored Wiener-filter approaches.
+%Our method yields near-optimal angular resolution
 %of the lensing reconstruction and allows cluster sized halos to be 
 %de-blended robustly.
 %It allows for mass reconstructions which are two to three orders of 
@@ -51,13 +86,13 @@ surveys.% This work addresses three related aspects of weak lensing analysis:
 
 %\item {\bf Mapping and shear peak statistics with noisy and incomplete data.}
 % (based on work published
-%in Vanderplas et al 2012). We use KL analysis to solve a 
+%in \citet{Vanderplas2012}). We use KL analysis to solve a 
 %practical problem in the analysis
 %of gravitational shear surveys. Shear catalogs from 
 %large-field weak-lensing surveys
 %will be subject to many systematic limitations, notably 
 %incomplete coverage and pixel-level
-%masking due to foreground sources. We develop amethod to 
+%masking due to foreground sources. We develop a method to 
 %use two-dimensional KL eigenmodes
 %of shear to interpolate noisy shear measurements across 
 %masked regions. We explore
@@ -84,7 +119,7 @@ surveys.% This work addresses three related aspects of weak lensing analysis:
 %nature of the universe.
 %When measuring the power spectrum directly, gaps in the data can 
 %lead to a situation where
-%fourier modes are no longer orthogonal. This can lead to mode 
+%Fourier modes are no longer orthogonal. This can lead to mode 
 %mixing which is complicated
 %to correct. We use KL analysis to construct an alternative 
 %orthonormal basis in which
@@ -93,7 +128,6 @@ surveys.% This work addresses three related aspects of weak lensing analysis:
 %KL allows for robust noise filtration and direct comparison to 
 %cosmological models, all
 %within a very fast matrix-based framework.
-
 %\end{enumerate}
 }
  
@@ -128,18 +162,43 @@ surveys.% This work addresses three related aspects of weak lensing analysis:
 %
 \acknowledgments{% \vskip2pc
    {\narrower\noindent
-   I would like to acknowledge...
+   Thanks first to my wife Cristin for supporting me during the last five
+   years, and understanding my late nights of working and writing.  Her
+   genuine and deep love for the people in her life is a daily reminder of
+   the reason for studying the things we do.
+
+   Thanks to my family: especially to my mother Gretchen for her constant
+   encouragement and support.  From collecting butterflies to growing   
+   carnivorous plants to counting the stars, she instilled in me a desire
+   to know the world around me.
+
+   Thanks to my advisors, Andrew Connolly and Bhuvnesh Jain, for their
+   patient mentorship.  Their thoughtfulness, humor, and expectation of
+   excellence has given me a graduate school experience that exceeded even
+   my highest expectations.
+
+   I am indebted to several colleagues for helpful discussions through the
+   course of this research, including Debbie Bard, Gary Bernstein, Anna Cabre,
+   Joerg Dietrich, Mike Jarvis, Jan Kratochvil, Tim Schrabback, Patrick Simon,
+   Andy Taylor, Vinu Vikram, Risa Wechsler, and many others.
+
+   Support for this research was provided by DOE Grant DESC0002607,
+   NSF Grant AST-0709394, and NASA Grant NNX07-AH07G.
    \par}
 }
 
 %
 % ----- dedication
 %
-\dedication{\begin{center}
+
+\dedication{
+\begin{center}
 To my father, Hugh Vander Plas, who lost his battle with cancer just weeks
-before I presented this dissertation.  His ceaseless support and encouragement
-has shaped me in more ways than I can imagine.
-\end{center}}
+before I presented this dissertation.  I will always be thankful for his
+ceaseless support, encouragement, and willingness to listen.  His loyal,
+loving, and faithful character will remain my highest example of how to live.
+\end{center}
+}
 
 %
 % end of the preliminary pages
