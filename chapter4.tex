@@ -20,21 +20,9 @@ of masked shear are not only useful for creating robust convergence maps
 from masked shear catalogs, but also offer promise of improved parameter
 constraints within studies of shear peak statistics.
 
+\comment{Add copyright notice}
 
 \section{Introduction}
-Since its discovery over a decade ago, cosmic shear -- the coherent 
-gravitational distortion of light from distant galaxies due to large
-scale structure -- has become an important tool in precision cosmology.
-\citep[see][for a review]{Bartelmann01}.  
-\citet{Kaiser95} first proposed a method of using weak gravitational lensing
-to probe the projected gravitational mass within an observed field.  This 
-method and its variations have often been applied to reconstructions of
-clusters using deep observations within small (a few square arcminute) fields.
-In this situation, the measured shear often dominates the shape noise, and 
-useful priors can be applied based on assumptions regarding 
-the location of the cluster center, symmetries of cluster mass profile, 
-and the correlation of mass with light.
-
 Currently, a new generation of wide-field weak lensing surveys are
 in the planning and construction stages.  
 Among them are the the Dark Energy Survey (DES), 
@@ -107,7 +95,7 @@ galaxy and quasar spectra \citep{Connolly95,Connolly99,Yip04a,Yip04b}, to
 analysis of the spatial distribution of galaxies 
 \citep{Vogeley96,Matsubara00,Pope04}, to characterization of the 
 expected errors in weak lensing surveys \citep{Kilbinger06, Munshi06}.
-A full description of KL analysis is presented in chapter 2; here we
+A full description of KL analysis is presented in Chapter 2; here we
 will briefly review the points relevant to this chapter.
 
 In general, any set of $N$-dimensional data can be represented as a sum of 
@@ -123,7 +111,7 @@ From the ellipticity of the galaxies within each cell,
 we infer the observed shear $\gamma^o(\myvec{x}_i)$, which we assume
 to be a linear combination of the true underlying shear, $\gamma(\myvec{x}_i)$
 and the shape noise $n_\gamma(\myvec{x}_i)$.\footnote{
-Throughout this work, we assume we are in the regime where the convergence
+Throughout this chapter, we assume we are in the regime where the convergence
 $\kappa \ll 1$ so that the average observed ellipticity in a 
 cell is an unbiased estimator of shear; see \citet{Bartelmann01}}
 In general, the cells may be of any shape (even overlapping) 
@@ -140,9 +128,7 @@ As discussed in Chapter 2, KL analysis provides an optimal framework
 such that our measurements $\myvec\gamma$ 
 can be expanded in a set of $N$ orthonormal basis functions 
 $\left\{ \myvec{\Psi}_j(\myvec{x}_i),\ j=1,N\right\}$, via a vector of
-coefficients $\myvec{a}$.  Here we will briefly outline the KL formalism
-as it applies to shear measurements; for a more complete discussion,
-refer to Chapter 2.
+coefficients $\myvec{a}$.  
 In matrix form, the KL projection of the observed shear can be written
 \begin{equation}
   \myvec\gamma = \myvec\Psi\myvec{a}
@@ -633,7 +619,7 @@ contribute two orders-of-magnitude more noise than signal.
 
 \begin{figure*}
  \centering
- \includegraphics[height=0.9\textheight]{fig06_kappa_multires2.pdf}
+ \includegraphics[height=0.8\textheight]{fig06_kappa_multires2.pdf}
 %created by ../fig_code/fig06_kappa_multires.py
  \caption{The large-field convergence map derived using the method of
    \citet{Kaiser93} from the
@@ -965,7 +951,9 @@ From Equations~\ref{shear_recons}-\ref{a_WF}, it can be shown that
   \Noise_{\hat\gamma} 
   & \equiv  &
   \langle\myvec{\hat\gamma} \myvec{\hat\gamma}^\dagger\rangle\nonumber\\
-  & = & \Noise_\gamma^{1/2}\myvec\Psi \mymat{M}^{-1} \mymat{\Psi}^\dagger \mymat{W}^2 \mymat{\Psi} \mymat{M}^{-1} \mymat{\Psi}^\dagger \Noise_\gamma^{1/2}
+  & = & \left[\Noise_\gamma^{1/2}\myvec\Psi \mymat{M}^{-1} \mymat{\Psi}^\dagger\right]
+  \mymat{W}^2 
+  \left[\mymat{\Psi} \mymat{M}^{-1} \mymat{\Psi}^\dagger \Noise_\gamma^{1/2}\right]
 \end{eqnarray}
 The covariance matrix $\Noise_{\hat\gamma}$ is no longer diagonal, but
 the noise remains isotropic under the linear transformation, so that
@@ -1182,4 +1170,4 @@ The projection of observed data onto this basis can be used to
 directly compute cosmological parameters via the 2-point function, 
 without ever explicitly calculating the power spectrum.  
 This is similar to the approach taken for galaxy counts
-in \citet{Vogeley96}.  We explore this approach in a followup work.
+in \citet{Vogeley96}.  This approach is the subject of Chapter 5.

@@ -16,21 +16,14 @@ It allows for mass reconstructions which are
 2-3 orders-of-magnitude faster than the Wiener
 filter approach; in particular, we estimate that an all-sky
 reconstruction with arcminute resolution could be performed
-on a time-scale of hours. We find however that linear, 
+on a time-scale of hours on a current workstation.
+We find however that linear, 
 non-parametric reconstructions have a fundamental limitation in the
 resolution achieved in the redshift direction.
 
-\section{Introduction}
+\comment{Add Copyright notice}
 
-In recent years, the study of gravitational lensing has proved a
-valuable tool in advancing our understanding of the universe.  Because
-deflection of light in a gravitational field is a well-understood
-aspect of Einstein's General Relativity, it offers a unique method of
-mapping the mass distribution within the universe (including the dark
-matter), which is free of any astrophysical bias.  Though much insight
-can be gained from the two dimensional projection of the matter distribution
-\citep[see, e.g.][]{Clowe06}, a nonparametric technique that can map
-the full 3D matter distribution is in principle attainable. 
+\section{Introduction}
 
 \citet{Taylor01}, \citet[][hereafter HK02]{Hu02} and 
 \citet{Bacon03} first looked at
@@ -63,7 +56,7 @@ It is possible that the redshift bias found in STH09 is not inherent
 to nonparametric linear mapping, but rather a result of this deficiency
 in the Wiener filtering method.
 
-In this work, we develop an alternate noise-suppression scheme for
+In this chapter, we develop an alternate noise-suppression scheme for
 tomographic mapping that,  unlike Wiener filtering, has no dependence
 on assumptions about the signal.   Our goal is to explore improvements
 in the reconstruction and examine, in particular, the recovery of
@@ -277,7 +270,8 @@ by a factor of $10^3$, effectively
 deweighting the signal in these pixels (cf.\ STH09).  The noise
 for each redshift bin is set to $n_i = \sigma_\gamma/\sqrt{N_i}$, where 
 $\sigma_\gamma$ is the intrinsic ellipticity dispersion, and
-$N_i$ is the number of galaxies in the bin.  We assume $\sigma_\gamma = 0.3$,
+$N_i$ is the number of galaxies in the bin.  We assume $\sigma_\gamma = 0.3$
+\citep[based on the Hubble Deep Field image][]{Mellier99},
 and 70 galaxies per square arcminute, with a redshift distribution given by
 \begin{equation}
   \label{gal_z_dist}
@@ -312,7 +306,7 @@ shear and projected density due to an NFW profile, given by equations
 
 \begin{figure*}[p]
  \centering
- \includegraphics[width=\textwidth]{three_lines.pdf}
+ \includegraphics[width=0.8\textwidth]{three_lines.pdf}
  \caption{
    The effect of SVD truncation on a single $z=0.6$ NFW halo
    in the center of the field, for three different levels of filtering.
@@ -359,7 +353,7 @@ detected at its correct location (left panels),
 although as $v_{\rm cut}$ decreases, there is more noise in the 
 surrounding field.  The right panels show the computed density profile
 along the line of sight for the central pixel. 
-The peak of this curve is reasonably close to the correct redshift, 
+The peak of this curve is close to the correct redshift, 
 but there is a significant spread in redshift, as well as a bias.
 As the level of SVD filtering (measured by $v_{\rm cut}$) decreases, 
 the magnitude of these effects decreases, but the increased noise 
@@ -606,7 +600,7 @@ than the Wiener filter.
 Extrapolating this scaling, the appropriately scaled 
 SVD filter will allow reconstruction
 of the entire $\sim\!\!20,000$ square-degree 
-LSST field in a few hours on a single workstation, given
+LSST field in a few hours on a single $\sim$GHz processor, given
 enough memory.  On the same computer, the Wiener-filter method would take 
 over a month, depending on the amount and type of filtering and 
 assuming that the required number of iterations stays constant with 

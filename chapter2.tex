@@ -20,7 +20,7 @@ to  analysis of the spatial distribution of galaxies
 \citep{Vogeley96, Matsubara00, Szalay03, Pope04, Tegmark06},
 to characterization of the 
 expected errors in weak lensing surveys \citep{Kilbinger06, Munshi06}.
-In this chapter, we will develop the formalism of KL which will form
+In this chapter, we will develop the formalism of KL that will form
 the basis of the applications in the subsequent chapters.
 
 The KL formalism requires the liberal
@@ -67,7 +67,7 @@ KL analysis is simply a basis function decomposition, where the basis
 functions are derived based on the variance and covariance properties
 of a class of functions.  We'll start by describing what is perhaps the
 best-known basis function decomposition, the Fourier series.
-We start here because it's a familiar concept which generalizes well to
+We start here because it's a familiar concept that generalizes well to
 the fundamental ideas of KL analysis.
 
 \subsection{Fourier Series}
@@ -101,7 +101,7 @@ Given the claim that Equation~\ref{eq:fourier_1D} holds, how can we
 compute the Fourier coefficients $a_k$ associated with 
 a particular $f(t)$?  Though the expression is well-known, we'll briefly
 derive it here because it illuminates some of the properties of
-Fourier transforms which will generalize to KL transforms.
+Fourier transforms that will generalize to KL transforms.
 
 To begin, we'll multiply both sides of Equation~\ref{eq:fourier_1D} by the
 complex conjugate $\Phi^\ast_{k^\prime}(x)$ of the basis function given
@@ -154,7 +154,7 @@ Could there be several possible sets of valid Fourier coefficients for
 a given function?
 
 Let's assume that given a function $f(t)$, there are two valid sets of
-Fourier coefficients $a_k$ and $a^\prime_k$ which satisfy
+Fourier coefficients $a_k$ and $a^\prime_k$ that satisfy
 Equation~\ref{eq:fourier_1D}.  In this case, subtracting the two equations
 gives
 \begin{equation}
@@ -169,13 +169,13 @@ yield
 Collapsing the sum, we find that $a_k = a^\prime_k$ for all $k$.  This
 shows the uniqueness of the fourier coefficients $a_k$ for a given function
 $f(t)$ on an interval $[t_a, t_b]$.  Thus, given an orthonormal basis $\Phi_k$,
-there is a single unique linear combination which reconstructs a function
+there is a single unique linear combination that reconstructs a function
 $f(t)$ on the defined interval.
 
 \subsection{Generalizing Orthonormal Bases}
 
 Stepping back for a moment, we have shown that for a particular
-class of functions $\Phi_k(t)$, one can find unique coefficients
+class of basis functions $\Phi_k(t)$, one can find unique coefficients
 $a_k$ such that one of the expansions of Equation~\ref{eq:fourier_1D} holds.
 A key observation is that all the derivations above rested 
 soley on two special properties of these basis functions:
@@ -202,7 +202,7 @@ soley on two special properties of these basis functions:
 As long as these two properties hold for a class of functions $\Phi_k(t)$,
 we would be able to repeat the above derivations and express any $f(t)$
 via Equation~\ref{eq:fourier_1D}.
-This suggests the possible existence of other functions which fit these
+This suggests the possible existence of other functions that fit these
 criteria.  Some examples are the Legendre polynomials on the interval
 $[-1, 1]$, the Laguerre polynomials on the interval $[0, \infty)$, and
 the Hermite polynomials on the interval $(-\infty, \infty)$.
@@ -218,7 +218,7 @@ a given problem.
 \section{\KL\ Analysis}
 Because of the infinite number of possible orthogonal function classes,
 one might wonder how to choose the optimal class for any particular problem.
-\KL\ Analysis Seeks to answer this question in a very general case.
+\KL\ analysis seeks to answer this question in a very general case.
 
 \subsection{Derivation of \KL\ theorem}
 Imagine now that we have a random process $F_t$.  This can be thought of as
@@ -457,7 +457,7 @@ we simply need to order the eigenvalues such that $\lambda_k \ge \lambda_{k+1}$
 for all eigenvalue-eigenfunction pairs $(\lambda_k, e_k(t))$.
 
 Because of this, throughout this work we will follow this convention when
-ordering the eigenvalues in and KL decomposition.
+ordering the eigenvalues in a KL decomposition.
 
 \subsection{KL in the presence of noise}
 \label{sec:whitening_chp2}
@@ -502,7 +502,7 @@ noise.  The whitened covariance is given by
 The signal is now expressed in the basis of the noise eigenmodes $n_k(t)$,
 and the noise has been made white with unit variance.  The KL modes derived
 from the whitened covariance $\mathcal{C}_F^{(W)}(k, k^\prime)$ will have
-eigenvalues which represent the signal-to-noise in each mode.
+eigenvalues that represent the signal-to-noise in each mode.
 
 \subsection{\KL: theory to practice}
 \label{sec:KL_practice}
@@ -590,8 +590,8 @@ representation of the eigenfunctions $e^{(i)}(\lambda)$.  These eigenvectors
 satisfy all the properties of the KL bases discussed above: they diagonalize
 the sample correlation matrix, they provide the best possible low-rank
 linear approximation to any spectrum from the sample, and in the presence of
-uncorrelated noise, they allow an orthogonal decomposition with a natural
-ranking in signal-to-noise.
+uncorrelated noise, they allow an orthogonal decomposition onto a basis
+with a natural ranking in signal-to-noise.
 
 In the case of the spectrum example, we have no theoretical expectation for the
 correlation matrix $\mathcal{C}(\lambda, \lambda^\prime)$, so we are forced
@@ -650,21 +650,21 @@ over the truncated space.  This is similar in spirit to the method
 explored by \citet{Gorski1994} in analysis of CMB data.
 While this leads to a complete orthogonal basis for the observed portion
 of the field, coefficients of these new modes have no simple relationship to
-coefficients of modes covering the full field.  In general, a low-rank
+coefficients of modes covering the full field.  In general, a rank-deficient
 transformation matrix must be inverted in order to convert between the two.
 
 We'll use a different approach.  We have shown above that when noise is
 not present, the KL vectors define the optimal basis for rank-$N$
 reconstruction in the least-squares sense.  That is, for an arbitrary
 truncated orthonormal basis $\mymat{\Phi}_{(N)}$, (where truncated means
-we use only the first $N$ columns of $\mymat{\Phi}$),
+we use only the first $N$ columns of $\mymat{\Phi}$, with $0 < N \le K$),
 \begin{equation}
   \chi^2 = \left|\left(\myvec{x}
   - \mymat{\Phi}_{(N)}^T\myvec{a}^{(N)}\right)\right|^2
 \end{equation}
 is minimized on average when
 $\mymat{\Phi} = \mymat{V}_{(N)}
-= [\myvec{v_1}, \myvec{v_2} \cdots \myvec{v_M}]$, $N \le M$.
+= [\myvec{v_1}, \myvec{v_2} \cdots \myvec{v_N}]$, $N \le K$.
 Here we flip the problem: we know the desired basis $\mymat{V}_{(N)}$,
 and hope to find the optimal vector of coefficients $\myvec{a}^{(N)}$
 which minimizes the $\chi^2$ in the presence of the missing data
@@ -699,7 +699,7 @@ $\myvec{v^{(i)}}$ and $\myvec{v^{(j)}}$ is modulated by $\mymat{W}$,
 there is no delta function to collapse the sum.
 
 We can simplify this notation by defining the correlation matrix of the
-mask $\mymat{M}_{(N)}$, such that
+mask $\mymat{M}_N$, such that
 \begin{equation}
   [\mymat{M}_N]_{ij} \equiv \myvec{v^{(j)}}^T \mymat{W}^2 \mymat{v^{(i)}}
 \end{equation}
@@ -715,19 +715,24 @@ $\myvec{a}^{(N)}$ is given by
   \myvec{a}^{(N)} = [\mymat{M}_N]^{-1}
   \mymat{V}_{(N)}^T \mymat{W}^2 \myvec{x}.
 \end{equation}
-This is the equivalent of the expression in eq.~\ref{eq:a_coeff_def}:
+This can be viewed as a generalized form of
+the expression in eq.~\ref{eq:a_coeff_def}:
 if $\mymat{W}$ is set equal to the identity matrix (indicating no
 missing data), then $\mymat{M}_N$ is also the identity and we recover
 eq.~\ref{eq:a_coeff_def} exactly.
 
 If some of the diagonal entries in $\mymat{W}$ are zero, then the
-correlation matrix for the full set of $K$ eigenvectors is rank-deficient,
+correlation matrix $\mymat{M}_K$ for the full set of $K$ eigenvectors
+is rank-deficient
 and cannot be inverted as required for eq.~\ref{eq:a_truncated}.  For this
 reason, it is essential to use the truncated eigenvectors $\mymat{V}_{(N)}$,
-with $N \le {\rm rank}(\mymat{W})$, the rank of the matrix $\mymat{W}$.  For the
-case here where $\mymat{W}$ is a diagonal matrix consisting of zeros and
-ones, the rank is equivalent to the trace, or the sum of nonzero diagonal
-terms.
+with $N \le {\rm rank}(\mymat{W})$.  It is not strictly necessary to
+discard the eigenvectors corresponding to the smallest eigenvalues, but this
+choice leads to the highest signal-to-noise result.
+For the simple binary masking case
+where $\mymat{W}$ is a diagonal matrix consisting of zeros and
+ones, the rank of $\mymat{W}$ is equivalent to its trace, or the sum
+of nonzero diagonal terms.
 
 Once these approximate KL coefficients $\myvec{a}^{(N)}$ are determined,
 it is straightforward to use these to approximate the unmasked vector
@@ -815,8 +820,8 @@ The likelihood is then given by
   (2\pi)^{n/2} |\det(X_{\{\theta_i\}})|^{-1/2}
   \exp(-\chi_{\{\theta\}}^2/2)
 \end{equation}
-where $n$ is the number of degrees of freedom: that is, the number
-of eigenmodes included in the analysis.  The likelihood given by
+where $n$ is the number of degrees of freedom: in most cases, $n = N$, the
+number of eigenmodes included in the analysis.  The likelihood given by
 Equation~\ref{eq:likelihood_chp2} enters into Equation~\ref{eq:bayes_chp2}
 when computing the posterior probability.  This sort of approach will be
 applied to observed shear in Chapter 5.

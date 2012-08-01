@@ -24,7 +24,8 @@ def plot_distribution(filename):
     pylab.imshow(H.T,
                  origin='lower',
                  interpolation='nearest',
-                 extent = (xrange[0],xrange[-1],yrange[0],yrange[-1]) )
+                 extent = (xrange[0],xrange[-1],yrange[0],yrange[-1]),
+                 cmap=pylab.cm.binary)
     pylab.colorbar().set_label(r'$\mathdefault{n_{gal}\ (arcmin^{-2})}$')
     pylab.xlabel('RA (deg)')
     pylab.ylabel('DEC (deg)')

@@ -1,0 +1,10 @@
+Skdaljf & Evans reference
+
+Copyright notice for chapters 3-4
+
+Figure 5.6 and discussion in 5.4.3: what level of accuracy?  Can we
+quantify this?
+
+More detailed discussion of the S10 results and how mine compare
+
+end of chapter 5: next steps

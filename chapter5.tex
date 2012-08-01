@@ -6,14 +6,14 @@ observed by the Hubble Space Telescope. We use KL to express the data
 within the optimal orthonormal basis dictated by the 
 survey geometry, and use the Bayesian inference framework developed in
 \S\ref{sec:KL_bayes} to perform a simple parameter estimation using
-the KL spectra in place of the Fourier spectra.  From this, we obtain
+the KL basis in place of the usual Fourier basis.  From this, we obtain
 parameter constraints on $\Omega_M$ and $\sigma_8$ which are similar to
 those from conventional angular correlation analyses, with a framework that
 is free from the systematic errors associated with incomplete sky coverage
 and irregular survey geometry.
 
-This chapter represents a first exploration of this problem; the results are
-limited to a two dimensional analysis of only two cosmological parameters.
+This chapter represents a first exploration of this problem; the results
+consider a simple two dimensional analysis for two cosmological parameters.
 KL can naturally be extended to 3D tomographic approaches with any number of
 parameters; this will be the subject of future work.
 
@@ -21,9 +21,9 @@ parameters; this will be the subject of future work.
 \label{sec:introduction}
 
 In this chapter we explore the evaluation of cosmological
-likelihoods using Karhunen-Lo\'{e}ve (KL) analysis of shear fields.  
-We first explored the use of KL analysis in shear surveys in a previous work
-\citep[Chapter 4;][]{Vanderplas2012}, in which we focused on the ability of
+likelihoods using KL analysis of shear fields.  
+In Chapter 4 we explored the use of KL analysis in shear surveys,
+focusing on the ability of
 KL modes to help fill-in missing information within the context of weak
 lensing convergence mapping and studies of the peak statistics of the
 resulting mass maps.
@@ -36,16 +36,14 @@ galaxy surveys \citep{Vogeley96, Pope04}.
 
 In \S\ref{sec:lensing_intro} we review and discuss the strengths and
 weaknesses of constraining cosmological quantities using two-point shear
-statistics.
-In \S\ref{sec:kl_intro} we review KL analysis and its application to 
-shear surveys.
-In \S\ref{sec:data} we describe the COSMOS shear data used in this analysis.
-In \S\ref{sec:results} we discuss the results.
+statistics. In \S\ref{sec:kl_intro} we review KL analysis and its application
+to shear surveys.  In \S\ref{sec:data} we describe the COSMOS shear data
+used in this analysis, and we discuss these results in \S\ref{sec:results}.
 
 \section{Two-point Statistics in Weak Lensing}
 \label{sec:lensing_intro}
-As noted and outlined in chapter 1,
-The large-scale structure of the universe provides a powerful probe of
+As noted and outlined in Chapter 1, the large-scale structure
+of the Universe provides a powerful probe of
 cosmological parameters.  Through gravitational instability, the initial
 matter fluctuations have grown to the nonlinear structure we see today.
 This happens in a hierarchical manner, with the smallest structures
@@ -55,27 +53,21 @@ fluctuations, $P_k(z)$, which gives the amplitude of the
 Fourier mode with wave-number $k$ at a redshift $z$. 
 This approach has often been used to measure cosmological parameters
 through optical tracers of the underlying dark matter structure
-\citep[e.g.][]{Tegmark06}.
-
-Another way to get at the matter power spectrum is through weak gravitational
-lensing.  As light travels from a distant source to an observer, its path is
-perturbed by the gravitational force of the intervening matter distribution.
-This cosmic shear signal is sensitive to both the gravitational potential
-of the matter along the line of sight, and the angular diameter distance
-to that matter.  As such, two-point measurements of cosmic shear have promise
-to be powerful probes of cosmological parameters, including dark energy
-\citep[see][]{Takada07}.  Recent results have shown the power of this
+\citep[e.g.][]{Tegmark06}.  In this chapter we explore the use of
+weak lensing measurements of the matter power spectrum.
+Recent work has shown the power of this lensing-based
 approach \citep{Ichiki09, Schrabback10}.
 
-There are two approaches to measuring two-point information which are 
+The are two approaches to measuring two-point information are 
 mathematically equivalent: the power spectrum $\mathcal{P}(\ell)$,
-and its fourier transform $\xi(\theta)$.
-The most common approach to measuring two-point information in practice
-is through the correlation functions \citep[see][]{Schneider02}.
+and its fourier transform $\xi(\theta)$.  In practice,
+the most commonly used method of measuring two-point information
+is through correlation functions \citep[see][]{Schneider02}.
 The main advantage of correlation functions is their ease of measurement:
-they can be straightforwardly estimated from galaxy positions and shears,
-even in very complicated survey geometries.  The disadvantage is that the
-signal is highly correlated between different bins.  Accounting for this 
+they can be straightforwardly estimated from the positions and shapes of
+galaxies, even in very complicated survey geometries.
+Their disadvantage is that the
+signal is highly correlated between different scales.  Accounting for this 
 correlation is very important when computing cosmological likelihoods,
 and often requires large suites of simulations.
 
@@ -83,34 +75,33 @@ Shear power spectra, on the other hand, have a number of nice properties.
 Compared to correlation functions, they provide a simpler mapping
 to theoretical expectations.  They have
 weaker correlations between different multipoles: on the largest scales,
-where structure is close to gaussian, the scales are statistically independent.
-Even on small scales where non-gaussianity leads to correlated errors,
-these correlations have a relatively small effect \citep{Takada09}.
+where structure is close to Gaussian, the scales are expected to be
+statistically independent.
+Even on small scales where non-Gaussianity leads to correlated errors,
+these correlations have a relatively small effect on derived cosmological
+constraints \citep{Takada09}.
 The disadvantage of shear power spectra as direct cosmological probes is
 the difficulty of measuring them from data.  In particular, survey geometry
-such as finite fields and masking effects can lead to mode-mixing on all
-angular scales.  There have been a few attempts to correct for this
-difficulty through direct deconvolution of the survey geometry
-\citep{Brown03, Hikage11}, but because of the computational difficulty
-involved, results based on correlation function measures have been
-more common.
-
-The main problem with the power spectrum approach is the finite sky coverage:
+effects such as incomplete sky coverage
+and masking can lead to mixing of power on all angular scales.
+This mode-mixing is a direct result of the loss of orthogonality:
 spherical harmonics are orthogonal over the entire sky, but are not
-necessarily orthogonal over the small patch of the sky represented by
-most surveys.  Even in the case of future all-sky surveys, the masking from
+necessarily orthogonal over the incomplete patch of the sky represented by
+lensing surveys.  Even in the case of future all-sky surveys, the masking from
 foreground sources will pose a problem.  This means
 that the spherical harmonic decomposition on which power spectra are based
-is not unique for realistic surveys.  This is the primary difficulty with
-measuring power spectra from realistic surveys: the orthogonal basis is no
-longer orthogonal when viewed through the survey's window function.
-It may be possible to construct a survey in order to
-limit the magnitude of these effects
+is not unique for realistic surveys.  
+It may be possible to construct
+a survey in order to limit the magnitude of these effects
 \citep[see][for some approaches]{Kilbinger04, Kilbinger06}.
-This can then be combined with a decorrelation step to correct for the
-presence of the mask \citep[e.g.][]{Hikage11}.
-Another approach would be to construct a new set of orthogonal modes for the
-observed survey geometry.  Because the modes are orthogonal by construction,
+There have also been a few attempts to correct for this
+difficulty through direct deconvolution of the survey geometry from
+the correlation signal \citep{Brown03, Hikage11}, but because of the
+computational difficulty involved with these methods,
+results based on correlation function measures remain more common.
+Here we explore an alternate approach which relies on constructing
+a new set of orthogonal modes for the observed survey geometry.
+Because the new modes are orthogonal by construction,
 one can avoid the difficulties associated with mode mixing. We propose to
 take this latter approach using Karhunen-Lo\'{e}ve (KL) analysis.
 
@@ -127,7 +118,7 @@ to studies of noise properties of weak lensing surveys
 \citep{Kilbinger06, Munshi06}, and a host of other situations too numerous
 to mention here.  Informally, the power of KL/PCA rests in the fact that 
 it allows a highly efficient representation of a set of data, highlighting
-the components which are most important in the dataset as a whole.
+the components that are most important in the dataset as a whole.
 Though the framework is discussed more completely in Chapter 2, we will
 review the most important points here.
 The discussion of KL analysis below derives largely from \citet{Vogeley96},
@@ -197,9 +188,8 @@ $\myvec{\xi} \equiv \left\langle
 $\langle\cdots\rangle$ denote expectation value or ensemble average
 of a quantity.
 
-Because we hope to perform a likelihood analysis on the coefficients
-$\myvec{a}$, it will be useful in likelihood estimation if they are
-statistically orthogonal:
+In order to perform a likelihood analysis on the coefficients
+$\myvec{a}$, we will require that $\myvec{a}$ be statistically orthogonal:
 \begin{equation}
   \label{eq:a_cov_2}
   \left\langle \myvec{a}\myvec{a}^\dagger \right\rangle_{ij}
@@ -220,47 +210,22 @@ $\lambda_i \ge \lambda_{i+1} \forall i\in(1, N-1)$.
 Expansion of the data $\myvec\gamma$ into this basis is the discrete form
 of KL analysis.
 
-A KL decomposition has a number of useful properties:
-\begin{description}
-  \item[Uniqueness] A KL decomposition is a unique representation of the data.
-    That is, there only a single set of basis vectors which satisfy the above
-    properties (up to degeneracies resulting from identical eigenvalues)
-    This can be straightforwardly shown in a proof by contradiction
-    (see Chapter 2).
-  \item[Efficiency] A partial KL decomposition provides the
-    optimal low-rank approximation of an observed data vector.  That is,
-    for $n < N$, the partial reconstruction (cf. Eqn.~\ref{eq:gamma_decomp})
-    \begin{equation}
-      \myvec\gamma^{(n)} \equiv \sum_{j=1}^n a_j \Psi_j
-    \end{equation}
-    minimizes the average reconstruction error
-    $\epsilon_n \equiv |\myvec\gamma - \myvec\gamma^{(n)}|^2$
-    for any orthogonal basis set $\mymat\Psi$.  The proof can be easily
-    obtained using Lagrangian multipliers (see Chapter 2).
-  \item[Signal-to-noise Optimization] As a consequence of the efficiency
-    property, it is clear that for data with white noise\footnote{
-    By \textit{white noise} we mean that the noise covariance satisfies
-    $\mymat{\mathcal{N}}_{ij} \equiv 
-    \langle\myvec{n_\gamma}\myvec{n_\gamma}^\dagger\rangle_{ij} 
-    \propto \delta_{ij}$}, KL modes express the
-    maximum possible signal-to-noise ratio per mode.  The noise can be assured
-    to be white through a judicious choice of binning, or alternatively
-    the data can be artificially whitened (See \S\ref{sec:whitening}).
-    If signal and noise are uncorrelated, then the covariance of the observed
-    shear can be decomposed as
-    \begin{equation}
-      \mymat{\xi} = \mymat{\mathcal{S}} + \mymat{\mathcal{N}}
-    \end{equation}
-    where $\mymat{\mathcal{S}}$ is the covariance of the signal, and
-    $\mymat{\mathcal{N}}$ is the covariance of the noise.
-    Because the noise covariance $\mymat{\mathcal{N}} \equiv 
-    \langle\myvec{n_\gamma}\myvec{n_\gamma}^\dagger\rangle$ is proportional
-    to the identity by assumption, diagonalization of $\mymat{\xi}$ results
-    in a simultaneous diagonalization of both the signal $\mymat{\mathcal{S}}$
-    and the noise $\mymat{\mathcal{N}}$.  Based on this signal-to-noise
-    optimization property, KL modes can be proven to be the optimal basis
-    for testing of spatial correlations \citep[see Appendix A of][]{Vogeley96}.
-\end{description}
+In chapter 2 we discussed the Uniqueness, Efficieny, and Signal-to-noise
+optimality of KL modes.  In particular, we showed that
+if signal and noise are uncorrelated, then the covariance of the observed
+shear can be decomposed as
+\begin{equation}
+  \mymat{\xi} = \mymat{\mathcal{S}} + \mymat{\mathcal{N}}
+\end{equation}
+where $\mymat{\mathcal{S}}$ is the covariance of the signal, and
+$\mymat{\mathcal{N}}$ is the covariance of the noise.
+Because the noise covariance $\mymat{\mathcal{N}} \equiv 
+\langle\myvec{n_\gamma}\myvec{n_\gamma}^\dagger\rangle$ is proportional
+to the identity by assumption, diagonalization of $\mymat{\xi}$ results
+in a simultaneous diagonalization of both the signal $\mymat{\mathcal{S}}$
+and the noise $\mymat{\mathcal{N}}$.  Based on this signal-to-noise
+optimization property, KL modes can be proven to be the optimal basis
+for testing of spatial correlations \citep[see Appendix A of][]{Vogeley96}.
 
 \subsection{Shear Noise Properties}
 \label{sec:whitening}
@@ -270,7 +235,7 @@ $\mymat{\mathcal{N}} \equiv
 \langle\myvec{n_\gamma}\myvec{n_\gamma}^\dagger\rangle
 = \sigma^2 \mymat{I}$.  Noise in measured shear is affected mainly by the
 intrinsic ellipticity and source density, but can also be prone to systematic
-effects which lead to noise correlations between pixels.  When the survey
+effects that lead to noise correlations between pixels.  When the survey
 geometry leads to shear with more complicated noise characteristics, a
 whitening transformation can be applied.
 
@@ -294,10 +259,10 @@ With this definition, the shear covariance matrix becomes
 We see that the whitened signal is $\mymat{\mathcal{S}}^\prime = 
 \mymat{\mathcal{N}}^{-1/2}\mymat{\mathcal{S}}\mymat{\mathcal{N}}^{-1/2}$
 and the whitened noise is $\mymat{\mathcal{N}}^\prime = \mymat{I}$, the
-identity matrix. So this transformation in fact whitens the data covariance,
+identity matrix. This transformation whitens the data covariance,
 so that the noise in each bin is constant and uncorrelated.  Given the
 whitened measurement covariance $\mymat{\xi}^\prime$, we can find the KL
-decomposition which satisfies the eigenvalue problem
+decomposition that satisfies the eigenvalue problem
 \begin{equation}
   \mymat{\xi}^\prime \myvec{\Psi^\prime}_j = 
   \lambda^\prime_j \myvec{\Psi^\prime}_j
@@ -381,7 +346,8 @@ Given these KL coefficients $\myvec{a}$, we use a Bayesian framework to
 compute the posterior distribution of our cosmological parameters.
 
 The problem of Bayesian inference with KL was discussed in
-\S\ref{sec:KL_bayes}.  We'll outline the results again here.
+\S\ref{sec:KL_bayes}.  Here we will briefly outline the portions relevant
+to this chapter.
 Given observations $D$ and prior information $I$, Bayes' theorem specifies the
 posterior probability of a model described by the parameters $\{\theta_i\}$:
 \begin{equation}
@@ -391,12 +357,7 @@ posterior probability of a model described by the parameters $\{\theta_i\}$:
 The term on the left of the equality
 is the \textit{posterior} probability of the set of
 model parameters $\{\theta_i\}$, which is the quantity we are interested in.
-
-The first term on the right hand side
-is the \textit{prior}.  It quantifies how our prior
-information $I$ affects the probabilities of the model parameters.  The 
-prior is where information from other surveys (e.g. WMAP, etc) can be
-included. The likelihood function for the observed coefficients $\myvec{a}$
+The likelihood function for the observed coefficients $\myvec{a}$
 enters into the numerator $P(D|\{\theta_i\}I)$.  The denominator $P(D|I)$
 is essentially a normalization constant, set so that the total probability
 over the parameter space equals unity.
@@ -432,7 +393,7 @@ computing the posterior probability.
 \label{sec:data}
 To test the KL likelihood formalism, we use a shear catalog derived from the
 COSMOS survey\footnote{We are grateful to Tim Schrabback et al. for making 
-this data available to us}.  A full description of this catalog and detailed 
+these data available to us}.  A full description of this catalog and detailed 
 tests of its systematics are presented in
 \citet[][hereafter S10]{Schrabback10}; we will summarize some relevant
 details here.
@@ -462,7 +423,8 @@ and \ref{fig:COSMOS_zdist}, respectively.
   \caption{Angular locations of the 194,976 COSMOS galaxies with photometric
     redshift measurements (top panel)
     and the 251,958 COSMOS galaxies without photometric redshift estimates
-    (bottom panel).}
+    (bottom panel).  The masking due to bright foreground sources is evident
+    in both panels.}
   \label{fig:COSMOS_locations}
 \end{figure}
 
@@ -493,7 +455,7 @@ with $i^+ > 24$ and redshifts $z < 0.6$.  S10 provides several tests which
 show that this cut does not generate appreciable systematic error.
 
 S10 performs a classical shear correlation function analysis to find
-constraints on $\sigma_8$ and $\Omega_M$ which are consistent with
+constraints on $\sigma_8$ and $\Omega_M$ that are consistent with
 those derived from WMAP: for a flat $\Lambda$CDM cosmology, they
 find with 63\% confidence 
 $\sigma_8(\Omega_M / 0.3)^{0.51} = 0.79 \pm 0.09$.  S10 performs both a
@@ -501,10 +463,10 @@ two-dimensional analysis and a three dimensional analysis: the constraints
 from each are consistent, with a slightly better figure of merit for the
 $\Omega_M$ vs. $\sigma_8$ constraint when the analysis is computed within
 several redshift bins.  The strength of the
-3D treatment comes when the assumption of flatness and/or equation of
-state for dark energy is dropped: for a
+3D treatment comes when we drop assumptions about flatness or the dark
+energy equation of state: for a
 $\Lambda$CDM cosmology with varying dark energy equation of state $w$,
-they find at 90\% confidence that $w < -0.41$.
+S10 finds at 90\% confidence that $w < -0.41$.
 Though these constraints offer only a slight improvement over prior
 information from WMAP constraints from measurements of the CMB, we must
 note that they are derived from just over
@@ -516,7 +478,7 @@ on these parameters.
 Here we will not duplicate all the various analyses of S10: instead we
 will use the KL-based estimation formalism of \S\ref{sec:KL_bayes} with
 shear eigenbases computed for the observed field via the formalism
-of \S\ref{sec:KL_shear}.  This will allow us to constrain two-point
+of \S\ref{sec:KL_shear}.  This will enable us to constrain two-point
 information using the KL formalism.
 
 \subsection{Intrinsic Ellipticity estimation}
@@ -529,12 +491,12 @@ which scales as $\mymat{\mathcal{N}}_{ii} = \hat{\sigma}_\epsilon^2 / n_i$,
 with $n_i$ representing the number of galaxies in bin $i$.
 
 To test this assumption, we perform a bootstrap resampling of the observed
-shear in square pixels which are two arcminutes on a side.
+shear in square pixels that are two arcminutes on a side.
 Generating 1000 bootstrap samples within each
 pixel, we compute the variance in each pixel.
 From Poisson statistics, we would expect the variance in each pixel to
 scale inversely with the number of measurements within each pixel: with this
-in mind we plot in Fiugre~\ref{fig:bootstrap}
+in mind we plot in Figure~\ref{fig:bootstrap}
 the variance vs the number of galaxies and fit a curve of the form 
 \begin{equation}
   \sigma_\gamma^2 = \frac{\sigma_{int}^2}{n_{\rm gal}},
@@ -544,9 +506,10 @@ As shown in the upper panel of Figure~\ref{fig:bootstrap}, the best-fit
 curve has $\sigma_{int} = 0.393$.  The residual distribution, shown in the
 lower panel of the figure, is close to Gaussian as expected.
 
-In this figure, we see that the fluctuation in shape noise from pixel to
-pixel is only a few percent.  For the analysis below, we use for each pixel
-the bootstrapped estimates derived here.  Because bootstrapping is inaccurate
+In this figure, we see that the pixel-to-pixel fluctuation in shape noise
+is only a few percent.  For the analysis below, we use for each pixel
+the noise estimates derived the bootstrap resampling within each pixel.
+Because bootstrapping is inaccurate
 for pixels with a small number of galaxies, if a pixel has fewer than 10
 sources we use the best-fit estimate for the noise,
 $\mymat{\mathcal{N}}_{ii} = \hat{\sigma}_\epsilon^2 / n_i$
@@ -566,7 +529,7 @@ Section~\ref{sec:kl_intro}.
 Using the pixel-by-pixel noise estimates from the previous section, we can
 now follow the formalism of \S\ref{sec:kl_intro} and construct the optimal
 orthonormal basis across the survey window defined by the selection function
-of the bright galaxies from the COSMOS survey.  We use pixels which are
+of the bright galaxies from the COSMOS survey.  We use pixels that are
 two arcminutes on a side, in a grid of 40 $\times$ 41 = 1640 total
 pixels.  We whiten the theoretical correlation matrix according to the noise
 properties of the observed data, and compute the eigenvalue decomposition
@@ -581,18 +544,19 @@ The window function of the COSMOS survey is clearly present, as can be
 seen by comparing the
 masking apparent in the eigenmodes to that of the galaxy distribution
 shown in the upper panel of Figure~\ref{fig:COSMOS_locations}.
-Moreover, the asymmetry of the mask acts as a perturbation which destroys
+Moreover, the asymmetry of the mask acts as a perturbation that destroys
 the rotational symmetry evident in the idealized eigenmodes of
-the previous chapter.
+the previous chapter (See Figure~\ref{fig_KL_modes}).
 
 \begin{figure*}
  \centering
  \includegraphics[width=\textwidth]{bright_eigenmodes.pdf}
  \caption{
    The first nine 2D KL signal-to-noise eigenmodes
-   for the COSMOS bright objects.  This uses square pixels which are
+   for the COSMOS bright objects.  This uses square pixels that are
    two arcminutes on a side, leading to $41 \times 40 = 1640$ pixels
-   over the entire field.}
+   over the entire field.  Compare these results to the KL modes shown
+   in Figure~\ref{fig_KL_modes}.}
    \label{fig:eigenmodes}
 \end{figure*}
 
@@ -629,16 +593,18 @@ signal-to-noise curve.
 \end{figure*}
 
 \subsection{Is our shear Gaussian?}
+\comment{Add more quantitative discussion}
+
 The KL formalism for shear analysis assumes that the shear is well-described
 by a Gaussian random field described by a covariance matrix, with mean
-zero.  If this is the case, then (by the arguments of chapter 2) we would
+zero.  If this is the case, then (by the arguments of Chapter 2) we would
 expect the observed KL coefficients of the whitened signal to be Gaussian
 distributed with zero mean and variance equal to the associated eigenvalue.
 Figure~\ref{fig:coeff_hist} shows a histogram of the observed coefficients
 scaled by the corresponding eigenvalue.  As is evident, both the real
 part and the imaginary part of the scaled coefficients are consistent with
 being drawn from a standard normal distribution.  This is consistent with
-our assumption that the shear is drawn from a gaussian random field, and
+our assumption that the shear is drawn from a Gaussian random field, and
 that the noise properties estimated in \S\ref{sec:bootstrap} are accurate.
 
 \begin{figure*}
@@ -652,7 +618,7 @@ that the noise properties estimated in \S\ref{sec:bootstrap} are accurate.
 \end{figure*}
 
 \subsection{Relationship to Power Spectrum}
-As we did in Figure~\ref{fig_bandpower}, for each KL mode we can compute the
+As we did in Figure~\ref{fig_bandpower}, for each KL mode we compute the
 associated two-dimensional power spectrum to determine the relationship
 between each mode and the Fourier power it represents.  For the unmasked
 KL modes explored in the previous chapter, this relationship displayed a
@@ -665,36 +631,46 @@ The analysis reflected in this plot can help in the choice of which KL
 modes to truncate: the pixel scale is two arcmin, which corresponds to
 $\ell = (2\pi\ {\rm rad}) / (2\ {\rm arcmin}) \approx 10000$.  So modes
 which do not have significant Fourier power on angular scales
-$\ell < 10,000$ are likely to be limited in their usefulness for parameter
-estimation from the gridded shear.
+$\ell \ll 10,000$ are likely to be limited in their usefulness for parameter
+estimation from the gridded shear.  This scale does not tell the whole story,
+however.  The KL analysis tells us that the smaller scales probed by the
+higher-order modes have progressively smaller signal-to-noise ratios.  For
+this reason, we choose the mode cutoff at scales less than 10,000.
+
+As was the case in Chapter 4, the choice of mode cutoff is not straightforward,
+and represents a tradeoff between statistical and systematic errors.  For the
+following analysis, we choose to use 800 of the 1640 total modes, such that
+each mode has a signal-to-noise ratio greater than $1/10$.  This cutoff
+corresponds to a scale of $\ell \sim 7000$.
 
 \begin{figure*}
  \centering
  \includegraphics[width=0.8\textwidth]{bright_bandpower.pdf}
  \caption{
-   The fourier power represented by each KL mode.  For each KL mode number,
+   The Fourier power represented by each KL mode.  For each KL mode number,
    the vertical band shows the distribution of power with angular wavenumber
    $\ell$.  In general, the larger KL modes correspond to larger values of
-   $\ell$, though there is a lot of mode mixing.
+   $\ell$, though there is significant mode mixing.
    \label{fig:bandpower_masked}}
 \end{figure*}
 
 \section{Results}
 \label{sec:results}
+\comment{Add a more quantitative discussion of the S10 results}
+
 The result of the KL-based Bayesian inference for cosmological parameter
 estimation is shown in Figure~\ref{fig:posterior}.  To compute the
 eigenmodes, we assume a flat $\Lambda$CDM cosmology with
 $\Omega_M = 0.27$, $\Omega_L = 0.73$, $\sigma_8 = 0.812$, and $h=0.71$.
 These KL modes are computed for the angular and redshift distribution
 of the bright galaxy sample, and the KL-based Bayesian inference is
-performed assuming flat cosmology.  We use only a single redshift bin in
+performed assuming a flat cosmology.  We use only a single redshift bin in
 this case, which is comparable to the first analysis performed in
 S10.
 
-The 
 This leads to a best-fit cosmology $\Omega_M = 0.23 \pm 0.06$,
 $\sigma_8 = 0.83 \pm 0.09$, where the error bars represent 1$\sigma$
-deviations at maximum.
+deviations about the maximum {\it a priori} value.
 This does not capture the entire story, however, as there
 is a strong degeneracy between the parameters (note that WMAP data offers
 complementary constraints in this plane, and can be used to break this
@@ -711,18 +687,18 @@ as well as a stronger degeneracy between $\sigma_8$ and $\Omega_M$
 (reflected in the exponent of the relation).  This discrepancy is likely
 due to the fact that we use only the bright galaxies in this analysis,
 while the S10 results use both bright and faint galaxies, as well as the
-fact that S10 marginalizes over nuisance parameters (the hubble parameter
+fact that S10 marginalizes over nuisance parameters (the Hubble parameter
 and redshift systematic corrections) while we fix these at the  expected
 values.
 
 S10 notes that the low value of $\sigma_8$ seen in their 2D analysis is likely
 an artifact of cosmic variance: the strongest contributions to lensing
-signals in COSMOS are from z > 0.7, which boosts the shear signal for higher
+signals in COSMOS are from $z > 0.7$, which boosts the shear signal for higher
 redshift sources but leads to a lower signal at intermediate reshifts.
 Using the full 3D analysis, S10 is able to separate these regions, leading
 to results consistent with those from WMAP.
 
-Here we have limited the analysis to two dimesnions, but this is by no means a
+Here we have limited the analysis to two dimensions, but this is by no means a
 fundamental limitation of KL.  As long as we can sufficiently estimate the
 correlation of signal and noise, KL can be used to analyze an arbitrary
 geometry: in future work we will extend the present analysis to three
@@ -739,3 +715,4 @@ dimensions, fully taking into account the redshifts of the sources.
  \label{fig:posterior}
 \end{figure*}
 
+\comment{Next steps...}

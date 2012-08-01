@@ -3,8 +3,8 @@ import socket
 
 hostname = socket.gethostname()
 
-if hostname == 'pleiades':
-    COSMOS_DIR = '/home/jake/COSMOS_DATA/v0.9_public'
+if hostname == 'inspiron':
+    COSMOS_DIR = '/home/vanderplas/COSMOS_DATA/v0.9_public'
 elif hostname.endswith('astro.washington.edu'):
     COSMOS_DIR = '/astro/store/student-scratch1/vanderplas/COSMOS/v0.9_public'
 
