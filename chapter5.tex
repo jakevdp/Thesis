@@ -629,19 +629,22 @@ especially for higher KL mode numbers.
 
 The analysis reflected in this plot can help in the choice of which KL
 modes to truncate: the pixel scale is two arcmin, which corresponds to
-$\ell = (2\pi\ {\rm rad}) / (2\ {\rm arcmin}) \approx 10000$.  So modes
-which do not have significant Fourier power on angular scales
-$\ell \ll 10,000$ are likely to be limited in their usefulness for parameter
-estimation from the gridded shear.  This scale does not tell the whole story,
+a dimensionally-averaged Nyquist frequency of
+\begin{equation}
+  \ell = \left(\frac{1}{\sqrt{2}}\right)
+  \left(\frac{2\pi\, {\rm rad}}{2\ {\rm arcmin}}\right) \approx 7200.
+\end{equation}
+So modes which do not have significant Fourier power on angular scales
+$\ell < 7200$ are likely to be limited in their usefulness for parameter
+estimation from shear on this grid.  This scale does not tell the whole story,
 however.  The KL analysis tells us that the smaller scales probed by the
 higher-order modes have progressively smaller signal-to-noise ratios.  For
-this reason, we choose the mode cutoff at scales less than 10,000.
-
-As was the case in Chapter 4, the choice of mode cutoff is not straightforward,
-and represents a tradeoff between statistical and systematic errors.  For the
-following analysis, we choose to use 800 of the 1640 total modes, such that
-each mode has a signal-to-noise ratio greater than $1/10$.  This cutoff
-corresponds to a scale of $\ell \sim 7000$.
+this reason, we choose the mode cutoff at scales less than 7200, which
+corresponds to $n \sim 800$ modes.  As was the case in Chapter 4, the
+optimal choice of mode cutoff is hard to quantify precisely, and represents
+a fundamental tradeoff between statistical and systematic errors.
+Modes larger than our cutoff of 800 have an expected signal-to-noise of
+less than $1/10$.
 
 \begin{figure*}
  \centering
