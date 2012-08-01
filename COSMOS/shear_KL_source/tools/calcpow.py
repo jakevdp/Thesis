@@ -26,11 +26,9 @@ def calcpow_complex(gammain, dx1, dx2=None, Nl=100, shape=None):
     area = N1*N2*cellarea
 
     #determing ell array
-    tmin = min(dx1,dx2)
-    tmax = 0.5*numpy.max(N1*dx1,N2*dx2)
-    ell_min = numpy.pi/tmax
-    ell_max = numpy.pi/tmin
-    ell = numpy.linspace(ell_min,ell_max,Nl)
+    ell_min = 2 * numpy.pi / max(N1*dx1,N2*dx2)
+    ell_max = numpy.pi * numpy.sqrt(1. / dx1 / dx1 + 1. / dx2 / dx2)
+    ell = numpy.linspace(ell_min, ell_max + 1, Nl)
 
     #create power array
     num = numpy.zeros(Nl)
@@ -166,15 +164,13 @@ def calcpow_scalar(rhoin,dx1,dx2=None,Nl=100, shape=None):
     area = N1*N2*cellarea
 
     #determing ell array
-    tmin = min(dx1,dx2)
-    tmax = 0.5*numpy.max(N1*dx1,N2*dx2)
-    ell_min = numpy.pi/tmax
-    ell_max = 1.5*numpy.pi/tmin
-    ell = numpy.linspace(ell_min,ell_max,Nl)
+    ell_min = 2 * numpy.pi / max(N1*dx1,N2*dx2)
+    ell_max = numpy.pi * numpy.sqrt(1. / dx1 / dx1 + 1. / dx2 / dx2)
+    ell = numpy.linspace(ell_min, ell_max + 1, Nl)
 
     #create power array
     num = numpy.zeros(Nl)
-    pow = numpy.zeros(Nl)
+    power = numpy.zeros(Nl)
 
     #fourier transform array
     rho = fftpack.fft2(rhoin, shape=shape)
@@ -196,10 +192,10 @@ def calcpow_scalar(rhoin,dx1,dx2=None,Nl=100, shape=None):
 
             if i==0:
                 num[np] += 1
-                pow[np] += powrho*pbl
+                power[np] += powrho*pbl
             else:
                 num[np] += 2
-                pow[np] += 2*powrho*pbl
+                power[np] += 2*powrho*pbl
             ##
         ##
     ##
@@ -207,10 +203,10 @@ def calcpow_scalar(rhoin,dx1,dx2=None,Nl=100, shape=None):
     i = numpy.where(num==0)
     
     num[i] = 1
-    pow /= num
-    pow /= area
+    power /= num
+    power /= area
 
-    return ell, pow
+    return ell, power
     
 
 def test_calcpow():

@@ -294,7 +294,7 @@ def plot_bandpower(evecs, noise, RArange, DECrange, dtheta,
     # KL modes are modes in signal to noise: correct for this
     evecs = noise[:, None] * evecs
 
-    pow = np.zeros( (Nell,nmodes), dtype=float )
+    power = np.zeros( (Nell,nmodes), dtype=float )
 
     normalize = True
 
@@ -308,20 +308,21 @@ def plot_bandpower(evecs, noise, RArange, DECrange, dtheta,
             print '  %i/%i' % (i, nmodes)
         evec = evecs[:,i].reshape((NRA,NDEC))
         ell,p = calcpow(evec, dtheta, dtheta, Nell, shape=shape)
-        
+  
         if normalize:
             p /= np.sum(p)
 
-        pow[:,i] = p
+        power[:,i] = p
 
-    pylab.imshow(pow,
+    pylab.imshow(power,
                  origin='lower',
                  interpolation='nearest',
                  cmap=pylab.cm.binary,
                  extent=[0,nmodes,ell[0],ell[-1]],
                  aspect='auto')
     pylab.xlim(0, nmodes)
-    pylab.ylim(ell[0], ell[-1])
+    pylab.ylim(ell[0], ell[-4])
+
     pylab.xlabel('KL mode number') 
     pylab.ylabel(r'$\ell$')
 
@@ -349,6 +350,12 @@ def plot_coeff_hist(evals, a_fit, nmodes=None, ax_re=None, ax_im=None):
         nmodes = len(a_prime)
     else:
         a_prime = a_prime[:nmodes]
+
+    from scipy.stats import anderson
+    print "real"
+    print anderson(a_prime.real)
+    print "imag"
+    print anderson(a_prime.imag)
 
     pylab.axes(ax_re)
     plot_hist_norm(a_prime.real, bins=30)
@@ -382,15 +389,14 @@ def plot_pseudo_spectrum(evals, a_fit, ax=None):
 def plot_all(evals, evecs, a_fit, RArange, DECrange,
              Ngal, noise, N_bootstraps, dtheta,
              label = ''):
-    file_type = 'eps'
+    file_type = 'pdf'
 
     #------------------------------------------------------------
     # plot bootstrap noise estimate
     #------------------------------------------------------------
     pylab.figure()
     plot_bootstrap_results(Ngal, noise, N_bootstraps, dtheta)
-    pylab.savefig('fig/sigma_calc.pdf')
-    pylab.savefig('fig/sigma_calc.eps')
+    pylab.savefig('fig/sigma_calc.%s' % file_type)
         
     #------------------------------------------------------------
     # plot eigenmodes
