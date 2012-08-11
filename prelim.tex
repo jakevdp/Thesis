@@ -32,12 +32,16 @@ surveys. This work addresses three related aspects of weak lensing analysis:
         weak lensing surveys.  The KL approach uses a KL-based filtering of
         the shear signal to reconstruct mass structures on the line-of-sight,
         and provides a unified framework to evaluate the efficacy of linear
-        reconstruction techniques.
+        reconstruction techniques.  We find that the KL-based filtering leads
+        to near-optimal angular resolution, and computation times which are
+        faster than previous approaches.  We also use the KL formalism to
+        show that linear non-parametric reconstruction methods are
+        fundamentally limited in their ability to resolve lens redshifts.
    \item[Shear Peak Statistics with Incomplete Data]
         \citep[Based on work published in][]{Vanderplas2012}
         We explore the use of KL eigenmodes for interpolation across masked     
         regions in observed shear maps.  Mass mapping is an inherently
-        nonlocal calculation, meaning gaps in the data can have a significant
+        non-local calculation, meaning gaps in the data can have a significant
         effect on the properties of the derived mass map.  Our KL mapping
         procedure leads to improvements in the recovery of detailed statistics
         of peaks in the mass map, which holds promise of improved cosmological
@@ -49,6 +53,11 @@ surveys. This work addresses three related aspects of weak lensing analysis:
         sensitive signal.  We show that KL can be used to derive an alternate
         orthonormal basis for the problem which avoids mode-mixing and allows
         a convenient formalism for cosmological likelihood computations.
+        Cosmological constraints derived using this method are shown to be
+        competitive with those from the more conventional correlation function
+        approach.  We also discuss several aspects of the KL approach which
+        will allow improved handling of correlated errors and redshift
+        information in future surveys.
 \end{description}
 
 

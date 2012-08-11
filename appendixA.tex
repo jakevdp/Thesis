@@ -32,7 +32,7 @@ These conditions become very useful when we study the
 which for a homogeneous and isotropic field depends only on the 
 distance $r = |\vec r|$.  It becomes useful to decompose $g$ into
 orthogonal Fourier components:\footnote{
-  Note that the fourier transform convention in eqns \ref{ft}-\ref{ift}
+  Note that the Fourier transform convention in eqns \ref{ft}-\ref{ift}
   is useful in that it leads to a particularly simple form of the 
   convolution theorem, without any gratuitous factors of $\sqrt{2\pi}$:
   \begin{displaymath}
@@ -50,7 +50,7 @@ orthogonal Fourier components:\footnote{
   \hat{g}(\vec k) = \int \dd^nx g(\vec x)e^{i\vec x\cdot\vec k}
 \end{eqnarray}
 
-From these, we can see that the n-dimensional dirac delta 
+From these, we can see that the n-dimensional Dirac delta 
 function can be written
 \begin{equation}
   \label{ddelta_form}
@@ -87,12 +87,12 @@ The proportionality constant is finite only for a discrete Fourier series
 
 \subsection{Smoothing of Gaussian Fields}
 \label{smoothing}
-When measuring a realization of gaussian field, we often make the measurement
+When measuring a realization of Gaussian field, we often make the measurement
 within a region defined by a window function $W(\vec x/R)$.
 By convention, we express window functions in terms of $\vec x/R$,
 where $R$ is a characteristic length scale of the window.
 This window may reflect a sharp boundary in space (e.g. a spherical tophat 
-function) or perhaps an observation efficiency in space (e.g. a 3D gaussian).
+function) or perhaps an observation efficiency in space (e.g. a 3D Gaussian).
 In either case, our observed overdensity is given by
 \begin{equation}
   g_W(\vec x) = \int \dd^n x^\prime 
@@ -139,7 +139,7 @@ wave number:
   e^{i\vec k\cdot(\vec x_1-\vec x_2)}
 \end{equation}
 Appendix \ref{app:sec:Wtransforms} lists a few common window functions and
-their fourier transforms.
+their Fourier transforms.
 
 \section{Cosmological Mass Power Spectrum}
 \label{app:sec:masspower}
@@ -147,7 +147,7 @@ In studies of the cosmological distribution of matter, we are interested
 in the comoving matter density $\rho(\vec{x})$, which defines the mass 
 density at every comoving point $\vec{x}$ in the universe.  In order
 to take advantage of the preceding formalism, we can subtract the mean
-cosmological density $\bar{\rho}(\vec{x})$, and definine a dimensionless
+cosmological density $\bar{\rho}(\vec{x})$, and define a dimensionless
 density contrast $\delta(\vec{x})$, such that
 \begin{equation}
   \delta(\vec{x}) = \frac{\rho(\vec{x}) - \bar{\rho}(\vec{x})}{\bar{\rho}(\vec{x})}.
@@ -215,7 +215,7 @@ cosmological evolution of the signal.
 
 For the top-hat window function of equation \ref{top-hat}, with 
 $k = |\vec{k}|$,
-the fourier transform of equation \ref{top-hat} (cf. eqn. \ref{W-transform}) is
+the Fourier transform of equation \ref{top-hat} (cf. eqn. \ref{W-transform}) is
 \begin{equation}
   \label{top-hat-f}
   \widetilde{W}_T(kR) = \frac{3}{(kR)^3}\left[\sin(kR) - kR\cos(kR) \right].
@@ -327,7 +327,7 @@ The first part of the Limber approximation is to assume that $S_{gg}$ vanishes
 at these distances.
 Next we make the assumption that $p_i(\rcom)$ and 
 $p_j(\rcom^\prime)$ do not vary appreciably over the small range where
-$S_{g_ig_j}$ is nonvanishing, and that this range is small enough that 
+$S_{g_ig_j}$ is non-vanishing, and that this range is small enough that 
 $f_\kappa(\rcom) \approx f_\kappa(\rcom^\prime)$. 
 This allows us to rewrite the above expression in a simpler way:
 \begin{eqnarray}
@@ -384,7 +384,7 @@ the angular integral via
 \end{equation}
 We see that all $k_\parallel$ terms have vanished, which leads to the main
 result of the Limber approximation: there is no correlation between the 
-density contrast in windows which do not overlap 
+density contrast in windows that do not overlap 
 in redshift. This is quickly seen from the leading integral in equation 
 \ref{Limber}.  If the windows $p_i(\rcom)$ and $p_j(\rcom)$ do 
 not overlap, then the expression integrates to zero.  
@@ -499,7 +499,7 @@ bin.  Note that if we assume $f_\kappa(\rcom)$ is constant across
 each redshift bin, the two formulations are equivalent.
 
 For our analysis, we will use angular pixels with radius $\theta_s$, 
-so that the fourier transform of the window functionis given by equation 
+so that the Fourier transform of the window function is given by equation 
 \ref{tophat2D} and the equation giving the signal covariance becomes
 \begin{equation}
   \left[S_{\delta\delta}\right]_{nm}
@@ -515,21 +515,21 @@ so that the fourier transform of the window functionis given by equation
 \label{app:sec:Wtransforms}
 Here we list a few common window functions and their Fourier transforms
 \subsection{Gaussian Window Functions}
-The $n$-dimenisional gaussian window function is defined as
+The $n$-dimensional Gaussian window function is defined as
 \begin{equation}
   W(\vec x/R) = \frac{1}{(2\pi R^2)^{n/2}}
   \exp\left(\frac{-|\vec x|^2}{2R^2}\right)
 \end{equation}
-The fourier transform is straightforward because the dimensions decouple
-and we're left with $n$ 1 dimensional gaussian integrals.  The resulting
+The Fourier transform is straightforward because the dimensions decouple
+and we're left with $n$ 1-dimensional Gaussian integrals.  The resulting
 window function is
 \begin{equation}
   \widetilde{W}(\vec k R) 
   = \exp\left(\frac{-|\vec k|^2R^2}{2}\right)
 \end{equation}
-which itself is a gaussian.
+which itself is a Gaussian.
 \subsection{Top-hat Window Functions}
-The $n$-dimensional tophat windown function is given by
+The $n$-dimensional tophat window function is given by
 \begin{equation}
 W(\vec x/R) = A_n
 \times\left\{
@@ -548,7 +548,7 @@ inverse of the volume of an $n$-sphere of radius $R$.
 For $n=2$ and $n=3$, the normalizations are the familiar 
 $1/(\pi R^2)$ and $3/(4\pi R^3)$, respectively.
 For the top-hat window function, there is no
-simple expression for the fourier transform for arbitrary $n$. 
+simple expression for the Fourier transform for arbitrary $n$. 
 Here we compute three special cases:
 \begin{description}
   \item{$n=1$}:

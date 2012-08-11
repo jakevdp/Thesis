@@ -60,7 +60,7 @@ approach \citep{Ichiki09, Schrabback10}.
 
 The are two approaches to measuring two-point information are 
 mathematically equivalent: the power spectrum $\mathcal{P}(\ell)$,
-and its fourier transform $\xi(\theta)$.  In practice,
+and its Fourier transform $\xi(\theta)$.  In practice,
 the most commonly used method of measuring two-point information
 is through correlation functions \citep[see][]{Schneider02}.
 The main advantage of correlation functions is their ease of measurement:
@@ -210,7 +210,7 @@ $\lambda_i \ge \lambda_{i+1} \forall i\in(1, N-1)$.
 Expansion of the data $\myvec\gamma$ into this basis is the discrete form
 of KL analysis.
 
-In chapter 2 we discussed the Uniqueness, Efficieny, and Signal-to-noise
+In chapter 2 we discussed the Uniqueness, Efficiency, and Signal-to-noise
 optimality of KL modes.  In particular, we showed that
 if signal and noise are uncorrelated, then the covariance of the observed
 shear can be decomposed as
@@ -328,7 +328,7 @@ source, and $W(\chi)$ is the lensing weight function,
 \end{equation}
 where $n(z)$ is the empirical redshift distribution of galaxies.
 The nonlinear mass fluctuation power spectrum $P_\delta(k, z)$ can be
-predicted semianalytically: in this work we use the halo model of
+predicted semi-analytically: in this work we use the halo model of
 \citet{Smith03}.  With this as an input, we can analytically
 construct the measurement covariance matrix $\mymat\xi$ using 
 Equations~\ref{eq:xi_analytic}-\ref{eq:lensing_weight}.
@@ -472,7 +472,7 @@ information from WMAP constraints from measurements of the CMB, we must
 note that they are derived from just over
 1 square degree of observations, while the
 WMAP constraints use the full sky.  Future wide-field
-lensing surveys will be able to place much more competetive constraints
+lensing surveys will be able to place much more competitive constraints
 on these parameters.
 
 Here we will not duplicate all the various analyses of S10: instead we
@@ -593,7 +593,6 @@ signal-to-noise curve.
 \end{figure*}
 
 \subsection{Is our shear Gaussian?}
-\comment{Add more quantitative discussion}
 
 The KL formalism for shear analysis assumes that the shear is well-described
 by a Gaussian random field described by a covariance matrix, with mean
@@ -612,8 +611,8 @@ that the noise properties estimated in \S\ref{sec:bootstrap} are accurate.
  \includegraphics[width=0.8\textwidth]{bright_coeff_hist.pdf}
  \caption{
    The histogram of normalized coefficients $a_i / \sqrt{\lambda_i}$.
-   If the shear is truly a gaussian random field, this distribution should
-   be a gaussian with unit variance.
+   If the shear is truly a Gaussian random field, this distribution should
+   be a Gaussian with unit variance.
    \label{fig:coeff_hist}}
 \end{figure*}
 
@@ -659,7 +658,6 @@ less than $1/10$.
 
 \section{Results}
 \label{sec:results}
-\comment{Add a more quantitative discussion of the S10 results}
 
 The result of the KL-based Bayesian inference for cosmological parameter
 estimation is shown in Figure~\ref{fig:posterior}.  To compute the
@@ -697,7 +695,7 @@ values.
 S10 notes that the low value of $\sigma_8$ seen in their 2D analysis is likely
 an artifact of cosmic variance: the strongest contributions to lensing
 signals in COSMOS are from $z > 0.7$, which boosts the shear signal for higher
-redshift sources but leads to a lower signal at intermediate reshifts.
+redshift sources but leads to a lower signal at intermediate redshifts.
 Using the full 3D analysis, S10 is able to separate these regions, leading
 to results consistent with those from WMAP.
 
@@ -718,4 +716,32 @@ dimensions, fully taking into account the redshifts of the sources.
  \label{fig:posterior}
 \end{figure*}
 
-\comment{Next steps...}
+\section{Next Steps}
+The above analysis presents a firm basis for further exploring the ability of
+KL to provide a natural basis for extracting two-point information from
+weak lensing surveys.  Further work is needed to fully understand the effect
+of the mode truncation on results, as well as other effects such as the
+pixel size, the assumptions of noise, and the effect of the assumed fiducial
+cosmology.
+
+There are also some potentially interesting and useful features of the
+algorithm: first of all, the KL framework naturally extends from two dimensions
+to three.  Unlike the rigidly tomographic approach used in conventional
+correlation function studies, KL allows each pixel to have its redshift
+distribution individually specified, potentially leading to a more robust
+use of source redshift information.  For this reason, KL is a promising
+technique for a full 3D analysis, and will give insight into the density and
+perhaps equation of state of dark energy.
+
+Second, assumptions about noise and bias can be built-in to the KL model.
+For example, S10 does a careful job of correcting for the shape of the HST PSF
+before computing the observed correlation function.  With KL, we could instead
+account for these biases in the KL basis itself, allowing us to perform our
+cosmological analysis one step closer to the observed data.
+
+Third, there is the question of how this approach can scale from the one
+square degree of COSMOS to the 20,000 square degrees of LSST.  The LSST
+weak lensing analysis has potential to give very tight constraints on
+cosmological parameters, especially the possible evolution of dark energy.
+It will be increasingly important to address and explore how this KL
+framework can be scaled to the size of future surveys.

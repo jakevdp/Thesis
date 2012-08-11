@@ -167,7 +167,7 @@ yield
   \sum_{k=-\infty}^\infty (a_k - a^\prime_k) \delta_{kk^\prime} = 0
 \end{equation}
 Collapsing the sum, we find that $a_k = a^\prime_k$ for all $k$.  This
-shows the uniqueness of the fourier coefficients $a_k$ for a given function
+shows the uniqueness of the Fourier coefficients $a_k$ for a given function
 $f(t)$ on an interval $[t_a, t_b]$.  Thus, given an orthonormal basis $\Phi_k$,
 there is a single unique linear combination that reconstructs a function
 $f(t)$ on the defined interval.
@@ -178,7 +178,7 @@ Stepping back for a moment, we have shown that for a particular
 class of basis functions $\Phi_k(t)$, one can find unique coefficients
 $a_k$ such that one of the expansions of Equation~\ref{eq:fourier_1D} holds.
 A key observation is that all the derivations above rested 
-soley on two special properties of these basis functions:
+solely on two special properties of these basis functions:
 \begin{enumerate}
   \item
     The basis functions are {\it orthonormal} on the interval $[a, b]$.
@@ -209,7 +209,7 @@ the Hermite polynomials on the interval $(-\infty, \infty)$.
 In fact, these different orthonormal basis functions are simply a
 generalization of well-known geometric bases (such as the $x$ and $y$ axis
 of a two dimensional vector space) into an abstract function space.
-Just as there are an infinite number of possibile orientations for
+Just as there are an infinite number of possible orientations for
 an $(x, y)$ axis in a two-dimensional vector space, there are an infinite
 number of possible orthogonal function bases that work in the above
 formalism.  Choosing the right basis can lead to a much easier analysis of
@@ -266,7 +266,7 @@ $e_k(t)$ and $e_{k^\prime}(t)$.  Consider the quantity
   \int_{t_a}^{t_b} \dd t \int_{t_a}^{t_b} \dd t^\prime\,\, \mathcal{C}_F(t, t^\prime)
   e_{k^\prime}(t^\prime) e_k(t)
 \end{equation}
-Because of the symmetry of the covarience,
+Because of the symmetry of the covariance,
 i.e.~$\mathcal{C}_F(t, t^\prime) = \mathcal{C}_F(t^\prime, t)$, and
 because the order of integration can be switched, this can be evaluated
 two different ways, which must be equal:
@@ -440,7 +440,7 @@ Minimizing this with respect to $\phi_k$ gives
   C_F(t, t^\prime) \phi_k(t^\prime)
   - \lambda_k \phi_k(t).
 \end{equation}
-The optimumum for each $k$ is where this derivative equals zero; setting to
+The optimum for each $k$ is where this derivative equals zero; setting to
 zero and solving recovers the original eigenvalue problem
  (Eq.~\ref{eq:eigfunc_def}) from which we
 derived the KL basis $\{e_k(t)\}$.  By the uniqueness of the eigenvalue
@@ -766,7 +766,8 @@ The term on the left hand side
 is the \textit{posterior} probability of the set of
 model parameters $\{\theta_i\}$, which is the quantity we are interested in.
 
-The first term on the RHS is the \textit{prior}.  It quantifies how our prior
+The first term on the right side of the equation is the \textit{prior}.
+It quantifies how our prior
 information $I$ affects the probabilities of the model parameters.  The 
 prior is where information from other surveys (e.g. WMAP, etc) can be
 included. The likelihood function for the observed coefficients $\myvec{a}$
