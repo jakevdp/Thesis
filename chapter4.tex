@@ -447,7 +447,7 @@ eigenvalues associated with $\myvec{\Psi}_{(n)}$.
  \centering
  \includegraphics[width=\textwidth]{fig01_eigenmodes.pdf} 
  %created by ../fig_code/fig01_eigenmodes.py
- \caption{
+ \caption[ A sample of nine of the 4096 KL eigenmodes]{
    A sample of nine of the 4096 KL eigenmodes 
    of a $1^\circ\times 1^\circ$ patch of the sky partitioned into
    $64\times 64$ pixels.  Black is positive, red is negative, and each mode
@@ -497,7 +497,8 @@ nature.
  \centering
  \includegraphics[width=0.8\textwidth]{fig02_bandpower.pdf}
  %created by ../fig_code/fig02_bandpower.py
- \caption{The normalized power spectrum of each KL mode.  For constant
+ \caption[The normalized power spectrum of each KL mode]
+ {The normalized power spectrum of each KL mode.  For constant
    mode number, the figure represents a histogram of the power in that KL
    mode, normalized to a constant total power.  KL modes represent a 
    linear combination of Fourier modes, so that the power in each KL 
@@ -537,7 +538,7 @@ contribute two orders-of-magnitude more noise than signal.
  \centering
  \includegraphics[width=0.8\textwidth]{fig03_eigenvalues.pdf}
  %created by ../fig_code/fig03_eigenvalues.py
- \caption{
+ \caption[The eigenvalues associated with the eigenmodes]{
    The eigenvalues associated with the eigenmodes discussed in
    Figure~\ref{fig_KL_modes}.  By construction, the eigenvalue is 
    proportional to the sum of signal and
@@ -565,7 +566,7 @@ contribute two orders-of-magnitude more noise than signal.
  \centering
  \includegraphics[width=\textwidth]{fig04_reconstruction.pdf}
  %created by ../fig_code/fig04_reconstruction.py
- \caption{
+ \caption[reconstruction of a small patch of masked shear from simulated shear catalog]{
    This figure illustrates the reconstruction of a small patch of masked
    shear from simulated shear catalog.
    \textit{upper panels:} 
@@ -593,7 +594,7 @@ contribute two orders-of-magnitude more noise than signal.
  \centering
  \includegraphics[width=\textwidth]{fig05_reconstruction_2.pdf}
  %created by ../fig_code/fig05_reconstruction_2.py
- \caption{
+ \caption[reconstruction using $n=900$ modes]{
    Here we show the same field as in Figure~\ref{fig_reconstruction}, 
    reconstructed using $n=900$ modes, with increasing levels of mask
    coverage.  The density of source galaxies has been increased to 
@@ -626,7 +627,7 @@ contribute two orders-of-magnitude more noise than signal.
  \centering
  \includegraphics[height=0.8\textheight]{fig06_kappa_multires2.pdf}
 %created by ../fig_code/fig06_kappa_multires.py
- \caption{The large-field convergence map derived using the method of
+ \caption[The large-field convergence map]{The large-field convergence map derived using the method of
    \citet{Kaiser93} from the
    noiseless input shear \textit{(upper panels)}, 
    the noisy input shear \textit{(middle panels)},
@@ -864,7 +865,7 @@ a simple local maximum criterion.
  \centering
  \includegraphics[width=\textwidth]{fig07_mask_vs_nomask.pdf}
  %created by ../fig_code/fig07_mask_nomask.py
- \caption{
+ \caption[Comparison of the masked and unmasked peak distributions.]{
    Comparison of the masked and unmasked peak distributions.
    \textit{left panel:} the peak distributions without the use of KL.
    The black line is the result with no masking, while the red and green
@@ -979,7 +980,7 @@ The aperture mass signal-to-noise in each pixel is given by
  \centering
  \includegraphics[width=0.8\textwidth]{fig08_num_peaks.pdf}
  %created by ../fig_code/fig08_num_peaks.py
- \caption{
+ \caption[Comparison of the distribution of \Map peaks for unmasked shear]{
    Comparison of the distribution of \Map peaks for unmasked shear,
    before and after filtering
    the field with KL (dotted line and dashed line, respectively).  The
@@ -997,7 +998,8 @@ The aperture mass signal-to-noise in each pixel is given by
  \centering
  \includegraphics[width=0.8\textwidth]{fig09_B_noise.pdf}
  %created by ../fig_code/fig09_B_noise.py
- \caption{The comparison between B-mode peak distributions and the
+ \caption[B-mode peak distributions]
+ {The comparison between B-mode peak distributions and the
    peak distributions for a shear field composed entirely of noise.
    As expected, the B-mode peak distributions are largely consistent
    with being due to noise only.  Because of this, we can use B-mode
@@ -1010,7 +1012,7 @@ The aperture mass signal-to-noise in each pixel is given by
  \centering
  \includegraphics[width=0.8\textwidth]{fig10_EB_comp.pdf}
  %created by ../fig_code/fig10_EB_comp.py
- \caption{
+ \caption[Distributions of peaks with and without KL]{
    \textit{top panel:} The cumulative distributions of peaks in 
    signal-to-noise, for peaks with $M_{\rm ap}/\sigma_M > 3.25$.
    This is the statistic used by \citet{Dietrich10} to discriminate

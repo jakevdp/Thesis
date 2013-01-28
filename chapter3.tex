@@ -247,7 +247,7 @@ of this method are described in Appendix~\ref{appB}.
 \begin{figure*}[t] 
  \centering
  \includegraphics[width=0.8\textwidth]{sing_vals.pdf}
- \caption{
+ \caption[Ordered singular values]{
    Ordered singular values of the matrix
    $\mymat{\widetilde{M_{\gamma\delta}}}$.
    The dotted lines show the values of $n$ 
@@ -312,7 +312,7 @@ shear and projected density due to an NFW profile, given by equations
 \begin{figure*}[p]
  \centering
  \includegraphics[width=0.8\textwidth]{three_lines.pdf}
- \caption{
+ \caption[The effect of SVD truncation on a single $z=0.6$ NFW halo]{
    The effect of SVD truncation on a single $z=0.6$ NFW halo
    in the center of the field, for three different levels of filtering.
    \textit{left column:}
@@ -337,7 +337,7 @@ shear and projected density due to an NFW profile, given by equations
 \begin{figure*}[t]
  \centering
  \includegraphics[width=\textwidth]{los_ST.pdf}
- \caption{
+ \caption[The effect of Wiener filtering]{
    The effect of Wiener filtering on the same input as 
    Figure~\ref{fig_los_plot}. Here we have used both transverse 
    \textit{(top panels)}
@@ -448,7 +448,8 @@ are the more successful noise reduction techniques for the present problem.
 \begin{figure*}[t]
  \centering
  \includegraphics[width=0.8\textwidth]{mode_compare.pdf} 
- \caption{Contribution of each shear mode to the reconstruction
+ \caption[Contribution of each shear mode to the reconstruction]
+ {Contribution of each shear mode to the reconstruction
  for three different filters.  The dotted line at $10^0$ represents the
  unfiltered result.  Each filtering method leads to a different
  weighting of the shear modes.  The SVD filter, by design, completely 
@@ -477,7 +478,8 @@ regardless of the filtering method used.
  \centering
  \includegraphics[width=0.45\textwidth]{radial_modes.pdf}
  \includegraphics[width=0.45\textwidth]{radial_sigma.pdf}  
- \caption{\textit{left panel:} 
+ \caption[The radial components and singular values of the filtering]
+ {\textit{left panel:} 
    The radial components of the first four
    columns of the matrix $\mymat{V}$ (see section~\ref{LinearMapping}).
    This is calculated for 100 equally spaced redshift bins $(0\le z\le 2.5)$ 
@@ -621,7 +623,7 @@ shared-memory parallel clusters.
 \begin{figure*}%[t] 
  \centering
  \includegraphics[width=\textwidth]{many_halos_los.pdf} 
- \caption{
+ \caption[Reconstruction of an artificial shear field with the SVD filter]{
    Reconstruction of an artificial shear field with the 
    SVD filter \textit{(top panels)}, 
    Transverse Wiener filter \textit{(middle panels)}, 
